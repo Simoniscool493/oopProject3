@@ -14,12 +14,12 @@ class Sliders
   
   void drawShape()
   {
+    pos.x = scale;
     pushMatrix();
-    translate(pos.x, pos.y);
-    rectMode(CENTER);
+    translate(map(pos.x, 0, 255, 150, width-150), pos.y);
     stroke(0);
     fill(C);
-    rect(0, 0, 50,50);
+    ellipse(0, 0, 25,25);
     popMatrix();
   }
 }

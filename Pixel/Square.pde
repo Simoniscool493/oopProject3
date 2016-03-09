@@ -1,5 +1,7 @@
 class Square
 {
+  PVector pos;
+  
   float x;
   float y; 
   color c; 
@@ -9,6 +11,7 @@ class Square
     this.x = x;
     this.y = y;
     this.c = c;
+    this.pos = new PVector(x+(boxSize/2),y+(boxSize/2));
   }
   
   void drawShape()

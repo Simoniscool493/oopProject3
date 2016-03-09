@@ -3,8 +3,10 @@ color userC;
 float x, y;
 
 int stages;
+int mode;
 int pixNum;
 float boxSize;
+PVector mouse;
 
 boolean colourMenu;
 boolean showLines;
@@ -19,6 +21,7 @@ void setup()
   boxSize = 0;
   
   userC = (255);
+  mode = 1;
   
   showLines = true;
   colourMenu = false;
@@ -62,7 +65,6 @@ void draw()
          //Vertical lines
          stroke(0);
          line(boxSize*i, 0, boxSize*i, height);
-         println(boxSize);
        
          //Horizontal lines
          line(0, boxSize*i, width, boxSize*i);
@@ -88,11 +90,14 @@ void draw()
 void ColourMenu()
 {
   //Colour menu
+  stroke(255);
   fill(255);
   rect(50,50,400,400);
        
   for(int i = 0; i < slide.size(); i++)
   {
+    line(150, 150+(i*100), width-150, 150+(i*100));
+    
     Sliders entity = slide.get(i);
     entity.drawShape();
   }
@@ -100,13 +105,36 @@ void ColourMenu()
 
 void mousePressed()
 {
-  if(stages == 1 && colourMenu == false)
+  mouse = new PVector(mouseX,mouseY);
+  
+  switch (mode)
   {
-    x = int((mouseX/boxSize));
-    y = int((mouseY/boxSize));
+    case 1:
+    if(stages == 1 && colourMenu == false )
+    {
+      x = int((mouseX/boxSize));
+      y = int((mouseY/boxSize));
+      
+      Square a = new Square(x*boxSize, y*boxSize, userC);
+      squares.add(a);
+    }
+    break;
     
-    Square a = new Square(x*boxSize, y*boxSize, userC);
-    squares.add(a);
+    case 2:
+    
+    if(stages == 1 && colourMenu == false)
+    {
+      for(int i = 0; i < squares.size(); i++)
+      {
+        Square temp = squares.get(i);
+        
+        if(temp.pos.dist(mouse) < boxSize/2)
+        {
+          squares.remove(i);
+        }
+      }
+    }
+    break;
   }
   
   if(stages == 0)
@@ -125,15 +153,49 @@ void mousePressed()
   }
 }
 
+void mouseDragged()
+{
+  
+  //check if mouse is on slider
+  if(colourMenu == true)
+  {
+    for(int i = 0; i < slide.size(); i++)
+    {
+      Sliders temp = slide.get(i);
+        
+      if(temp.pos.dist(mouse) < 25)
+      {
+          println(int(temp.scale+(mouse.x - mouseX)));
+          temp.scale = int(temp.scale+(mouse.x - mouseX));
+          println(temp.scale);
+      }
+    }
+  }
+}
+
 void keyPressed()
 {
-  if(key == 't')
+  if(stages == 1)
   {
-    showLines = !showLines;
-  }
+    if(key == 't')
+    {
+      showLines = !showLines;
+    }
   
-  if(key == 'c')
-  {
-    colourMenu = !colourMenu;
+    if(key == 'c')
+    {
+      colourMenu = !colourMenu;
+    }
+    
+    //Draw mode
+    if(key == 'd')
+    {
+      mode = 1;
+    }
+    
+    if(key == 'e')
+    {
+      mode = 2;
+    }
   }
 }
