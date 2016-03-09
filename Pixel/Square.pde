@@ -13,6 +13,7 @@ class Square
   
   void drawShape()
   {
+    rectMode(CORNER);
     stroke(c);
     fill(c);
     rect(x, y, boxSize,boxSize);

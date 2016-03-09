@@ -10,6 +10,7 @@ boolean colourMenu;
 boolean showLines;
 
 ArrayList<Square> squares = new ArrayList<Square>();
+ArrayList<Sliders> slide = new ArrayList<Sliders>();
 
 void setup()
 {
@@ -21,11 +22,22 @@ void setup()
   
   showLines = true;
   colourMenu = false;
+  
+  //Create 3 sliders
+  Sliders red = new Sliders(150, color(255,0,0));
+  slide.add(red);
+  
+  Sliders green = new Sliders(250, color(0,255,0));
+  slide.add(green);
+  
+  Sliders blue = new Sliders(350, color(0,0,255));
+  slide.add(blue);
 }
 
 void draw()
 {
   background(200);
+  rectMode(CORNER);
  
   switch (stages)
   {
@@ -40,12 +52,6 @@ void draw()
      break;
   
      case 1:
-     
-     //Colour menu
-     if(colourMenu == true)
-     {
-       
-     }
      
      boxSize = float(width) / float(pixNum);
      
@@ -69,9 +75,27 @@ void draw()
        entity.drawShape();
      }
      
+     if(colourMenu == true)
+     {
+       ColourMenu();
+     }
+     
      //println(pixNum);
      break;
    }
+}
+
+void ColourMenu()
+{
+  //Colour menu
+  fill(255);
+  rect(50,50,400,400);
+       
+  for(int i = 0; i < slide.size(); i++)
+  {
+    Sliders entity = slide.get(i);
+    entity.drawShape();
+  }
 }
 
 void mousePressed()
@@ -110,6 +134,6 @@ void keyPressed()
   
   if(key == 'c')
   {
-    colourMenu = true;
+    colourMenu = !colourMenu;
   }
 }
