@@ -5,6 +5,8 @@ float x, y;
 int stages;
 int mode;
 int pixNum;
+int r,g,b;
+
 float boxSize;
 PVector mouse;
 
@@ -90,12 +92,12 @@ void draw()
 void ColourMenu()
 {
   //Colour menu
-  stroke(255);
   fill(255);
   rect(50,50,400,400);
        
   for(int i = 0; i < slide.size(); i++)
   {
+    stroke(0);
     line(150, 150+(i*100), width-150, 150+(i*100));
     
     Sliders entity = slide.get(i);
@@ -104,9 +106,7 @@ void ColourMenu()
 }
 
 void mousePressed()
-{
-  mouse = new PVector(mouseX,mouseY);
-  
+{ 
   switch (mode)
   {
     case 1:
@@ -121,6 +121,8 @@ void mousePressed()
     break;
     
     case 2:
+    
+    mouse = new PVector(mouseX,mouseY);
     
     if(stages == 1 && colourMenu == false)
     {
@@ -155,6 +157,7 @@ void mousePressed()
 
 void mouseDragged()
 {
+  mouse = new PVector(mouseX,mouseY);
   
   //check if mouse is on slider
   if(colourMenu == true)
@@ -162,12 +165,17 @@ void mouseDragged()
     for(int i = 0; i < slide.size(); i++)
     {
       Sliders temp = slide.get(i);
-        
+      println(temp.pos + " " + mouse);
+      
       if(temp.pos.dist(mouse) < 25)
       {
-          println(int(temp.scale+(mouse.x - mouseX)));
-          temp.scale = int(temp.scale+(mouse.x - mouseX));
+        println("yea");
+        if(mouseX < width-135 && mouseX > 135)
+        {
+          
+          temp.scale = map(mouseX, 150, width - 150, 0 ,255);
           println(temp.scale);
+        }
       }
     }
   }
