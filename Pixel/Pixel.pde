@@ -21,8 +21,9 @@ void setup()
   size(500, 500);
   stages = 0;
   boxSize = 0;
+  r=g=b=255;
   
-  userC = (255);
+  userC = color(r,g,b);
   mode = 1;
   
   showLines = true;
@@ -89,9 +90,24 @@ void draw()
    }
 }
 
+void setColour()
+{
+  Sliders Red = slide.get(0);
+  r = int(Red.scale);
+  
+  Sliders Green = slide.get(1);
+  g = int(Green.scale);
+  
+  Sliders Blue = slide.get(2);
+  b = int(Blue.scale);
+  
+  userC = color(r,g,b);
+}
+
 void ColourMenu()
 {
   //Colour menu
+  stroke(0);
   fill(255);
   rect(50,50,400,400);
        
@@ -103,6 +119,8 @@ void ColourMenu()
     Sliders entity = slide.get(i);
     entity.drawShape();
   }
+  
+  setColour();
 }
 
 void mousePressed()
@@ -170,7 +188,7 @@ void mouseDragged()
       if(temp.pos.dist(mouse) < 25)
       {
         println("yea");
-        if(mouseX < width-135 && mouseX > 135)
+        if(mouseX < width-150 && mouseX > 150)
         {
           
           temp.scale = map(mouseX, 150, width - 150, 0 ,255);

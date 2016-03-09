@@ -22,5 +22,7 @@ class Sliders
     fill(C);
     ellipse(0, 0, 25,25);
     popMatrix();
+    
   }
+  
 }
