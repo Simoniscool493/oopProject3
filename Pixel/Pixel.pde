@@ -61,23 +61,15 @@ void draw()
      
      boxSize = float(width) / float(pixNum);
      
-     if(showLines == true)
-     {
-       for(int i = 1; i < pixNum+1; i++)
-       {
-         //Vertical lines
-         stroke(0);
-         line(boxSize*i, 0, boxSize*i, height);
-       
-         //Horizontal lines
-         line(0, boxSize*i, width, boxSize*i);
-       }
-     }
-     
      for(int i = 0; i < squares.size(); i++)
      {
        Square entity = squares.get(i);
        entity.drawShape();
+     }
+     
+     if(showLines == true)
+     {
+       drawGrid();
      }
      
      if(colourMenu == true)
@@ -88,6 +80,19 @@ void draw()
      //println(pixNum);
      break;
    }
+}
+
+void drawGrid()
+{
+  for(int i = 1; i < pixNum+1; i++)
+  {
+     //Vertical lines
+     stroke(0);
+     line(boxSize*i, 0, boxSize*i, height);
+       
+     //Horizontal lines
+     line(0, boxSize*i, width, boxSize*i);
+  }
 }
 
 void setColour()
@@ -119,6 +124,10 @@ void ColourMenu()
     Sliders entity = slide.get(i);
     entity.drawShape();
   }
+  
+  //Colour preview
+  fill(userC);
+  rect(70,70,50,50);
   
   setColour();
 }
@@ -222,6 +231,12 @@ void keyPressed()
     if(key == 'e')
     {
       mode = 2;
+    }
+    
+    //Testing the save here, need to change and put into menu
+    if(key == 's')
+    {
+      save("art.jpeg");
     }
   }
 }
