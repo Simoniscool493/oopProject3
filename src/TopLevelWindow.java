@@ -32,9 +32,20 @@ public class TopLevelWindow
 		slider_1.setPaintTicks(true);
 		slider_1.setPaintLabels(true);
 		slider_1.addChangeListener(new SliderListener());
+		
+		JSlider slider_2 = new JSlider(JSlider.HORIZONTAL,min,max,init);
+		slider_2.setPreferredSize(new Dimension(1000,120));
+		slider_2.setMajorTickSpacing(10);
+		slider_2.setMinorTickSpacing(1);
+		slider_2.setPaintTicks(true);
+		slider_2.setPaintLabels(true);
+		slider_2.addChangeListener(new SliderListener());
+
 
 		frame.getContentPane().add(textLabel_1,BorderLayout.CENTER);
 		frame.getContentPane().add(slider_1,BorderLayout.SOUTH);
+		//frame.getContentPane().add(slider_2,BorderLayout.SOUTH);
+
 
 
 		frame.setLocationRelativeTo(null); 	//relative to null puts it in the center
@@ -44,15 +55,3 @@ public class TopLevelWindow
 	}
 }
 
-class SliderListener implements ChangeListener 
-{
-    public void stateChanged(ChangeEvent e) 
-	{
-        JSlider source = (JSlider)e.getSource();
-        if (!source.getValueIsAdjusting())
-		{
-            int num = (int)source.getValue();
-			System.out.println(num);
-        }    
-    }
-}
