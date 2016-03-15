@@ -9,7 +9,6 @@ public class Main extends PApplet
 {
 	
 	
-	
 	public static void main(String[] args)
 	{					
 		//TopLevelWindow.createWindow();
@@ -50,13 +49,13 @@ public class Main extends PApplet
 		  colourMenu = false;
 		  
 		  //Create 3 sliders
-		  Sliders red = new Sliders(150, color(255,0,0));
+		  Sliders red = new Sliders(150, color(255,0,0),this);
 		  slide.add(red);
 		  
-		  Sliders green = new Sliders(250, color(0,255,0));
+		  Sliders green = new Sliders(250, color(0,255,0),this);
 		  slide.add(green);
 		  
-		  Sliders blue = new Sliders(350, color(0,0,255));
+		  Sliders blue = new Sliders(350, color(0,0,255),this);
 		  slide.add(blue);
 
 	 }
@@ -73,7 +72,7 @@ public class Main extends PApplet
 		     textAlign(CENTER);
 		     fill(0);
 		     stroke(0);
-		     text("How many pixels would you want to work with?",width/2, 100);
+		     text("How many pixels would you like to work with?",width/2, 100);
 		     text("16 x 16",width/2, 200);
 		     text("32 x 32",width/2, 300);
 		     break;
@@ -163,7 +162,7 @@ public class Main extends PApplet
 	       x = (int)((mouseX/boxSize));
 	       y = (int)((mouseY/boxSize));
 	       
-	       Square a = new Square(x*boxSize, y*boxSize, userC);
+	       Square a = new Square(x*boxSize, y*boxSize, userC,this);
 	       squares.add(a);
 	     }
 	     break;
@@ -202,7 +201,7 @@ public class Main extends PApplet
 	     }
 	   }
 	 }
-
+	 
 	 public void mouseDragged()
 	 {
 	   mouse = new PVector(mouseX,mouseY);

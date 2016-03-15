@@ -26,8 +26,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 
-
-
 public class TopLevelWindow
 {
 	public static void createWindow()
