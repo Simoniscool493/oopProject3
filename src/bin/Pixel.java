@@ -23,7 +23,7 @@ public class Pixel extends PApplet
 	int pixNum;
 	int r,g,b;
 
-	float boxSize;
+	public static float boxSize;
 	PVector mouse;
 
 	boolean colourMenu;
