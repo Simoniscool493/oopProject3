@@ -5,11 +5,12 @@ import javax.swing.*;
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.event.*;
+import java.util.ArrayList;
 
 
 public class TopLevelWindow
 {
-	public static void createWindow()
+	public void createWindow()
 	{
 		//System.out.println("memes");
 		Font font = new Font("Serif",Font.BOLD,30);
@@ -31,7 +32,7 @@ public class TopLevelWindow
 		slider_1.setMinorTickSpacing(1);
 		slider_1.setPaintTicks(true);
 		slider_1.setPaintLabels(true);
-		slider_1.addChangeListener(new SliderListener());
+		slider_1.addChangeListener(new SliderListener(0));
 		
 		JSlider slider_2 = new JSlider(JSlider.HORIZONTAL,min,max,init);
 		slider_2.setPreferredSize(new Dimension(1000,120));
@@ -39,12 +40,12 @@ public class TopLevelWindow
 		slider_2.setMinorTickSpacing(1);
 		slider_2.setPaintTicks(true);
 		slider_2.setPaintLabels(true);
-		slider_2.addChangeListener(new SliderListener());
+		slider_2.addChangeListener(new SliderListener(1));
 
 
-		frame.getContentPane().add(textLabel_1,BorderLayout.CENTER);
-		frame.getContentPane().add(slider_1,BorderLayout.SOUTH);
-		//frame.getContentPane().add(slider_2,BorderLayout.SOUTH);
+		frame.getContentPane().add(textLabel_1,BorderLayout.NORTH);
+		frame.getContentPane().add(slider_1,BorderLayout.CENTER);
+		frame.getContentPane().add(slider_2,BorderLayout.SOUTH);
 
 
 
