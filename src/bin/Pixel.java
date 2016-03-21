@@ -8,12 +8,6 @@ import processing.core.PVector;
 public class Pixel extends PApplet
 {
 
-	public static void main(String[] args)
-	{					
-		//TopLevelWindow.createWindow();
-		
-	}
-
 	int userC; //had to be changed because the type color does not exist outside the processing ide. more info at https://forum.processing.org/two/discussion/2753/color-data-type-is-not-recognized-in-eclipse
 
 	float x, y;
