@@ -26,6 +26,8 @@ public class Square
 	{
 		parent.stroke(c);
 		parent.fill(c);
+		
+		//there is a slight overlap 
 		parent.rect(x, y, Pixel.boxSize, Pixel.boxSize);
 	}
 
