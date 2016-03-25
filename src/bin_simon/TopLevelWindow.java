@@ -18,13 +18,22 @@ public class TopLevelWindow
 	public void createWindow()
 	{
 		JFrame frame = new JFrame("Simple GUI");
+		frame = init(frame);
+
+		
+		JMenuBar menuBar = new JMenuBar();
+		JMenu menu = new JMenu();
+		JMenu subMenu = new JMenu();
+		JMenuItem menuItem = new JMenuItem("Save");
+		menuBar.add(menuItem);
+		frame.setJMenuBar(menuBar);
+		
 		ButtonListener b = new ButtonListener();
 		
 		frame.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
 		
-		frame = init(frame);
 				
 		byn = new JCheckBox("background");
 		byn.setSelected(true);
