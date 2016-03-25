@@ -14,26 +14,18 @@ public class TopLevelWindow
 	static Font font = new Font("Serif",Font.BOLD,30);
 	
 	public static JCheckBox byn;
+	
+	ButtonListener b = new ButtonListener();
+	MenuActionListener m = new MenuActionListener();	
 
 	public void createWindow()
 	{
 		JFrame frame = new JFrame("Simple GUI");
 		frame = init(frame);
-
-		
-		JMenuBar menuBar = new JMenuBar();
-		JMenu menu = new JMenu();
-		JMenu subMenu = new JMenu();
-		JMenuItem menuItem = new JMenuItem("Save");
-		menuBar.add(menuItem);
-		frame.setJMenuBar(menuBar);
-		
-		ButtonListener b = new ButtonListener();
 		
 		frame.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
-		
 				
 		byn = new JCheckBox("background");
 		byn.setSelected(true);
@@ -60,8 +52,31 @@ public class TopLevelWindow
 		f.setVisible(true);
 		f.setLocationRelativeTo(null);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f = makeMenu(f);
 
 		return f;
+	}
+	
+	public JFrame makeMenu(JFrame j)
+	{
+		JMenuBar menuBar = new JMenuBar();
+		
+		JMenu menu = new JMenu("File");
+		menu.setMnemonic(KeyEvent.VK_S);
+		menuBar.add(menu);
+		
+		JMenuItem menuItem1 = new JMenuItem("Save as image");
+		menu.setMnemonic(KeyEvent.VK_I);
+		menuItem1.addActionListener(m);
+		menu.add(menuItem1);
+		
+		JMenuItem menuItem2 = new JMenuItem("Save as code");
+		menu.setMnemonic(KeyEvent.VK_C);
+		menuItem2.addActionListener(m);
+		menu.add(menuItem2);
+
+		j.setJMenuBar(menuBar);
+		return j;
 	}
 
 	public JSlider makeSlider(int n)

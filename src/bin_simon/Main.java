@@ -5,6 +5,7 @@ import processing.core.PApplet;
 public class Main extends PApplet
 {
 	public static boolean showBackground = true;
+	public static boolean saveImage = false;
 	
 	public static int[] num = new int[5];
 
@@ -22,15 +23,15 @@ public class Main extends PApplet
 		{
 			background(255);
 		}
+		
 		ellipse(width/2,height/2,(width/100)*num[0],(height/100)*num[1]);
-	}
-	
-	public void keyPressed()
-	{
-		if(key == 's')
+		
+		if(saveImage)
 		{
-			save("art.jpeg");
+			save("art"+(int)random(1000)+".jpeg");
+			saveImage = false;
 		}
+
 	}
 
 	public static void main(String[] args)
