@@ -13,8 +13,11 @@ public class Main extends PApplet
 	{
 		size(1000,1000);
 		background(255);
-		TopLevelWindow t = new TopLevelWindow();
-		t.createWindow();
+		ControlWindow c = new ControlWindow();
+		c.createWindow();
+		DrawWindow d = new DrawWindow();
+		d.createWindow();
+		
 	}
 	
 	public void draw()

@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class TopLevelWindow
+public class ControlWindow
 {
 	static int sliderMin = 0;
 	static int sliderMax = 100;
@@ -40,11 +40,8 @@ public class TopLevelWindow
 		frame.add(makeSlider(1),c);
 		c.gridy = 3;
 		frame.add(byn, c);
-
-
-		frame.setSize(componentWidth,1000);
+ 
 		frame.pack();
-
 	}
 	
 	public JFrame init(JFrame f)

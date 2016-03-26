@@ -12,7 +12,7 @@ class ButtonListener implements ItemListener
 	{
 	    Object source = e.getItemSelectable();
 	
-	    if (source == TopLevelWindow.byn) 
+	    if (source == ControlWindow.byn) 
 	    {
 	    	Main.showBackground = !Main.showBackground;
 	    }
