@@ -14,7 +14,7 @@ class ButtonListener implements ItemListener
 	
 	    if (source == ControlWindow.byn) 
 	    {
-	    	Main.showBackground = !Main.showBackground;
+	    	Sketch.showBackground = !Sketch.showBackground;
 	    }
 	}
 }

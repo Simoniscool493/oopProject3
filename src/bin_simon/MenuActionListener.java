@@ -9,7 +9,7 @@ class MenuActionListener implements ActionListener
 	    System.out.println("Selected: " + e.getActionCommand());
 	    if(e.getActionCommand() == "Save as image")
 	    {
-			Main.saveImage = true;
+			Sketch.saveImage = true;
 	    }
 	  }
 }

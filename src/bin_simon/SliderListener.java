@@ -18,7 +18,7 @@ class SliderListener implements ChangeListener
         JSlider source = (JSlider)e.getSource();
         //if (!source.getValueIsAdjusting()) if commented out, will only change the variable when the mouse button is released
 		{
-            Main.num[index] = (int)source.getValue();
+            Sketch.num[index] = (int)source.getValue();
             System.out.println(index);
         }    
     }

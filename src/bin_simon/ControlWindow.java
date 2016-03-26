@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class ControlWindow
+public class ControlWindow extends JFrame
 {
 	static int sliderMin = 0;
 	static int sliderMax = 100;
@@ -21,9 +21,9 @@ public class ControlWindow
 	public void createWindow()
 	{
 		JFrame frame = new JFrame("Simple GUI");
-		frame = init(frame);
+		init();
 		
-		frame.setLayout(new GridBagLayout());
+		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
 				
@@ -33,28 +33,26 @@ public class ControlWindow
 		byn.addItemListener(b);
 		
 		c.gridy = 0;
-		frame.add(guiText("Graphics Control Menu"),c);
+		this.add(guiText("Graphics Control Menu"),c);
 		c.gridy = 1;
-		frame.add(makeSlider(0),c);
+		this.add(makeSlider(0),c);
 		c.gridy = 2;
-		frame.add(makeSlider(1),c);
+		this.add(makeSlider(1),c);
 		c.gridy = 3;
-		frame.add(byn, c);
+		this.add(byn, c);
  
-		frame.pack();
+		this.pack();
 	}
 	
-	public JFrame init(JFrame f)
+	public void init()
 	{
-		f.setVisible(true);
-		f.setLocationRelativeTo(null);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f = makeMenu(f);
-
-		return f;
+		this.setVisible(true);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		makeMenu();
 	}
 	
-	public JFrame makeMenu(JFrame j)
+	public void makeMenu()
 	{
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -72,8 +70,7 @@ public class ControlWindow
 		menuItem2.addActionListener(m);
 		menu.add(menuItem2);
 
-		j.setJMenuBar(menuBar);
-		return j;
+		this.setJMenuBar(menuBar);
 	}
 
 	public JSlider makeSlider(int n)
