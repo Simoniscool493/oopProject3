@@ -1,13 +1,10 @@
 package bin;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+import java.util.Hashtable;
 import java.awt.event.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
@@ -39,8 +36,8 @@ public class Frame extends JFrame  implements ActionListener, KeyListener, MenuL
 	static int sliderMin = 0;
 	static int sliderMax = 255;
 	static int sliderInit = 0;
-	static int componentWidth = 700;
-	static int componentHeight = 100;
+	static int componentWidth = 400;
+	static int componentHeight = 50;
 
 	
 	public Frame()
@@ -96,9 +93,24 @@ public class Frame extends JFrame  implements ActionListener, KeyListener, MenuL
 			}
 		});
 		
+		//Adding sliders
+		JPanel sliderPanel = new JPanel();
+		JSlider Red = new JSlider();
+		Red = makeSlider(1);
+		JSlider Green = new JSlider();
+		Green = makeSlider(2);
+		JSlider Blue = new JSlider();
+		Blue = makeSlider(3);
+		
+		sliderPanel.add(Red);
+		sliderPanel.add(Green);
+		sliderPanel.add(Blue);
+		
 		//Add things into frames
 		add(sketch, BorderLayout.WEST);
 		add(buttonsPanel);
+		add(sliderPanel);
+		
 		pixel.init();
 
 		menuBar = new JMenuBar();
@@ -139,9 +151,6 @@ public class Frame extends JFrame  implements ActionListener, KeyListener, MenuL
 		
 		this.setJMenuBar(menuBar);
 		add(lblCode);
-
-		//Adding sliders
-		JPanel sliderPanel = new JPanel();
 		
 	}
 	
@@ -153,7 +162,12 @@ public class Frame extends JFrame  implements ActionListener, KeyListener, MenuL
 		slider.setMinorTickSpacing(1);
 		slider.setPaintTicks(true);
 		slider.setPaintLabels(true);
-		//slider.addChangeListener(new SliderListener(n));
+		
+		Hashtable colorLabel = new Hashtable<>();
+		colorLabel.put(new Integer(0), new JLabel("0"));
+		colorLabel.put(new Integer(255), new JLabel("255"));
+		
+		slider.setLabelTable(colorLabel);
 		return slider;
 
 	}
