@@ -20,7 +20,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 
-public class Frame extends JFrame  implements ActionListener, KeyListener, MenuListener {
+public class Frame extends JFrame{ //implements ActionListener, KeyListener, MenuListener {
 	
 	//Some fields
 	//ButtonListener bListen = new ButtonListener();
@@ -113,10 +113,30 @@ public class Frame extends JFrame  implements ActionListener, KeyListener, MenuL
 		
 		pixel.init();
 
+		/*
 		menuBar = new JMenuBar();
 		
 		useIt = new JMenu("Using File explorer");
-		useIt.addMenuListener(new thisMenuListener());
+		useIt.addMenuListener(new MenuListener() {
+			
+			@Override
+			public void menuSelected(MenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void menuDeselected(MenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void menuCanceled(MenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		menuBar.add(useIt);
 		
 		exit= new JMenu("Exit");
@@ -151,6 +171,7 @@ public class Frame extends JFrame  implements ActionListener, KeyListener, MenuL
 		
 		this.setJMenuBar(menuBar);
 		add(lblCode);
+		*/
 		
 	}
 	
@@ -174,11 +195,14 @@ public class Frame extends JFrame  implements ActionListener, KeyListener, MenuL
 	
 	public static void main(String[] args) {
 		Frame f = new Frame();
+		/*
 		MenuBar m = new MenuBar();
 		maximiseFrame(Frame());
 		m.setVisible(true);
+		*/
 	}
 
+	/*
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
@@ -208,5 +232,6 @@ public class Frame extends JFrame  implements ActionListener, KeyListener, MenuL
         //...Get information from the item event...
         //...Display it in the text area...
     }
+    */
 }
 
