@@ -1,46 +1,51 @@
 package bin;
 
-import java.awt.GridLayout;
-
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class Frame extends JFrame{
 	
+	//Some fields
+	ButtonListener bListen = new ButtonListener();
 	
 	public Frame()
 	{
-		this.setSize(600, 600);
-		addSketch();
+		this.setTitle("Pixel Art Tool");
+		this.setSize(1000, 1000);
+		init();
 		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	public void addSketch()
+	public void init()
 	{
 		JPanel sketch = new JPanel();
 		processing.core.PApplet pixel = new Pixel();
-		sketch.setLayout(null);
+		
+		//sketch.setLayout(new BorderLayout());
 		sketch.add(pixel);
-		this.add(sketch);
-		addButtons();
-		pixel.init();
-	}
-	
-	public void addButtons()
-	{
-		JPanel buttons = new JPanel();
-		buttons.setBounds(500, 0 ,150,100);
-		buttons.setLayout(new GridLayout());
+		sketch.setPreferredSize(new Dimension(500, 500));
+		
+		JPanel buttonsPanel = new JPanel();
+		//buttonsPanel.setLayout();
 		
 		/*2 buttons for now... just a test
-		Color palet and sliders should be a color of its own anway*/
-		JButton drawButton = new JButton("Draw");
-		buttons.add(drawButton);
+		Color palet and sliders should be a color of its own anyway*/
 		
-		JButton eraseButton = new JButton("Erase");
-		buttons.add(eraseButton);
+		//Draw
+		JButton Button = new JButton("Draw");
+		setPreferredSize(new Dimension(100,50));
+		buttonsPanel.add(Button);
 		
-		//Add buttons into frame
-		this.add(buttons);
+		//Erase
+		Button = new JButton("Erase");
+		buttonsPanel.add(Button);
+		
+		//Add things into frames
+		add(sketch, BorderLayout.WEST);
+		add(buttonsPanel);
+		pixel.init();
 	}
 	
 	public static void main(String[] args) {
