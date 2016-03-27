@@ -11,6 +11,6 @@ public class Main
 		c = new ControlWindow();
 		d = new DrawWindow();
 		c.createWindow();
-		d.createWindow();
+		//d.createWindow();
 	}
 } 

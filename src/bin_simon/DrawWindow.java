@@ -22,8 +22,10 @@ public class DrawWindow extends JFrame
 		p.init();
 	}
 	
+	/*
 	public void createWindow();
 	{
 	
 	}
+	*/
 }

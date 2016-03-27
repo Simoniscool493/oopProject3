@@ -2,6 +2,8 @@ package bin_simon;
 
 import javax.swing.*;
 
+import bin.Pixel;
+
 public class PFrame extends JFrame
 {
 	public PFrame()

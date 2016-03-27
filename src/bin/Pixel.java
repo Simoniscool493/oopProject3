@@ -3,11 +3,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 
 public class Pixel extends PApplet
 {
-
+	PImage img = loadImage("art.jpeg");
+	boolean load = false;
 	int userC; //had to be changed because the type color does not exist outside the processing ide. more info at https://forum.processing.org/two/discussion/2753/color-data-type-is-not-recognized-in-eclipse
 
 	float x, y;
@@ -93,7 +95,12 @@ public class Pixel extends PApplet
 
 			//println(pixNum);
 			break;
-		} 
+		}
+		
+		if(load==true)
+		{
+			image(img,width/2,height/2);
+		}
 	}
 
 	public void drawGrid()
@@ -220,7 +227,7 @@ public class Pixel extends PApplet
 		}
 	}
 
-	/*
+	
 	 public void load(PImage img)
 	 {
 	     //Load functionality will be changed to be file explorer in future.
@@ -230,11 +237,14 @@ public class Pixel extends PApplet
 	     System.out.println("Enter a word or quit: ");
 	     name = scanIn.nextLine();
 
-	     img = loadImage(name + ".JPEG");
+	     img = loadImage(name + ".jpeg");
 	     imageMode(CENTER);
+	     System.out.println(name);
+	     
+	    
 
 	 }
-	 */
+	 
 
 	public void keyPressed()
 	{
@@ -265,17 +275,23 @@ public class Pixel extends PApplet
 			//Possibly change art.jpeg to other method. Make it so we use scanner to test then later use a file explorer to save the file like in paint. That way we can choose the file type as well :)
 			if(key == 's')
 			{
-				save("art.jpeg");
+				save("data/art.jpeg");
+				/*createGraphics("art.jpeg");https://processing.org/reference/createGraphics_.html
+				 * can be used to create transparent images but also is a drawable surface. Might be able
+				 * to use this to re-edit save images. Or we save it as a dat file and load it like that
+				 * but that is messy and not user friendly
+				*/
+				System.out.println("image saved");
 			}
-			/*
+			
 	     if(key == 'l')
 	     {
-	       PImage img = loadImage("art.jpeg");
+	       load = true;
 	       load(img);
-	       image(img,width/2,height/2);
+	       System.out.println("image loaded");
 
 	     }
-			 */
+			 
 		}
 	}
 }
