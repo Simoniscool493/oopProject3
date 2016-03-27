@@ -15,11 +15,12 @@ public class Pixel extends PApplet
 	float x, y;
 
 	int stages;
-	int mode;
 	int pixNum;
-	int r,g,b;
-
-	public static float boxSize;
+	
+	static int r,g,b;
+	static int mode;
+	static float boxSize;
+	
 	PVector mouse;
 
 	boolean colourMenu;
