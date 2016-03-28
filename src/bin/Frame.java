@@ -58,6 +58,9 @@ public class Frame extends JFrame{ //implements ActionListener, KeyListener, Men
 		sketch.add(pixel);
 		sketch.setPreferredSize(new Dimension(500, 500));
 		
+		JPanel toolBar = new JPanel();
+		toolBar.setLayout(new GridLayout(2,1));
+		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setBackground(Color.WHITE);
 		//buttonsPanel.setLayout();
@@ -95,21 +98,27 @@ public class Frame extends JFrame{ //implements ActionListener, KeyListener, Men
 		
 		//Adding sliders
 		JPanel sliderPanel = new JPanel();
-		JSlider Red = new JSlider();
-		Red = makeSlider(1);
-		JSlider Green = new JSlider();
-		Green = makeSlider(2);
-		JSlider Blue = new JSlider();
-		Blue = makeSlider(3);
 		
-		sliderPanel.add(Red);
-		sliderPanel.add(Green);
-		sliderPanel.add(Blue);
+		sliderPanel.setLayout(new GridLayout(3,1)); 
+		
+		JSlider red = new JSlider();
+		red = makeSlider(1);
+		JSlider green = new JSlider();
+		green = makeSlider(2);
+		JSlider blue = new JSlider();
+		blue = makeSlider(3);
+		
+		sliderPanel.add(red);
+		
+		sliderPanel.add(green);
+
+		sliderPanel.add(blue);
 		
 		//Add things into frames
-		add(sketch, BorderLayout.WEST);
-		add(buttonsPanel);
-		add(sliderPanel);
+		add(sketch, BorderLayout.CENTER);
+		add(toolBar, BorderLayout.EAST);
+		toolBar.add((buttonsPanel));
+		toolBar.add(sliderPanel);
 		
 		pixel.init();
 
