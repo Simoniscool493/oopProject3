@@ -23,8 +23,7 @@ public class Pixel extends PApplet
 	
 	PVector mouse;
 
-	boolean colourMenu;
-	boolean showLines;
+	static boolean showLines;
 
 	ArrayList<Square> squares = new ArrayList<Square>();
 	ArrayList<Sliders> slide = new ArrayList<Sliders>();
@@ -36,14 +35,16 @@ public class Pixel extends PApplet
 		size(500, 500);
 		stages = 0;
 		boxSize = 0;
-		r=g=b=255;
+		
+		//Start color off as black
+		r=g=b=0;
 
 		userC = color(r,g,b);
 		mode = 1;
 
 		showLines = true;
-		colourMenu = false;
 
+		/*
 		//Create 3 sliders
 		Sliders red = new Sliders(150, color(255,0,0),this);
 		slide.add(red);
@@ -53,6 +54,7 @@ public class Pixel extends PApplet
 
 		Sliders blue = new Sliders(350, color(0,0,255),this);
 		slide.add(blue);
+		*/
 
 	}
 
@@ -89,11 +91,6 @@ public class Pixel extends PApplet
 				drawGrid();
 			}
 
-			if(colourMenu == true)
-			{
-				ColourMenu();
-			}
-
 			//println(pixNum);
 			break;
 		}
@@ -119,39 +116,7 @@ public class Pixel extends PApplet
 
 	public void setColour()
 	{
-		Sliders Red = slide.get(0);
-		r = (int)(Red.scale);
-
-		Sliders Green = slide.get(1);
-		g = (int)(Green.scale);
-
-		Sliders Blue = slide.get(2);
-		b = (int)(Blue.scale);
-
 		userC = color(r,g,b);
-	}
-
-	public void ColourMenu()
-	{
-		//Colour menu
-		stroke(0);
-		fill(255);
-		rect(50,50,400,400);
-
-		for(int i = 0; i < slide.size(); i++)
-		{
-			stroke(0);
-			line(150, 150+(i*100), width-150, 150+(i*100));
-
-			Sliders entity = slide.get(i);
-			entity.drawShape();
-		}
-
-		//Colour preview
-		fill(userC);
-		rect(70,70,50,50);
-
-		setColour();
 	}
 
 	public void mousePressed()
@@ -159,7 +124,7 @@ public class Pixel extends PApplet
 		switch (mode)
 		{
 		case 1:
-			if(stages == 1 && colourMenu == false )
+			if(stages == 1)
 			{
 				x = (int)((mouseX/boxSize));
 				y = (int)((mouseY/boxSize));
@@ -173,7 +138,7 @@ public class Pixel extends PApplet
 
 			mouse = new PVector(mouseX,mouseY);
 
-			if(stages == 1 && colourMenu == false)
+			if(stages == 1)
 			{
 				for(int i = 0; i < squares.size(); i++)
 				{
@@ -204,6 +169,7 @@ public class Pixel extends PApplet
 		}
 	}
 
+	/* I dont think I need this anymore but left it in in case I do 
 	public void mouseDragged()
 	{
 		mouse = new PVector(mouseX,mouseY);
@@ -227,6 +193,7 @@ public class Pixel extends PApplet
 			}
 		}
 	}
+	*/
 
 	
 	 public void load(PImage img)
@@ -249,16 +216,12 @@ public class Pixel extends PApplet
 
 	public void keyPressed()
 	{
+		//Processing window must be selected for this to work?
 		if(stages == 1)
 		{
 			if(key == 't')
 			{
 				showLines = !showLines;
-			}
-
-			if(key == 'c')
-			{
-				colourMenu = !colourMenu;
 			}
 
 			//Draw mode
