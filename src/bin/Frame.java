@@ -38,6 +38,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		this.setTitle("Pixel Art Tool");
 		this.setSize(1000, 1000);
 		this.setLayout(new BorderLayout());
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		init();
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,6 +51,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		// sketch.setLayout(new BorderLayout());
 		sketch.add(pixel);
 		sketch.setPreferredSize(new Dimension(500, 500));
+		sketch.setBackground(Color.WHITE);
 
 		JPanel toolBar = new JPanel();
 		toolBar.setLayout(new GridLayout(2, 1));
@@ -58,7 +60,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		buttonsPanel.setBackground(Color.WHITE);
 
 		/*
-		 * 2 buttons for now... just a test Color palet and sliders should be a
+		 * 2 buttons for now... just a test Color pallet and sliders should be a
 		 * color of its own anyway
 		 */
 
@@ -101,13 +103,19 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		// Adding sliders
 		JPanel sliderPanel = new JPanel();
-
-		sliderPanel.setLayout(new GridLayout(3, 1));
-
+		sliderPanel.setBackground(Color.WHITE);
+		
+		sliderPanel.setLayout(new GridLayout(6, 1));
+		
+		JLabel redLabel = new JLabel("Red");
 		JSlider red = new JSlider();
 		red = makeSlider();
+		
+		JLabel greenLabel = new JLabel("Green");
 		JSlider green = new JSlider();
 		green = makeSlider();
+		
+		JLabel blueLabel = new JLabel("Blue");
 		JSlider blue = new JSlider();
 		blue = makeSlider();
 
@@ -144,11 +152,14 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 				pixel.setColour();
 			}
 		});
-
+		
+		sliderPanel.add(redLabel);
 		sliderPanel.add(red);
 
+		sliderPanel.add(greenLabel);
 		sliderPanel.add(green);
 
+		sliderPanel.add(blueLabel);
 		sliderPanel.add(blue);
 
 		// Add things into frames
@@ -219,6 +230,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		slider.setMinorTickSpacing(1);
 		slider.setPaintTicks(true);
 		slider.setPaintLabels(true);
+		slider.setBackground(Color.WHITE);
 
 		Hashtable colorLabel = new Hashtable<>();
 		colorLabel.put(new Integer(0), new JLabel("0"));
@@ -226,7 +238,6 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		slider.setLabelTable(colorLabel);
 		return slider;
-
 	}
 
 	public static void main(String[] args) {
