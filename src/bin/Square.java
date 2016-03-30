@@ -30,5 +30,15 @@ public class Square
 		//there is a slight overlap 
 		parent.rect(x, y, Pixel.boxSize, Pixel.boxSize);
 	}
+	
+	/*Lets you see what the contents of an arralist are normally. in this example it is the field pos
+	*testing so we can save the squares arraylist then reload it 
+	*For whatever reason colour is negative?
+	*check terminal when a square is coloured
+	*/
+    @Override
+    public String toString() {
+        return "pos:"+ pos +"Colour: "+(int)c;
+    }
 
 }

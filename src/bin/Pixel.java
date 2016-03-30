@@ -5,6 +5,8 @@ import java.util.Scanner;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
+import processing.data.Table;
+import processing.data.TableRow;
 
 public class Pixel extends PApplet
 {
@@ -72,8 +74,8 @@ public class Pixel extends PApplet
 			fill(0);
 			stroke(0);
 			text("How many pixels would you like to work with?",width/2, 100);
-			text("16 x 16",width/2, 200);
-			text("32 x 32",width/2, 300);
+			text("16 x 16",width/2, 200);//256
+			text("32 x 32",width/2, 300);//1024
 			break;
 
 		case 1:
@@ -94,11 +96,14 @@ public class Pixel extends PApplet
 			//println(pixNum);
 			break;
 		}
-		
+		/*
 		if(load==true)
 		{
 			image(img,width/2,height/2);
 		}
+		*/
+		
+		println(squares);
 	}
 
 	public void drawGrid()
@@ -131,6 +136,7 @@ public class Pixel extends PApplet
 
 				Square a = new Square(x*boxSize, y*boxSize, userC,this);
 				squares.add(a);
+				//square16.add(x,y);
 			}
 			break;
 
@@ -236,14 +242,15 @@ public class Pixel extends PApplet
 			}
 
 			//Testing the save here, need to change and put into menu
-			//Possibly change art.jpeg to other method. Make it so we use scanner to test then later use a file explorer to save the file like in paint. That way we can choose the file type as well :)
 			if(key == 's')
 			{
 				save("data/art.jpeg");
+				
+				//String [] g = squares.get(0);
+				  
 				/*createGraphics("art.jpeg");https://processing.org/reference/createGraphics_.html
 				 * can be used to create transparent images but also is a drawable surface. Might be able
-				 * to use this to re-edit save images. Or we save it as a dat file and load it like that
-				 * but that is messy and not user friendly
+				 Might have to use savestrings as saving bytes is overcomplicating the code.
 				*/
 				System.out.println("image saved");
 			}
