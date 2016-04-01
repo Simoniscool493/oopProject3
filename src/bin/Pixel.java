@@ -10,7 +10,9 @@ import processing.data.TableRow;
 
 public class Pixel extends PApplet
 {
-	PImage img = loadImage("art.jpeg");
+	//This should be inside a function that is only called if the user wants to load, not the constructor
+	//PImage img = loadImage("art.jpeg");
+	
 	boolean load = false;
 	int userC; //had to be changed because the type color does not exist outside the processing ide. more info at https://forum.processing.org/two/discussion/2753/color-data-type-is-not-recognized-in-eclipse
 
@@ -34,7 +36,7 @@ public class Pixel extends PApplet
 
 	public void setup() 
 	{
-		size(500, 500);
+		size(1000,1000);
 		stages = 0;
 		boxSize = 0;
 		
@@ -213,10 +215,8 @@ public class Pixel extends PApplet
 
 	     img = loadImage(name + ".jpeg");
 	     imageMode(CENTER);
-	     System.out.println(name);
-	     
-	    
-
+	     //This was printing all the time so I stopped it
+	     //System.out.println(name);
 	 }
 	 
 

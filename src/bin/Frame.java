@@ -33,6 +33,8 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 	static int sliderInit = 0;
 	static int componentWidth = 400;
 	static int componentHeight = 50;
+	
+	Color backgroundColor = new Color(204, 255, 255);
 
 	public Frame() {
 		this.setTitle("Pixel Art Tool");
@@ -50,14 +52,15 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		// sketch.setLayout(new BorderLayout());
 		sketch.add(pixel);
-		sketch.setPreferredSize(new Dimension(500, 500));
-		sketch.setBackground(Color.WHITE);
+		sketch.setPreferredSize(new Dimension(1000,1000));
+		sketch.setBackground(Color.BLACK);
 
 		JPanel toolBar = new JPanel();
 		toolBar.setLayout(new GridLayout(2, 1));
+		toolBar.setBackground(backgroundColor);
 
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBackground(Color.WHITE);
+		buttonsPanel.setBackground(backgroundColor);
 
 		/*
 		 * 2 buttons for now... just a test Color pallet and sliders should be a
@@ -153,20 +156,56 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 			}
 		});
 		
-		sliderPanel.add(redLabel);
+		JPanel leftTool = new JPanel();
+		leftTool.setBackground(backgroundColor);
+		
+		//To control background Colour, Found out you can't reuse the same labels
+		JPanel sliderBackPanel = new JPanel();
+		sliderBackPanel.setBackground(Color.WHITE);
+				
+		sliderBackPanel.setLayout(new GridLayout(6, 1));
+
+		JLabel redBackLabel = new JLabel("Red");
+		JSlider redBack = new JSlider();
+		redBack = makeSlider();
+		
+		JLabel greenBackLabel = new JLabel("Green");
+		JSlider greenBack = new JSlider();
+		greenBack = makeSlider();
+		
+		JLabel blueBackLabel = new JLabel("Blue");
+		JSlider blueBack = new JSlider();
+		blueBack = makeSlider();
+		
+		
+		//Adding Sliders into Toolbar
+		sliderPanel.add(redBackLabel);
 		sliderPanel.add(red);
 
-		sliderPanel.add(greenLabel);
+		sliderPanel.add(greenBackLabel);
 		sliderPanel.add(green);
 
-		sliderPanel.add(blueLabel);
+		sliderPanel.add(blueBackLabel);
 		sliderPanel.add(blue);
+		
+		//Adding sliders into leftToolbar
+		sliderBackPanel.add(redLabel);
+		sliderBackPanel.add(redBack);
+		
+		sliderBackPanel.add(greenLabel);
+		sliderBackPanel.add(greenBack);
+		
+		sliderBackPanel.add(blueLabel);
+		sliderBackPanel.add(blueBack);
 
 		// Add things into frames
 		add(sketch, BorderLayout.CENTER);
 		add(toolBar, BorderLayout.EAST);
+		add(leftTool, BorderLayout.WEST);
+		leftTool.add(sliderBackPanel);
 		toolBar.add((buttonsPanel));
 		toolBar.add(sliderPanel);
+		
 
 		pixel.init();
 
