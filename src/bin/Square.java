@@ -28,7 +28,7 @@ public class Square implements java.io.Serializable
 		parent.fill(c);
 		
 		//there is a slight overlap 
-		parent.rect(x, y, Pixel.boxSize, Pixel.boxSize);
+		parent.rect(x, y, Pixel.boxSize-1, Pixel.boxSize-1);
 	}
 	
 	/*Lets you see what the contents of an arralist are normally. in this example it is the field pos

@@ -19,6 +19,11 @@ import java.awt.*;
 public class Frame extends JFrame { // implements ActionListener, KeyListener,
 									// MenuListener {
 
+	//Getting screen size to make layout
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	double screenWidth = screenSize.getWidth();
+	double screenHeight = screenSize.getHeight();
+	
 	// Some fields
 	// ButtonListener bListen = new ButtonListener();
 	JMenuBar menuBar;
@@ -29,15 +34,18 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 	// Some fields
 	// ButtonListener bListen = new ButtonListener();
 	// For sliders
-	static int sliderMin = 0;
-	static int sliderMax = 255;
-	static int sliderInit = 0;
-	static int componentWidth = 400;
-	static int componentHeight = 50;
+	int sliderMin = 0;
+	int sliderMax = 255;
+	int sliderInit = 0;
+	int componentWidth = (int)screenSize.getWidth()/4;
+	int componentHeight = 50;
 	
 	Color backgroundColor = new Color(204, 255, 255);
 
 	public Frame() {
+		
+		Pixel.screenSize = (int)screenHeight-100;
+		
 		this.setTitle("Pixel Art Tool");
 		this.setSize(1000, 1000);
 		this.setLayout(new BorderLayout());
@@ -51,16 +59,17 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JPanel sketch = new JPanel();
 		Pixel pixel = new Pixel();
 
-		// sketch.setLayout(new BorderLayout());
+		//sketch.setLayout(new BorderLayout());
 		sketch.add(pixel);
-		sketch.setPreferredSize(new Dimension(1000,1000));
-		sketch.setBackground(Color.BLACK);
+		sketch.setPreferredSize(new Dimension(Pixel.screenSize,Pixel.screenSize));
+		sketch.setBackground(backgroundColor);
 
 		JPanel toolBar = new JPanel();
 		toolBar.setLayout(new GridLayout(2, 1));
 		toolBar.setBackground(backgroundColor);
 
 		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new GridLayout(2,2));
 		buttonsPanel.setBackground(backgroundColor);
 
 		/*
@@ -70,7 +79,6 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		// Draw
 		JButton drawButton = new JButton("Draw (D)");
-		setPreferredSize(new Dimension(100, 50));
 		buttonsPanel.add(drawButton);
 
 		// Erase
