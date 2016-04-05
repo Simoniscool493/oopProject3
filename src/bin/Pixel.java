@@ -1,12 +1,20 @@
 package bin;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
-import processing.data.Table;
-import processing.data.TableRow;
 
 public class Pixel extends PApplet
 {
@@ -105,7 +113,7 @@ public class Pixel extends PApplet
 		}
 		*/
 		
-		println(squares);
+		//println(squares);
 	}
 
 	public void drawGrid()
@@ -138,7 +146,7 @@ public class Pixel extends PApplet
 
 				Square a = new Square(x*boxSize, y*boxSize, userC,this);
 				squares.add(a);
-				//square16.add(x,y);
+				
 			}
 			break;
 
@@ -245,25 +253,70 @@ public class Pixel extends PApplet
 			//Testing the save here, need to change and put into menu
 			if(key == 's')
 			{
-				save("data/art.jpeg");
+
 				
-				//String [] g = squares.get(0);
-				  
-				/*createGraphics("art.jpeg");https://processing.org/reference/createGraphics_.html
-				 * can be used to create transparent images but also is a drawable surface. Might be able
-				 Might have to use savestrings as saving bytes is overcomplicating the code.
-				*/
+				File file = new File("C:/Data/" + "art.bin");
+				
+				//save("data/art.jpeg");
+					
+				save(file, squares);
+
 				System.out.println("image saved");
 			}
 			
 	     if(key == 'l')
-	     {
+	     {	
+	    	 File file = new File("C:/Data/art.bin" );
+	    	 
 	       load = true;
 	       System.out.println("image loaded");
-
+	       
+	       squares=(ArrayList<Square>) loaded(file);
 	     }
 			 
 		}
+		
 	}
+	
+	public static void save(File path, ArrayList<Square> squares2)
+	{
+	    try(ObjectOutputStream write= new ObjectOutputStream (new FileOutputStream(path)))
+	    {
+	        write.writeObject(squares2);
+	    }
+	    catch(NotSerializableException nse)
+	    {
+	    	println("Exception not seriliazble");
+	    }
+	    catch(IOException eio)
+	    {
+	        
+	    	println("IO Exception");
+	    }
+	}
+	
+	public static Object loaded(File path)
+	{
+	    Object square = null;
+
+	    try(ObjectInputStream inFile = new ObjectInputStream(new FileInputStream(path)))
+	    {
+	        square = inFile.readObject();
+	        return square;
+	    }
+	    catch(ClassNotFoundException cnfe)
+	    {
+	        //do something
+	    }
+	    catch(FileNotFoundException fnfe)
+	    {
+	        //do something
+	    }
+	    catch(IOException e)
+	    {
+	        //do something
+	    }
+	    return square;
+	}   
 }
 
