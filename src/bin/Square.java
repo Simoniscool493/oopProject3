@@ -4,9 +4,9 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
 
-public class Square 
+public class Square implements java.io.Serializable
 {
-	PApplet parent;
+	transient PApplet parent;
 
 	PVector pos;
 	float x;

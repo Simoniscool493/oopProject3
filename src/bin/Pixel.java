@@ -16,7 +16,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
-public class Pixel extends PApplet
+public class Pixel extends PApplet 
 {
 	//This should be inside a function that is only called if the user wants to load, not the constructor
 	//PImage img = loadImage("art.jpeg");
@@ -254,8 +254,7 @@ public class Pixel extends PApplet
 			if(key == 's')
 			{
 
-				
-				File file = new File("C:/Data/" + "art.bin");
+				File file = new File("C:/Data/" + "art.ser");
 				
 				//save("data/art.jpeg");
 					
@@ -266,12 +265,13 @@ public class Pixel extends PApplet
 			
 	     if(key == 'l')
 	     {	
-	    	 File file = new File("C:/Data/art.bin" );
-	    	 
+	    	
+
+		File file = new File("C:/Data/" + "art.ser");
 	       load = true;
 	       System.out.println("image loaded");
 	       
-	       squares=(ArrayList<Square>) loaded(file);
+	       squares= loaded(file);
 	     }
 			 
 		}
@@ -283,6 +283,8 @@ public class Pixel extends PApplet
 	    try(ObjectOutputStream write= new ObjectOutputStream (new FileOutputStream(path)))
 	    {
 	        write.writeObject(squares2);
+	        write.close();
+	         
 	    }
 	    catch(NotSerializableException nse)
 	    {
@@ -295,28 +297,32 @@ public class Pixel extends PApplet
 	    }
 	}
 	
-	public static Object loaded(File path)
+	public static ArrayList<Square> loaded(File path)
 	{
-	    Object square = null;
+	    Object square2 = null;
+	    ArrayList<Square> sq = new ArrayList<Square>();
 
 	    try(ObjectInputStream inFile = new ObjectInputStream(new FileInputStream(path)))
 	    {
-	        square = inFile.readObject();
-	        return square;
+	        square2 = inFile.readObject();
+	        
+	        sq=(ArrayList<Square>) square2;
+	        
+	        return sq;
 	    }
 	    catch(ClassNotFoundException cnfe)
 	    {
-	        //do something
+	        println("Class not found");
 	    }
 	    catch(FileNotFoundException fnfe)
 	    {
-	        //do something
+	    	println("File not found");
 	    }
 	    catch(IOException e)
 	    {
-	        //do something
+	    	println("IO Exception ");
 	    }
-	    return square;
+	    return sq;
 	}   
 }
 
