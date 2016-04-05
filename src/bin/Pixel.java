@@ -29,7 +29,7 @@ public class Pixel extends PApplet
 
 	static boolean showLines;
 
-	ArrayList<Square> squares = new ArrayList<Square>();
+	public static ArrayList<Square> squares = new ArrayList<Square>();
 	ArrayList<Sliders> slide = new ArrayList<Sliders>();
 	
 	Scanner scanIn = new Scanner(System.in);
@@ -208,6 +208,7 @@ public class Pixel extends PApplet
 	 {
 	     //Load functionality will be changed to be file explorer in future.
 
+		 /*
 	     String name;
 
 	     System.out.println("Enter a word or quit: ");
@@ -215,8 +216,8 @@ public class Pixel extends PApplet
 
 	     img = loadImage(name + ".jpeg");
 	     imageMode(CENTER);
-	     //This was printing all the time so I stopped it
-	     //System.out.println(name);
+	
+		*/
 	 }
 	 
 
@@ -258,7 +259,6 @@ public class Pixel extends PApplet
 	     if(key == 'l')
 	     {
 	       load = true;
-	       load(img);
 	       System.out.println("image loaded");
 
 	     }

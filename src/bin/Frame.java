@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.awt.event.*;
 
@@ -78,6 +79,9 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		JButton gridButton = new JButton("Show Grid (T)");
 		buttonsPanel.add(gridButton);
+		
+		JButton EraseallButton = new JButton("Erase all");
+		buttonsPanel.add(EraseallButton);
 
 		// Button action listeners
 		drawButton.addActionListener(new ActionListener() {
@@ -102,6 +106,17 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 			public void actionPerformed(ActionEvent e) {
 				Pixel.showLines = !Pixel.showLines;
 			}
+			
+		});
+		
+		EraseallButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Pixel.squares.clear();
+			}
+			
+			
 		});
 
 		// Adding sliders
