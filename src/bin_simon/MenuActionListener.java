@@ -1,6 +1,7 @@
 package bin_simon;
 
 import java.awt.event.*;
+import javax.swing.*;
 
 class MenuActionListener implements ActionListener 
 {
@@ -11,5 +12,14 @@ class MenuActionListener implements ActionListener
 	    {
 			Sketch.saveImage = true;
 	    }
+	    else if(e.getActionCommand() == "comboBoxChanged")
+	    {
+	    	JComboBox cb = (JComboBox)e.getSource();
+	    	String chosen = (String)cb.getSelectedItem();
+	    	System.out.println(chosen);
+	    	
+	    	Sketch.currentAnimation = chosen;
+	    }
+
 	  }
 }

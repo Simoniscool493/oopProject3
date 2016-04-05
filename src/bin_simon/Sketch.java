@@ -6,8 +6,11 @@ public class Sketch extends PApplet
 {
 	public static boolean showBackground = true;
 	public static boolean saveImage = false;
+	public static boolean enableDraw = true;
 	
 	public static int[] num = new int[5];
+	
+	public static String currentAnimation = "Circle";
 
 	public void setup()
 	{
@@ -17,12 +20,15 @@ public class Sketch extends PApplet
 	
 	public void draw()
 	{
-		if(showBackground)
+		if(enableDraw)
 		{
-			background(255);
+			if(showBackground)
+			{
+				background(255);
+			}
+			
+			drawAnimation();
 		}
-		
-		ellipse(width/2,height/2,(width/100)*num[0],(height/100)*num[1]);
 		
 		if(saveImage)
 		{
@@ -30,4 +36,13 @@ public class Sketch extends PApplet
 			saveImage = false;
 		}
 	}
+	
+	public void drawAnimation()
+	{
+		if(currentAnimation == "Circle")
+		{
+			ellipse(width/2,height/2,(width/100)*num[0],(height/100)*num[1]);
+		}
+	}
+
 }

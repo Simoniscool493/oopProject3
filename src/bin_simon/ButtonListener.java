@@ -20,6 +20,11 @@ class ButtonListener implements ItemListener
 	    {
 	    	SliderListener.slidingSliders = !SliderListener.slidingSliders;
 	    }
+	    if (source == ControlWindow.drawCheckbox) 
+	    {
+	    	Sketch.enableDraw = !Sketch.enableDraw;
+	    }
+
 	}
 }
 
