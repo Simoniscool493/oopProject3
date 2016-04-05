@@ -13,7 +13,9 @@ public class ControlWindow extends JFrame
 	static int componentHeight = 100;
 	static Font font = new Font("Serif",Font.BOLD,30);
 	
-	public static JCheckBox byn;
+	public static JCheckBox backgroundCheckbox;
+	public static JCheckBox sliderCheckbox;
+
 	
 	ButtonListener b = new ButtonListener();
 	MenuActionListener m = new MenuActionListener();	
@@ -26,11 +28,14 @@ public class ControlWindow extends JFrame
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
-				
-		byn = new JCheckBox("background");
-		byn.setSelected(true);
-		byn.setMnemonic(KeyEvent.VK_B);
-		byn.addItemListener(b);
+		
+		JPanel panel1 = new JPanel();
+		
+		backgroundCheckbox = makeCheckBox("Background",true,KeyEvent.VK_B);
+		panel1.add(backgroundCheckbox);
+		
+		sliderCheckbox = makeCheckBox("Holding Sliders",true,KeyEvent.VK_S);
+		panel1.add(sliderCheckbox);
 		
 		c.gridy = 0;
 		this.add(guiText("Graphics Control Menu"),c);
@@ -39,7 +44,7 @@ public class ControlWindow extends JFrame
 		c.gridy = 2;
 		this.add(makeSlider(1),c);
 		c.gridy = 3;
-		this.add(byn, c);
+		this.add(panel1, c);
  
 		this.pack();
 	}
@@ -83,6 +88,15 @@ public class ControlWindow extends JFrame
 		slider.setPaintLabels(true);
 		slider.addChangeListener(new SliderListener(n));
 		return slider;
+	}
+	
+	public JCheckBox makeCheckBox(String name,boolean selected,int k)
+	{
+		JCheckBox c = new JCheckBox(name);
+		c.setSelected(selected);
+		c.setMnemonic(KeyEvent.VK_B);
+		c.addItemListener(b);
+		return c;
 	}
 	
 	public JLabel guiText(String s)

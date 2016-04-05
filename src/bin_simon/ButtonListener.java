@@ -12,9 +12,13 @@ class ButtonListener implements ItemListener
 	{
 	    Object source = e.getItemSelectable();
 	
-	    if (source == ControlWindow.byn) 
+	    if (source == ControlWindow.backgroundCheckbox) 
 	    {
 	    	Sketch.showBackground = !Sketch.showBackground;
+	    }
+	    if (source == ControlWindow.sliderCheckbox) 
+	    {
+	    	SliderListener.slidingSliders = !SliderListener.slidingSliders;
 	    }
 	}
 }

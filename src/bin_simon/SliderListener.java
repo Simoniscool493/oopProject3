@@ -6,6 +6,7 @@ import javax.swing.event.ChangeListener;
 class SliderListener implements ChangeListener 
 {
 	int index;
+	public static boolean slidingSliders = true;
 	
 	public SliderListener(int n)
 	{
@@ -16,10 +17,11 @@ class SliderListener implements ChangeListener
     public void stateChanged(ChangeEvent e)
 	{
         JSlider source = (JSlider)e.getSource();
-        //if (!source.getValueIsAdjusting()) if commented out, will only change the variable when the mouse button is released
+        if (!source.getValueIsAdjusting() || slidingSliders)
 		{
             Sketch.num[index] = (int)source.getValue();
             System.out.println(index);
-        }    
+        }
+        
     }
 }
