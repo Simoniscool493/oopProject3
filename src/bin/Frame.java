@@ -19,11 +19,11 @@ import java.awt.*;
 public class Frame extends JFrame { // implements ActionListener, KeyListener,
 									// MenuListener {
 
-	//Getting screen size to make layout
+	// Getting screen size to make layout
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double screenWidth = screenSize.getWidth();
 	double screenHeight = screenSize.getHeight();
-	
+
 	// Some fields
 	// ButtonListener bListen = new ButtonListener();
 	JMenuBar menuBar;
@@ -37,19 +37,19 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 	int sliderMin = 0;
 	int sliderMax = 255;
 	int sliderInit = 0;
-	int componentWidth = (int)screenSize.getWidth()/4;
+	int componentWidth = (int) screenSize.getWidth() / 4;
 	int componentHeight = 50;
-	
+
 	Color backgroundColor = new Color(204, 255, 255);
 
 	public Frame() {
-		
-		Pixel.screenSize = (int)screenHeight-100;
-		
+
+		Pixel.screenSize = (int) screenHeight - 100;
+
 		this.setTitle("Pixel Art Tool");
 		this.setSize(1000, 1000);
 		this.setLayout(new BorderLayout());
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		init();
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,9 +59,9 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JPanel sketch = new JPanel();
 		Pixel pixel = new Pixel();
 
-		//sketch.setLayout(new BorderLayout());
+		// sketch.setLayout(new BorderLayout());
 		sketch.add(pixel);
-		sketch.setPreferredSize(new Dimension(Pixel.screenSize,Pixel.screenSize));
+		sketch.setPreferredSize(new Dimension(Pixel.screenSize, Pixel.screenSize));
 		sketch.setBackground(backgroundColor);
 
 		JPanel toolBar = new JPanel();
@@ -69,14 +69,10 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		toolBar.setBackground(backgroundColor);
 
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(new GridLayout(2,2));
-		buttonsPanel.setBackground(backgroundColor);
+		buttonsPanel.setLayout(new GridLayout(4, 2, 10, 5));
+		buttonsPanel.setBackground(Color.WHITE);
 
-		/*
-		 * 2 buttons for now... just a test Color pallet and sliders should be a
-		 * color of its own anyway
-		 */
-
+		// BUTTONS
 		// Draw
 		JButton drawButton = new JButton("Draw (D)");
 		buttonsPanel.add(drawButton);
@@ -87,7 +83,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		JButton gridButton = new JButton("Show Grid (T)");
 		buttonsPanel.add(gridButton);
-		
+
 		JButton EraseallButton = new JButton("Erase all");
 		buttonsPanel.add(EraseallButton);
 
@@ -114,33 +110,41 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 			public void actionPerformed(ActionEvent e) {
 				Pixel.showLines = !Pixel.showLines;
 			}
-			
+
 		});
-		
+
 		EraseallButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Pixel.squares.clear();
 			}
-			
-			
+
 		});
+
+		// Blank JLabels
+		JLabel blank = new JLabel();
+		buttonsPanel.add(blank);
+		
+		//Initial color set
+		JPanel colourPre = new JPanel();
+		colourPre.setBackground(new Color(Pixel.r, Pixel.g, Pixel.b));
+		buttonsPanel.add(colourPre);
 
 		// Adding sliders
 		JPanel sliderPanel = new JPanel();
 		sliderPanel.setBackground(Color.WHITE);
-		
+
 		sliderPanel.setLayout(new GridLayout(6, 1));
-		
+
 		JLabel redLabel = new JLabel("Red");
 		JSlider red = new JSlider();
 		red = makeSlider();
-		
+
 		JLabel greenLabel = new JLabel("Green");
 		JSlider green = new JSlider();
 		green = makeSlider();
-		
+
 		JLabel blueLabel = new JLabel("Blue");
 		JSlider blue = new JSlider();
 		blue = makeSlider();
@@ -154,6 +158,8 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 				Pixel.r = (int) source.getValue();
 				pixel.setColour();
+				colourPre.setBackground(new Color(Pixel.r, Pixel.g, Pixel.b));
+				colourPre.repaint();
 			}
 		});
 
@@ -165,6 +171,8 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 				Pixel.g = (int) source.getValue();
 				pixel.setColour();
+				colourPre.setBackground(new Color(Pixel.r, Pixel.g, Pixel.b));
+				colourPre.repaint();
 			}
 		});
 
@@ -176,32 +184,34 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 				Pixel.b = (int) source.getValue();
 				pixel.setColour();
+				colourPre.setBackground(new Color(Pixel.r, Pixel.g, Pixel.b));
+				colourPre.repaint();
 			}
 		});
-		
+
 		JPanel leftTool = new JPanel();
 		leftTool.setBackground(backgroundColor);
-		
-		//To control background Colour, Found out you can't reuse the same labels
+
+		// To control background Colour, Found out you can't reuse the same
+		// labels
 		JPanel sliderBackPanel = new JPanel();
 		sliderBackPanel.setBackground(Color.WHITE);
-				
+
 		sliderBackPanel.setLayout(new GridLayout(6, 1));
 
 		JLabel redBackLabel = new JLabel("Red");
 		JSlider redBack = new JSlider();
 		redBack = makeSlider();
-		
+
 		JLabel greenBackLabel = new JLabel("Green");
 		JSlider greenBack = new JSlider();
 		greenBack = makeSlider();
-		
+
 		JLabel blueBackLabel = new JLabel("Blue");
 		JSlider blueBack = new JSlider();
 		blueBack = makeSlider();
-		
-		
-		//Adding Sliders into Toolbar
+
+		// Adding Sliders into Toolbar
 		sliderPanel.add(redBackLabel);
 		sliderPanel.add(red);
 
@@ -210,14 +220,14 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		sliderPanel.add(blueBackLabel);
 		sliderPanel.add(blue);
-		
-		//Adding sliders into leftToolbar
+
+		// Adding sliders into leftToolbar
 		sliderBackPanel.add(redLabel);
 		sliderBackPanel.add(redBack);
-		
+
 		sliderBackPanel.add(greenLabel);
 		sliderBackPanel.add(greenBack);
-		
+
 		sliderBackPanel.add(blueLabel);
 		sliderBackPanel.add(blueBack);
 
@@ -228,7 +238,6 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		leftTool.add(sliderBackPanel);
 		toolBar.add((buttonsPanel));
 		toolBar.add(sliderPanel);
-		
 
 		pixel.init();
 
