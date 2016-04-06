@@ -34,7 +34,7 @@ public class ControlWindow extends JFrame
 
 		JPanel controlPanel = new JPanel();
 		
-		String[] animationTypes = { "Circle", "Star", "Square", "Bouncing", "Spinning", "Orbit" };
+		String[] animationTypes = { "Circle", "Star", "Square", "Bouncing", "Pendulum", "Orbit" };
 		JComboBox animationList = new JComboBox(animationTypes);
 		animationList.setSelectedIndex(0);
 		animationList.addActionListener(m);

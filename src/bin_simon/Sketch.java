@@ -8,6 +8,14 @@ public class Sketch extends PApplet
 	public static boolean saveImage = false;
 	public static boolean enableDraw = true;
 	
+	float range = 40.0f;
+	float theta = 0;
+	float thetaInc;
+	float fps = 60.0f;
+	float rad1 = 100;
+	float rad2 = 200;
+	float numPoints = 5;
+	
 	public static int[] num = new int[5];
 	
 	public static String currentAnimation = "Circle";
@@ -43,6 +51,44 @@ public class Sketch extends PApplet
 		{
 			ellipse(width/2,height/2,(width/100)*num[0],(height/100)*num[1]);
 		}
+		if(currentAnimation == "Star")
+		{
+			float angle = TWO_PI / numPoints;
+			float halfAngle = angle/(float)2.0;
+			beginShape();
+			for (float a = 0; a < TWO_PI; a += angle) 
+			{
+				float sx = width/2 + cos(a) * num[0]*5;
+				float sy = height/2 + sin(a) * num[0]*5;
+				vertex(sx, sy);
+				sx = width/2 + cos(a+halfAngle) * num[1]*5;
+				sy = height/2 + sin(a+halfAngle) * num[1]*5;
+				vertex(sx, sy);
+			}
+			endShape(CLOSE);
+
+		}
+		if(currentAnimation == "Square")
+		{
+	
+		}
+		if(currentAnimation == "Bouncing")
+		{
+			
+		}
+		if(currentAnimation == "Pendulum")
+		{
+		    translate(width / 2, height / 2);
+		    rotate(sin(theta) * radians(range));
+		    line(0, 0, 0, 200);
+		    ellipse(0, 200, 20, 20);    
+		    theta += (PI / fps);
+		}
+		if(currentAnimation == "Orbit")
+		{
+			
+		}
+				
 	}
 
 }
