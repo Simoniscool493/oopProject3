@@ -21,12 +21,17 @@ public class ControlWindow extends JFrame
 	
 	public static ArrayList<JCheckBox> boxes = new ArrayList<JCheckBox>();
 	public static ArrayList<CycleBox> cycles = new ArrayList<CycleBox>();
+	public static ArrayList<CycleBox> reversers = new ArrayList<CycleBox>();
 		
 	ButtonListener b = new ButtonListener();
 	MenuActionListener m = new MenuActionListener();	
 	
 	GridBagConstraints c = new GridBagConstraints();
+	
+	JPanel titlePanel = new JPanel();
+	JPanel controlPanel = new JPanel();
 
+	int numControlBoxes = 0;
 
 	public void createWindow()
 	{
@@ -35,24 +40,21 @@ public class ControlWindow extends JFrame
 		this.setLayout(new GridBagLayout());
 		c.fill = GridBagConstraints.BOTH;
 		
-		JPanel titlePanel = new JPanel();
 		titlePanel.add(guiText("Graphics Control Menu"));
-
-		JPanel controlPanel = new JPanel();
 		
 		String[] animationTypes = { "Circle", "Star", "Square", "Bouncing", "Pendulum", "Orbit"};
 		JComboBox animationList = new JComboBox(animationTypes);
 		animationList.setSelectedIndex(0);
 		animationList.addActionListener(m);
 		
-		makeCheckBox("Background",true,KeyEvent.VK_B);
+		makeCheckBox("Background",false,KeyEvent.VK_B);
 		makeCheckBox("Pause Animation",false,KeyEvent.VK_P);
 		makeCheckBox("Holding Sliders",true,KeyEvent.VK_S);
-		
+		makeCheckBox("Random Stroke",false,KeyEvent.VK_R);
+		makeCheckBox("Random Fill",false,KeyEvent.VK_F);
+
 		controlPanel.add(animationList);
-		controlPanel.add(boxes.get(0));
-		controlPanel.add(boxes.get(1));
-		controlPanel.add(boxes.get(2));
+		addControlBoxes();
 		
 		controlPanel.setPreferredSize(new Dimension(componentWidth,componentHeight/2));
 
@@ -67,16 +69,45 @@ public class ControlWindow extends JFrame
 		this.pack();
 	}
 	
+	public void addControlBoxes()
+	{
+		for(int i=0;i<numControlBoxes;i++)
+		{
+			controlPanel.add(boxes.get(i));
+		}
+	}
+	
 	public void addSliders()
 	{
 		for(int i=0;i<Main.numSliders;i++)
 		{
 			c.gridy++;
-			makeCycleBox(i);
+			makeCycleBox(i,"Repeat");
+			makeCycleBox(i,"Reverse");
 			this.add(makeSlider(i),c);
 			this.add(cycles.get(i),c);
+			this.add(reversers.get(i),c);
+
 		}
 	}
+	
+	public void makeCycleBox(int i,String s)
+	{
+		CycleBox c = new CycleBox(s,i);
+		c.setSelected(false);
+		c.setMnemonic(i+48);
+		c.addItemListener(b);
+		if(s == "Repeat")
+		{
+			cycles.add(c);
+		}
+		else if(s == "Reverse")
+		{
+			reversers.add(c);
+		}
+		//return c;
+	}
+
 	
 	public void init()
 	{
@@ -126,18 +157,10 @@ public class ControlWindow extends JFrame
 		c.setMnemonic(KeyEvent.VK_B);
 		c.addItemListener(b);
 		boxes.add(c);
+		numControlBoxes++;
 		//return c;
 	}
 	
-	public void makeCycleBox(int i)
-	{
-		CycleBox c = new CycleBox("Repeat",i);
-		c.setSelected(false);
-		c.setMnemonic(i+48);
-		c.addItemListener(b);
-		cycles.add(c);
-		//return c;
-	}
 	
 	public JLabel guiText(String s)
 	{

@@ -5,7 +5,7 @@ public class Main
 	static ControlWindow c;
 	static DrawWindow d;
 	
-	public static int numSliders = 3;
+	public static int numSliders = 7;
 	
 	public static void main(String[] args)
 	{		

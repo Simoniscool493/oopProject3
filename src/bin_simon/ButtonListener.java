@@ -27,11 +27,25 @@ class ButtonListener implements ItemListener
 	    {
 	    	Sketch.enableDraw = !Sketch.enableDraw;
 	    }
+	    else if (s == "Random Stroke") 
+	    {
+	    	Sketch.randomStroke = !Sketch.randomStroke;
+	    }
+	    else if (s == "Random Fill") 
+	    {
+	    	Sketch.randomFill = !Sketch.randomFill;
+	    }
 	    else if(s == "Repeat")
 	    {
 	    	int num = ((CycleBox)source).id;
 	    	Sketch.repeating[num] = !(Sketch.repeating[num]);
 	    }
+	    else if(s == "Reverse")
+	    {
+	    	int num = ((CycleBox)source).id;
+	    	Sketch.reversed[num] = !(Sketch.reversed[num]);
+	    }
+
 	}
 }
 

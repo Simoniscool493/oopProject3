@@ -21,6 +21,11 @@ class SliderListener implements ChangeListener
 		{
             Sketch.num[index] = (int)source.getValue();
             System.out.println(index);
+            
+            if(index == 0)
+            {
+            	Sketch.frameRateChanged = true;
+            }
         }
         
     }
