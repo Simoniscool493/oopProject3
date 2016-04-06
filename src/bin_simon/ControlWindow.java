@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.border.*;
+import java.util.ArrayList;
 
 public class ControlWindow extends JFrame
 {
@@ -18,15 +19,20 @@ public class ControlWindow extends JFrame
 	public static JCheckBox sliderCheckbox;
 	public static JCheckBox drawCheckbox;
 	
+	public static ArrayList<JCheckBox> boxes = new ArrayList<JCheckBox>();
+	public static ArrayList<CycleBox> cycles = new ArrayList<CycleBox>();
+		
 	ButtonListener b = new ButtonListener();
 	MenuActionListener m = new MenuActionListener();	
+	
+	GridBagConstraints c = new GridBagConstraints();
+
 
 	public void createWindow()
 	{
 		init();
 		
 		this.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
 		
 		JPanel titlePanel = new JPanel();
@@ -34,32 +40,42 @@ public class ControlWindow extends JFrame
 
 		JPanel controlPanel = new JPanel();
 		
-		String[] animationTypes = { "Circle", "Star", "Square", "Bouncing", "Pendulum", "Orbit" };
+		String[] animationTypes = { "Circle", "Star", "Square", "Bouncing", "Pendulum", "Orbit"};
 		JComboBox animationList = new JComboBox(animationTypes);
 		animationList.setSelectedIndex(0);
 		animationList.addActionListener(m);
 		
-		backgroundCheckbox = makeCheckBox("Background",true,KeyEvent.VK_B);
-		drawCheckbox = makeCheckBox("Pause Animation",false,KeyEvent.VK_P);
-		sliderCheckbox = makeCheckBox("Holding Sliders",true,KeyEvent.VK_S);
+		makeCheckBox("Background",true,KeyEvent.VK_B);
+		makeCheckBox("Pause Animation",false,KeyEvent.VK_P);
+		makeCheckBox("Holding Sliders",true,KeyEvent.VK_S);
 		
 		controlPanel.add(animationList);
-		controlPanel.add(sliderCheckbox);
-		controlPanel.add(backgroundCheckbox);
-		controlPanel.add(drawCheckbox);
+		controlPanel.add(boxes.get(0));
+		controlPanel.add(boxes.get(1));
+		controlPanel.add(boxes.get(2));
 		
 		controlPanel.setPreferredSize(new Dimension(componentWidth,componentHeight/2));
 
 		c.gridy = 0;
 		this.add(titlePanel,c);
+		
 		c.gridy = 1;
 		this.add(controlPanel,c);
-		c.gridy = 2;
-		this.add(makeSlider(0),c);
-		c.gridy = 3;
-		this.add(makeSlider(1),c);
- 
+		
+		addSliders();
+		
 		this.pack();
+	}
+	
+	public void addSliders()
+	{
+		for(int i=0;i<Main.numSliders;i++)
+		{
+			c.gridy++;
+			makeCycleBox(i);
+			this.add(makeSlider(i),c);
+			this.add(cycles.get(i),c);
+		}
 	}
 	
 	public void init()
@@ -103,13 +119,24 @@ public class ControlWindow extends JFrame
 		return slider;
 	}
 	
-	public JCheckBox makeCheckBox(String name,boolean selected,int k)
+	public void makeCheckBox(String name,boolean selected,int k)
 	{
 		JCheckBox c = new JCheckBox(name);
 		c.setSelected(selected);
 		c.setMnemonic(KeyEvent.VK_B);
 		c.addItemListener(b);
-		return c;
+		boxes.add(c);
+		//return c;
+	}
+	
+	public void makeCycleBox(int i)
+	{
+		CycleBox c = new CycleBox("Repeat",i);
+		c.setSelected(false);
+		c.setMnemonic(i+48);
+		c.addItemListener(b);
+		cycles.add(c);
+		//return c;
 	}
 	
 	public JLabel guiText(String s)

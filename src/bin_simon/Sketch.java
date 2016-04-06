@@ -16,7 +16,8 @@ public class Sketch extends PApplet
 	float rad2 = 200;
 	float numPoints = 5;
 	
-	public static int[] num = new int[5];
+	public static int[] num = new int[Main.numSliders];
+	public static boolean[] repeating = new boolean[Main.numSliders];
 	
 	public static String currentAnimation = "Circle";
 
@@ -47,15 +48,17 @@ public class Sketch extends PApplet
 	
 	public void drawAnimation()
 	{
+		beginShape();
+
 		if(currentAnimation == "Circle")
 		{
 			ellipse(width/2,height/2,(width/100)*num[0],(height/100)*num[1]);
 		}
 		if(currentAnimation == "Star")
 		{
-			float angle = TWO_PI / numPoints;
+			float angle = TWO_PI / num[2];
 			float halfAngle = angle/(float)2.0;
-			beginShape();
+			
 			for (float a = 0; a < TWO_PI; a += angle) 
 			{
 				float sx = width/2 + cos(a) * num[0]*5;
@@ -65,7 +68,6 @@ public class Sketch extends PApplet
 				sy = height/2 + sin(a+halfAngle) * num[1]*5;
 				vertex(sx, sy);
 			}
-			endShape(CLOSE);
 
 		}
 		if(currentAnimation == "Square")
@@ -88,7 +90,28 @@ public class Sketch extends PApplet
 		{
 			
 		}
-				
+		endShape(CLOSE);
+		
+		cycle();
+
 	}
+	
+	public void cycle()
+	{
+		for(int i = 0;i<Main.numSliders;i++)
+		{
+			if(repeating[i])
+			{
+				if(num[i]>ControlWindow.sliderMax)
+				{
+					num[i]=0;
+				}
+				
+				num[i]++;
+			}
+		}
+	}
+	
+	
 
 }
