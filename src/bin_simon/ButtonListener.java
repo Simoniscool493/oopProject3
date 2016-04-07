@@ -1,6 +1,8 @@
 package bin_simon;
 
-import java.awt.event.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import javax.swing.JCheckBox;
 
 class ButtonListener implements ItemListener
@@ -35,6 +37,7 @@ class ButtonListener implements ItemListener
 	    {
 	    	Sketch.randomFill = !Sketch.randomFill;
 	    }
+	    /*
 	    else if(s == "Repeat")
 	    {
 	    	int num = ((CycleBox)source).id;
@@ -45,6 +48,7 @@ class ButtonListener implements ItemListener
 	    	int num = ((CycleBox)source).id;
 	    	Sketch.reversed[num] = !(Sketch.reversed[num]);
 	    }
+	    */
 
 	}
 }

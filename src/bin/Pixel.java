@@ -8,14 +8,13 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
+
 
 public class Pixel extends PApplet {
 	// This should be inside a function that is only called if the user wants to
@@ -36,7 +35,9 @@ public class Pixel extends PApplet {
 	static int mode;
 	static int screenSize;
 	static float boxSize;
-
+	
+	static boolean flip;
+	
 	PVector mouse;
 
 	static boolean showLines;
@@ -57,6 +58,7 @@ public class Pixel extends PApplet {
 		mode = 1;
 
 		showLines = true;
+		flip=false;
 
 		/*
 		 * //Create 3 sliders Sliders red = new Sliders(150,
@@ -101,6 +103,8 @@ public class Pixel extends PApplet {
 			if (showLines == true) {
 				drawGrid();
 			}
+			
+
 
 			// println(pixNum);
 			break;
@@ -210,6 +214,21 @@ public class Pixel extends PApplet {
 
 			if (key == 'e') {
 				mode = 2;
+			}
+			
+			if(key == 'f')
+			{
+				
+				
+				 for(int i =0; i < squares.size(); i++)
+				 {
+					 
+					 squares.get(i).y=-y;
+					 
+				 }
+				 
+				 println("flipped");
+				 
 			}
 
 			// Testing the save here, need to change and put into menu

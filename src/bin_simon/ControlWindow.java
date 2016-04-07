@@ -20,8 +20,8 @@ public class ControlWindow extends JFrame
 	public static JCheckBox drawCheckbox;
 	
 	public static ArrayList<JCheckBox> boxes = new ArrayList<JCheckBox>();
-	public static ArrayList<CycleBox> cycles = new ArrayList<CycleBox>();
-	public static ArrayList<CycleBox> reversers = new ArrayList<CycleBox>();
+	//public static ArrayList<CycleBox> cycles = new ArrayList<CycleBox>();
+	//public static ArrayList<CycleBox> reversers = new ArrayList<CycleBox>();
 		
 	ButtonListener b = new ButtonListener();
 	MenuActionListener m = new MenuActionListener();	
@@ -82,15 +82,16 @@ public class ControlWindow extends JFrame
 		for(int i=0;i<Main.numSliders;i++)
 		{
 			c.gridy++;
-			makeCycleBox(i,"Repeat");
-			makeCycleBox(i,"Reverse");
+			//makeCycleBox(i,"Repeat");
+			//makeCycleBox(i,"Reverse");
 			this.add(makeSlider(i),c);
-			this.add(cycles.get(i),c);
-			this.add(reversers.get(i),c);
+			//this.add(cycles.get(i),c);
+			//this.add(reversers.get(i),c);
 
 		}
 	}
 	
+	/*
 	public void makeCycleBox(int i,String s)
 	{
 		CycleBox c = new CycleBox(s,i);
@@ -107,7 +108,7 @@ public class ControlWindow extends JFrame
 		}
 		//return c;
 	}
-
+*/
 	
 	public void init()
 	{
