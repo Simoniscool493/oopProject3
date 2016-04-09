@@ -17,9 +17,6 @@ import processing.core.PVector;
 
 
 public class Pixel extends PApplet {
-	// This should be inside a function that is only called if the user wants to
-	// load, not the constructor
-	// PImage img = loadImage("art.jpeg");
 
 	boolean load = false;
 	int userC; // had to be changed because the type color does not exist
@@ -41,6 +38,7 @@ public class Pixel extends PApplet {
 	PVector mouse;
 
 	static boolean showLines;
+	
 
 	public static ArrayList<Square> squares = new ArrayList<Square>();
 
@@ -117,13 +115,29 @@ public class Pixel extends PApplet {
 	}
 
 	public void drawGrid() {
-		for (int i = 1; i < pixNum + 1; i++) {
+		for (int i = 1; i < pixNum + 1; i++) 
+		{
+			
 			// Vertical lines
 			stroke(0);
+			
+			if(i == pixNum/2 )
+			{
+				stroke(255,0,0);
+			}
+			
 			line(boxSize * i, 0, boxSize * i, height);
+			
+			if(i == pixNum/2 )
+			{
+				stroke(255,0,0);
+			}
+			
 
+			
 			// Horizontal lines
 			line(0, boxSize * i, width, boxSize * i);
+			
 		}
 	}
 

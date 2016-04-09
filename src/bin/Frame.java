@@ -257,7 +257,6 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		 * 
 		 * }
 		 * 
-		 * 
 		 * @Override public void menuCanceled(MenuEvent e) { // TODO
 		 * Auto-generated method stub
 		 * 
@@ -304,7 +303,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		slider.setPaintLabels(true);
 		slider.setBackground(Color.WHITE);
 
-		Hashtable colorLabel = new Hashtable<>();
+		Hashtable<Object, Object> colorLabel = new Hashtable<>();
 		colorLabel.put(new Integer(0), new JLabel("0"));
 		colorLabel.put(new Integer(255), new JLabel("255"));
 
