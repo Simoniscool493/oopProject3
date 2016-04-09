@@ -146,8 +146,10 @@ public class Pixel extends PApplet {
 	}
 
 	public void mousePressed() {
-		switch (mode) {
-		case 1:
+		switch (mode) 
+		{
+		
+			case 1:
 			if (stages == 1) {
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
@@ -157,7 +159,8 @@ public class Pixel extends PApplet {
 
 			}
 			break;
-
+		
+	
 		case 2:
 
 			mouse = new PVector(mouseX, mouseY);
@@ -185,6 +188,24 @@ public class Pixel extends PApplet {
 				stages = 1;
 			}
 		}
+	}
+	
+	public void mouseDragged()
+	{
+		switch (mode) 
+		{
+			case 1:
+			if (stages == 1) {
+				x = (int) ((mouseX / boxSize));
+				y = (int) ((mouseY / boxSize));
+
+				Square a = new Square(x * boxSize, y * boxSize, userC, this);
+				squares.add(a);
+
+			}
+			break;
+		}
+
 	}
 
 	/*
