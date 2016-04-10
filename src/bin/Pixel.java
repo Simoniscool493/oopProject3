@@ -15,30 +15,35 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
-
 public class Pixel extends PApplet {
 
 	boolean load = false;
+	int backGround;
+
 	int userC; // had to be changed because the type color does not exist
 				// outside the processing ide. more info at
 				// https://forum.processing.org/two/discussion/2753/color-data-type-is-not-recognized-in-eclipse
 
-	float x, y;
+	//was float changed to an int 
+	int x, y;
 
 	int stages;
 	int pixNum;
 
+	// Drawing color
 	static int r, g, b;
+	// Background color
+	static int backR, backG, backB;
+
 	static int mode;
 	static int screenSize;
 	static float boxSize;
-	
+
 	static boolean flip;
-	
+
 	PVector mouse;
 
 	static boolean showLines;
-	
 
 	public static ArrayList<Square> squares = new ArrayList<Square>();
 
@@ -51,28 +56,20 @@ public class Pixel extends PApplet {
 
 		// Start color off as black
 		r = g = b = 0;
+		backR = backG = backB = 200;
 
+		backGround = color(backR, backG, backB);
 		userC = color(r, g, b);
 		mode = 1;
 
 		showLines = true;
-		flip=false;
-
-		/*
-		 * //Create 3 sliders Sliders red = new Sliders(150,
-		 * color(255,0,0),this); slide.add(red);
-		 * 
-		 * Sliders green = new Sliders(250, color(0,255,0),this);
-		 * slide.add(green);
-		 * 
-		 * Sliders blue = new Sliders(350, color(0,0,255),this);
-		 * slide.add(blue);
-		 */
+		flip = false;
 
 	}
 
 	public void draw() {
-		background(200);
+		// Dynamic background color
+		background(backR, backG, backB);
 		rectMode(CORNER);
 		fill(255);
 
@@ -101,10 +98,7 @@ public class Pixel extends PApplet {
 			if (showLines == true) {
 				drawGrid();
 			}
-			
 
-
-			// println(pixNum);
 			break;
 		}
 		/*
@@ -115,29 +109,19 @@ public class Pixel extends PApplet {
 	}
 
 	public void drawGrid() {
-		for (int i = 1; i < pixNum + 1; i++) 
-		{
-			
-			// Vertical lines
-			stroke(0);
-			
-			if(i == pixNum/2 )
-			{
-				stroke(255,0,0);
+		for (int i = 1; i < pixNum + 1; i++) {
+			if (i == pixNum / 2) {
+				stroke(255, 0, 0);
+			} else {
+				stroke(0);
 			}
-			
-			line(boxSize * i, 0, boxSize * i, height);
-			
-			if(i == pixNum/2 )
-			{
-				stroke(255,0,0);
-			}
-			
 
-			
+			// Vertical lines
+			line(boxSize * i, 0, boxSize * i, height);
+
 			// Horizontal lines
 			line(0, boxSize * i, width, boxSize * i);
-			
+
 		}
 	}
 
@@ -146,21 +130,20 @@ public class Pixel extends PApplet {
 	}
 
 	public void mousePressed() {
-		switch (mode) 
-		{
+		switch (mode) {
 		
-			case 1:
+		case 1:
+			
 			if (stages == 1) {
+				
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
 
 				Square a = new Square(x * boxSize, y * boxSize, userC, this);
 				squares.add(a);
-
 			}
 			break;
-		
-	
+
 		case 2:
 
 			mouse = new PVector(mouseX, mouseY);
@@ -189,13 +172,13 @@ public class Pixel extends PApplet {
 			}
 		}
 	}
-	
-	public void mouseDragged()
-	{
-		switch (mode) 
-		{
-			case 1:
+
+	public void mouseDragged() {
+		switch (mode) {
+		case 1:
+			
 			if (stages == 1) {
+				
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
 
@@ -250,20 +233,16 @@ public class Pixel extends PApplet {
 			if (key == 'e') {
 				mode = 2;
 			}
-			
-			if(key == 'f')
-			{
-				
-				
-				 for(int i =0; i < squares.size(); i++)
-				 {
-					 
-					 squares.get(i).y=-y;
-					 
-				 }
-				 
-				 println("flipped");
-				 
+
+			// A bit broken right now
+			if (key == 'f') {
+				for (int i = 0; i < squares.size(); i++) {
+					squares.get(i).y = -y;
+
+				}
+
+				println("flipped");
+
 			}
 
 			// Testing the save here, need to change and put into menu
@@ -283,61 +262,48 @@ public class Pixel extends PApplet {
 			if (key == 'l') {
 
 				/*
-				File file = new File("C:/Data/" + "art.ser");
-				load = true;
-				System.out.println("image loaded");
-
-				squares = loaded(file);
-				*/
+				 * File file = new File("C:/Data/" + "art.ser"); load = true;
+				 * System.out.println("image loaded");
+				 * 
+				 * squares = loaded(file);
+				 */
 			}
 
 		}
 
 	}
 
-	
-	public static void save(File path, ArrayList<Square> squares2) 
-	{
-	
+	public static void save(File path, ArrayList<Square> squares2) {
+
 		try (ObjectOutputStream write = new ObjectOutputStream(new FileOutputStream(path))) {
 			write.writeObject(squares2);
 			write.close();
 		}
-		
-		catch (NotSerializableException nse) 
-		{
+
+		catch (NotSerializableException nse) {
 			println("Exception not seriliazble");
-		} 
-		catch (IOException eio) 
-		{
+		} catch (IOException eio) {
 			println("IO Exception");
 		}
 	}
 
-	public static ArrayList<Square> loaded(File path) 
-	{
+	public static ArrayList<Square> loaded(File path) {
 		Object square2 = null;
 		ArrayList<Square> sq = new ArrayList<Square>();
 
-		try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream(path))) 
-		{
+		try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream(path))) {
 			square2 = inFile.readObject();
 
 			sq = (ArrayList<Square>) square2;
 
 			return sq;
-		} 
-		
-		catch (ClassNotFoundException cnfe) 
-		{
+		}
+
+		catch (ClassNotFoundException cnfe) {
 			println("Class not found");
-		} 
-		catch (FileNotFoundException fnfe) 
-		{
+		} catch (FileNotFoundException fnfe) {
 			println("File not found");
-		} 
-		catch (IOException e) 
-		{
+		} catch (IOException e) {
 			println("IO Exception ");
 		}
 		return null;

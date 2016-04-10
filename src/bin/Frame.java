@@ -34,9 +34,11 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 	// Some fields
 	// ButtonListener bListen = new ButtonListener();
 	// For sliders
+	int backGroundInit = 200;
+	int colorInit = 0;
+	
 	int sliderMin = 0;
 	int sliderMax = 255;
-	int sliderInit = 0;
 	int componentWidth = (int) screenSize.getWidth() / 4;
 	int componentHeight = 50;
 
@@ -139,15 +141,15 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		JLabel redLabel = new JLabel("Red");
 		JSlider red = new JSlider();
-		red = makeSlider();
+		red = makeSlider(colorInit);
 
 		JLabel greenLabel = new JLabel("Green");
 		JSlider green = new JSlider();
-		green = makeSlider();
+		green = makeSlider(colorInit);
 
 		JLabel blueLabel = new JLabel("Blue");
 		JSlider blue = new JSlider();
-		blue = makeSlider();
+		blue = makeSlider(colorInit);
 
 		// Slider listeners
 		red.addChangeListener(new ChangeListener() {
@@ -201,16 +203,48 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		JLabel redBackLabel = new JLabel("Red");
 		JSlider redBack = new JSlider();
-		redBack = makeSlider();
+		redBack = makeSlider(backGroundInit);
 
 		JLabel greenBackLabel = new JLabel("Green");
 		JSlider greenBack = new JSlider();
-		greenBack = makeSlider();
+		greenBack = makeSlider(backGroundInit);
 
 		JLabel blueBackLabel = new JLabel("Blue");
 		JSlider blueBack = new JSlider();
-		blueBack = makeSlider();
+		blueBack = makeSlider(backGroundInit);
+		
+		redBack.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				JSlider source = (JSlider) e.getSource();
 
+				Pixel.backR = (int) source.getValue();
+			}
+		});
+		
+		greenBack.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				JSlider source = (JSlider) e.getSource();
+
+				Pixel.backG = (int) source.getValue();
+				
+			}
+		});
+		
+		blueBack.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				JSlider source = (JSlider) e.getSource();
+
+				Pixel.backB = (int) source.getValue();
+				
+			}
+		});
+		
 		// Adding Sliders into Toolbar
 		sliderPanel.add(redBackLabel);
 		sliderPanel.add(red);
@@ -294,8 +328,9 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 	}
 
-	public JSlider makeSlider() {
+	public JSlider makeSlider(int sliderInit) {
 		JSlider slider = new JSlider(JSlider.HORIZONTAL, sliderMin, sliderMax, sliderInit);
+
 		slider.setPreferredSize(new Dimension(componentWidth, componentHeight));
 		slider.setMajorTickSpacing(10);
 		slider.setMinorTickSpacing(1);
