@@ -20,8 +20,6 @@ public class Square implements java.io.Serializable
 		this.y = y;
 		this.c = c;
 		this.pos = new PVector(x+(Pixel.boxSize/2),y+(Pixel.boxSize/2));
-		System.out.println(parent);
-		System.out.println(p);
 	}
 
 	public void drawShape()

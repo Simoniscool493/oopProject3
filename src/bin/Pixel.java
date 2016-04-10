@@ -26,6 +26,7 @@ public class Pixel extends PApplet {
 	int backGround;
 	int userC;
 	int x, y;
+	int bk=0;
 	int stages;
 	int pixNum;
 
@@ -231,8 +232,6 @@ public class Pixel extends PApplet {
 			if (key == 's') {
 
 				File file = new File("data/" + "art.ser");
-				String basePath = new File("").getAbsolutePath();
-				System.out.println(basePath);
 
 				// save("data/art.jpeg");
 
@@ -245,13 +244,51 @@ public class Pixel extends PApplet {
 			if (key == 'l') {
 
 				File file = new File("data/" + "art.ser");
-				System.out.println("image loaded");
+				
 
 				squares = loaded(file);
+				System.out.println("image loaded");
 
+			}
+			
+			if(key == '\u001A' && !squares.isEmpty())
+			{
+					bk--;
+					if(bk > 0)
+					{
+						File file = new File("data/" + "art" +bk +".ser");
+						
+						squares = loaded(file);
+						//System.out.println("image loaded");
+						println(bk+"loading");
+					}
+					if(bk < 0)
+					{
+						bk=2;
+					}
+	
 			}
 
 		}
+	}
+	
+	public void	mouseReleased()
+	{
+		if(!squares.isEmpty())
+		{
+			bk++;
+			File file = new File("data/" + "art" +bk + ".ser");
+	
+			// save("data/art.jpeg");
+	
+			save(file, squares);
+	
+			System.out.println("image saved");
+			
+			
+			println(bk);
+		}
+		
 	}
 	
 	//To delete over written squares (there is a bug here i think)
@@ -291,15 +328,18 @@ public class Pixel extends PApplet {
 			println("IO Exception");
 		}
 	}
+	
 
-	public static ArrayList<Square> loaded(File path) {
+	public static ArrayList<Square> loaded(File path) 
+	{
 		Object square2 = null;
 		ArrayList<Square> sq = new ArrayList<Square>();
-
+		
 		try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream(path))) {
 			square2 = inFile.readObject();
 
 			sq = (ArrayList<Square>) square2;
+			inFile.close();
 
 			return sq;
 		}
@@ -318,6 +358,7 @@ public class Pixel extends PApplet {
 
 		return null;
 	}
+	
 
 	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
