@@ -26,15 +26,10 @@ public class Square implements java.io.Serializable
 	{
 		parent.stroke(c);
 		parent.fill(c);
-		
-		//there is a slight overlap 
 		parent.rect(x, y, Pixel.boxSize-1, Pixel.boxSize-1);
 	}
 	
-	/*Lets you see what the contents of an arralist are normally. in this example it is the field pos
-	*testing so we can save the squares arraylist then reload it 
-	*For whatever reason colour is negative?
-	*check terminal when a square is coloured
+	/*Lets you see what the contents of an arralist are normally
 	*/
     @Override
     public String toString() {

@@ -18,38 +18,29 @@ import processing.core.PVector;
 public class Pixel extends PApplet {
 
 	boolean load = false;
+	static boolean flip;
+	static boolean showLines;
+	
 	int backGround;
-
-	int userC; // had to be changed because the type color does not exist
-				// outside the processing ide. more info at
-				// https://forum.processing.org/two/discussion/2753/color-data-type-is-not-recognized-in-eclipse
-
-	//was float changed to an int 
+	int userC;
 	int x, y;
-
 	int stages;
 	int pixNum;
 
-	// Drawing color
 	static int r, g, b;
-	// Background color
 	static int backR, backG, backB;
-
 	static int mode;
 	static int screenSize;
 	static float boxSize;
 
-	static boolean flip;
-
 	PVector mouse;
-
-	static boolean showLines;
 
 	public static ArrayList<Square> squares = new ArrayList<Square>();
 
 	Scanner scanIn = new Scanner(System.in);
 
-	public void setup() {
+	public void setup() 
+	{
 		size(screenSize, screenSize);
 		stages = 0;
 		boxSize = 0;
@@ -67,74 +58,80 @@ public class Pixel extends PApplet {
 
 	}
 
-	public void draw() {
-		// Dynamic background color
+	public void draw() 
+	{
 		background(backR, backG, backB);
 		rectMode(CORNER);
 		fill(255);
 
-		switch (stages) {
-		case 0:
-
-			textAlign(CENTER);
-			fill(0);
-			stroke(0);
-			text("How many pixels would you like to work with?", width / 2, 100);
-			text("16 x 16", width / 2, 200);// 256
-			text("32 x 32", width / 2, 300);// 1024
-			break;
-
-		case 1:
-
-			boxSize = (float) (width) / (float) (pixNum); // Makes the boxes fit
-															// the size of the
-															// screen
-
-			for (int i = 0; i < squares.size(); i++) {
-				Square squ = squares.get(i);
-				squ.drawShape();
-			}
-
-			if (showLines == true) {
-				drawGrid();
-			}
-
-			break;
+		switch (stages) 
+		{
+			case 0:
+	
+				textAlign(CENTER);
+				fill(0);
+				stroke(0);
+				text("How many pixels would you like to work with?", width / 2, 100);
+				text("16 x 16", width / 2, 200);// 256
+				text("32 x 32", width / 2, 300);// 1024
+				break;
+	
+			case 1:
+	
+				boxSize = (float) (width) / (float) (pixNum); 
+	
+				for (int i = 0; i < squares.size(); i++) {
+					Square squ = squares.get(i);
+					squ.drawShape();
+				}
+	
+				if (showLines == true) {
+					drawGrid();
+				}
+	
+				break;
 		}
+		
 		/*
 		 * if(load==true) { image(img,width/2,height/2); }
 		 */
-
-		// println(squares);
 	}
 
-	public void drawGrid() {
-		for (int i = 1; i < pixNum + 1; i++) {
-			if (i == pixNum / 2) {
+	public void drawGrid() 
+	{
+		for (int i = 1; i < pixNum + 1; i++)
+		{
+			if (i == pixNum / 2)
+			{
 				stroke(255, 0, 0);
-			} else {
+			} 
+			else
+			{
 				stroke(0);
 			}
 
-			// Vertical lines
+			// Vertical
 			line(boxSize * i, 0, boxSize * i, height);
 
-			// Horizontal lines
+			// Horizontal
 			line(0, boxSize * i, width, boxSize * i);
-
 		}
 	}
 
-	public void setColour() {
+	public void setColour() 
+	{
 		userC = color(r, g, b);
 	}
 
-	public void mousePressed() {
-		switch (mode) {
+	public void mousePressed() 
+	{
+		switch (mode) 
+		{
 		
 		case 1:
 			
-			if (stages == 1) {
+			if (stages == 1) 
+			{
 				
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
@@ -148,11 +145,14 @@ public class Pixel extends PApplet {
 
 			mouse = new PVector(mouseX, mouseY);
 
-			if (stages == 1) {
-				for (int i = 0; i < squares.size(); i++) {
+			if (stages == 1) 
+			{
+				for (int i = 0; i < squares.size(); i++) 
+				{
 					Square temp = squares.get(i);
 
-					if (temp.pos.dist(mouse) < boxSize / 2) {
+					if (temp.pos.dist(mouse) < boxSize / 2) 
+					{
 						squares.remove(i);
 					}
 				}
@@ -160,51 +160,42 @@ public class Pixel extends PApplet {
 			break;
 		}
 
-		if (stages == 0) {
-			if (mouseX > 100 && mouseX < width - 100 && mouseY < 220 && mouseY > 180) {
+		if (stages == 0) 
+		{
+			if (mouseX > 100 && mouseX < width - 100 && mouseY < 220 && mouseY > 180)
+			{
 				pixNum = 16;
 				stages = 1;
 			}
 
-			if (mouseX > 100 && mouseX < width - 100 && mouseY < 320 && mouseY > 280) {
+			if (mouseX > 100 && mouseX < width - 100 && mouseY < 320 && mouseY > 280)
+			{
 				pixNum = 32;
 				stages = 1;
 			}
 		}
 	}
 
-	public void mouseDragged() {
-		switch (mode) {
-		case 1:
+	public void mouseDragged()
+	{
+		switch (mode) 
+		{	
+			case 1:
 			
-			if (stages == 1) {
-				
+			if (stages == 1) 
+			{
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
 
 				Square a = new Square(x * boxSize, y * boxSize, userC, this);
 				squares.add(a);
-
 			}
 			break;
 		}
-
 	}
 
-	/*
-	 * I dont think I need this anymore but left it in in case I do public void
-	 * mouseDragged() { mouse = new PVector(mouseX,mouseY);
-	 * 
-	 * //check if mouse is on slider if(colourMenu == true) { for(int i = 0; i <
-	 * slide.size(); i++) { Sliders temp = slide.get(i); println(temp.pos + " "
-	 * + mouse);
-	 * 
-	 * if(temp.pos.dist(mouse) < 25) { if(mouseX < width-150 && mouseX > 150) {
-	 * temp.scale = map(mouseX, 150, width - 150, 0 ,255); println(temp.scale);
-	 * } } } } }
-	 */
-
-	public void load(PImage img) {
+	public void load(PImage img) 
+	{
 		// Load functionality will be changed to be file explorer in future.
 
 		/*
@@ -218,35 +209,38 @@ public class Pixel extends PApplet {
 		 */
 	}
 
-	public void keyPressed() {
-		// Processing window must be selected for this to work?
-		if (stages == 1) {
-			if (key == 't') {
+	public void keyPressed() 
+	{
+		if (stages == 1) 
+		{
+			if (key == 't') 
+			{
 				showLines = !showLines;
 			}
 
-			// Draw mode
-			if (key == 'd') {
+			if (key == 'd') 
+			{
 				mode = 1;
 			}
 
-			if (key == 'e') {
+			if (key == 'e') 
+			{
 				mode = 2;
 			}
 
-			// A bit broken right now
-			if (key == 'f') {
-				for (int i = 0; i < squares.size(); i++) {
+			if (key == 'f') 
+			{
+				for (int i = 0; i < squares.size(); i++) 
+				{
 					squares.get(i).y = -y;
 
 				}
 
 				println("flipped");
-
 			}
 
-			// Testing the save here, need to change and put into menu
-			if (key == 's') {
+			if (key == 's') 
+			{
 
 				/*
 				 * File file = new File("C:/Data/" + "art.ser");
@@ -259,7 +253,8 @@ public class Pixel extends PApplet {
 				 */
 			}
 
-			if (key == 'l') {
+			if (key == 'l') 
+			{
 
 				/*
 				 * File file = new File("C:/Data/" + "art.ser"); load = true;
@@ -270,28 +265,34 @@ public class Pixel extends PApplet {
 			}
 
 		}
-
 	}
 
-	public static void save(File path, ArrayList<Square> squares2) {
+	public static void save(File path, ArrayList<Square> squares2) 
+	{
 
-		try (ObjectOutputStream write = new ObjectOutputStream(new FileOutputStream(path))) {
+		try (ObjectOutputStream write = new ObjectOutputStream(new FileOutputStream(path))) 
+		{
 			write.writeObject(squares2);
 			write.close();
 		}
 
-		catch (NotSerializableException nse) {
+		catch (NotSerializableException nse) 
+		{
 			println("Exception not seriliazble");
-		} catch (IOException eio) {
+		} 
+		catch (IOException eio)
+		{
 			println("IO Exception");
 		}
 	}
 
-	public static ArrayList<Square> loaded(File path) {
+	public static ArrayList<Square> loaded(File path) 
+	{
 		Object square2 = null;
 		ArrayList<Square> sq = new ArrayList<Square>();
 
-		try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream(path))) {
+		try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream(path))) 
+		{
 			square2 = inFile.readObject();
 
 			sq = (ArrayList<Square>) square2;
@@ -299,13 +300,21 @@ public class Pixel extends PApplet {
 			return sq;
 		}
 
-		catch (ClassNotFoundException cnfe) {
+		catch (ClassNotFoundException cnfe) 
+		{
 			println("Class not found");
-		} catch (FileNotFoundException fnfe) {
+		} 
+		
+		catch (FileNotFoundException fnfe) 
+		{
 			println("File not found");
-		} catch (IOException e) {
+		} 
+		
+		catch (IOException e)
+		{
 			println("IO Exception ");
 		}
+		
 		return null;
 	}
 }
