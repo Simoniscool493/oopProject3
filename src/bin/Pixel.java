@@ -21,6 +21,8 @@ public class Pixel extends PApplet {
 	static boolean flip;
 	static boolean showLines;
 	
+	static PApplet parent;
+	
 	int backGround;
 	int userC;
 	int x, y;
@@ -80,7 +82,8 @@ public class Pixel extends PApplet {
 	
 				boxSize = (float) (width) / (float) (pixNum); 
 	
-				for (int i = 0; i < squares.size(); i++) {
+				for (int i = 0; i < squares.size(); i++) 
+				{
 					Square squ = squares.get(i);
 					squ.drawShape();
 				}
@@ -136,7 +139,7 @@ public class Pixel extends PApplet {
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
 
-				Square a = new Square(x * boxSize, y * boxSize, userC, this);
+				Square a = new Square(x * boxSize, y * boxSize, userC,this);
 				squares.add(a);
 			}
 			break;
@@ -187,7 +190,7 @@ public class Pixel extends PApplet {
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
 
-				Square a = new Square(x * boxSize, y * boxSize, userC, this);
+				Square a = new Square(x * boxSize, y * boxSize, userC,this);
 				squares.add(a);
 			}
 			break;
@@ -242,26 +245,28 @@ public class Pixel extends PApplet {
 			if (key == 's') 
 			{
 
-				/*
-				 * File file = new File("C:/Data/" + "art.ser");
-				 * 
-				 * //save("data/art.jpeg");
-				 * 
-				 * save(file, squares);
-				 * 
-				 * System.out.println("image saved");
-				 */
+				
+				  File file = new File("data/" + "art.ser");
+				  String basePath = new File("").getAbsolutePath();
+				    System.out.println(basePath);
+				  
+				  //save("data/art.jpeg");
+				  
+				  save(file, squares);
+				  
+				  System.out.println("image saved");
+				 
 			}
 
 			if (key == 'l') 
 			{
 
-				/*
-				 * File file = new File("C:/Data/" + "art.ser"); load = true;
-				 * System.out.println("image loaded");
-				 * 
-				 * squares = loaded(file);
-				 */
+				
+				 File file = new File("data/" + "art.ser");
+				 System.out.println("image loaded");
+				 
+				  squares = loaded(file);
+				 
 			}
 
 		}
@@ -317,4 +322,10 @@ public class Pixel extends PApplet {
 		
 		return null;
 	}
+	
+	private void readObject(java.io.ObjectInputStream in)
+		    throws IOException, ClassNotFoundException {
+		    in.defaultReadObject();
+		    Square.parent = parent ;
+		}
 }

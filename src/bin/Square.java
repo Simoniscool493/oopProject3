@@ -6,8 +6,8 @@ import processing.core.PVector;
 
 public class Square implements java.io.Serializable
 {
-	transient PApplet parent;
-
+	
+   transient static PApplet parent;
 	PVector pos;
 	float x;
 	float y; 
@@ -20,6 +20,8 @@ public class Square implements java.io.Serializable
 		this.y = y;
 		this.c = c;
 		this.pos = new PVector(x+(Pixel.boxSize/2),y+(Pixel.boxSize/2));
+		System.out.println(parent);
+		System.out.println(p);
 	}
 
 	public void drawShape()
