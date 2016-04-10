@@ -20,9 +20,9 @@ public class Pixel extends PApplet {
 	boolean load = false;
 	static boolean flip;
 	static boolean showLines;
-	
+
 	static PApplet parent;
-	
+
 	int backGround;
 	int userC;
 	int x, y;
@@ -41,8 +41,7 @@ public class Pixel extends PApplet {
 
 	Scanner scanIn = new Scanner(System.in);
 
-	public void setup() 
-	{
+	public void setup() {
 		size(screenSize, screenSize);
 		stages = 0;
 		boxSize = 0;
@@ -60,56 +59,50 @@ public class Pixel extends PApplet {
 
 	}
 
-	public void draw() 
-	{
+	public void draw() {
 		background(backR, backG, backB);
 		rectMode(CORNER);
 		fill(255);
 
-		switch (stages) 
-		{
-			case 0:
-	
-				textAlign(CENTER);
-				fill(0);
-				stroke(0);
-				text("How many pixels would you like to work with?", width / 2, 100);
-				text("16 x 16", width / 2, 200);// 256
-				text("32 x 32", width / 2, 300);// 1024
-				break;
-	
-			case 1:
-	
-				boxSize = (float) (width) / (float) (pixNum); 
-	
-				for (int i = 0; i < squares.size(); i++) 
-				{
-					Square squ = squares.get(i);
-					squ.drawShape();
-				}
-	
-				if (showLines == true) {
-					drawGrid();
-				}
-	
-				break;
+		switch (stages) {
+		case 0:
+
+			textAlign(CENTER);
+			fill(0);
+			stroke(0);
+			text("How many pixels would you like to work with?", width / 2, 100);
+			text("16 x 16", width / 2, 200);// 256
+			text("32 x 32", width / 2, 300);// 1024
+			break;
+
+		case 1:
+
+			boxSize = (float) (width) / (float) (pixNum);
+
+			for (int i = 0; i < squares.size(); i++) {
+				Square squ = squares.get(i);
+				squ.drawShape();
+			}
+
+			if (showLines == true) {
+				drawGrid();
+			}
+
+			break;
 		}
-		
+
 		/*
 		 * if(load==true) { image(img,width/2,height/2); }
 		 */
+		
+		overWriteSquare();
 	}
 
-	public void drawGrid() 
-	{
-		for (int i = 1; i < pixNum + 1; i++)
-		{
-			if (i == pixNum / 2)
-			{
+	public void drawGrid() {
+		for (int i = 1; i < pixNum + 1; i++) {
+			if (i == pixNum / 2) {
 				stroke(255, 0, 0);
-			} 
-			else
-			{
+			} else {
 				stroke(0);
 			}
 
@@ -121,25 +114,21 @@ public class Pixel extends PApplet {
 		}
 	}
 
-	public void setColour() 
-	{
+	public void setColour() {
 		userC = color(r, g, b);
 	}
 
-	public void mousePressed() 
-	{
-		switch (mode) 
-		{
-		
+	public void mousePressed() {
+		switch (mode) {
+
 		case 1:
-			
-			if (stages == 1) 
-			{
-				
+
+			if (stages == 1) {
+
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
 
-				Square a = new Square(x * boxSize, y * boxSize, userC,this);
+				Square a = new Square(x * boxSize, y * boxSize, userC, this);
 				squares.add(a);
 			}
 			break;
@@ -148,14 +137,11 @@ public class Pixel extends PApplet {
 
 			mouse = new PVector(mouseX, mouseY);
 
-			if (stages == 1) 
-			{
-				for (int i = 0; i < squares.size(); i++) 
-				{
+			if (stages == 1) {
+				for (int i = 0; i < squares.size(); i++) {
 					Square temp = squares.get(i);
 
-					if (temp.pos.dist(mouse) < boxSize / 2) 
-					{
+					if (temp.pos.dist(mouse) < boxSize / 2) {
 						squares.remove(i);
 					}
 				}
@@ -163,42 +149,49 @@ public class Pixel extends PApplet {
 			break;
 		}
 
-		if (stages == 0) 
-		{
-			if (mouseX > 100 && mouseX < width - 100 && mouseY < 220 && mouseY > 180)
-			{
+		if (stages == 0) {
+			if (mouseX > 100 && mouseX < width - 100 && mouseY < 220 && mouseY > 180) {
 				pixNum = 16;
 				stages = 1;
 			}
 
-			if (mouseX > 100 && mouseX < width - 100 && mouseY < 320 && mouseY > 280)
-			{
+			if (mouseX > 100 && mouseX < width - 100 && mouseY < 320 && mouseY > 280) {
 				pixNum = 32;
 				stages = 1;
 			}
 		}
 	}
 
-	public void mouseDragged()
-	{
-		switch (mode) 
-		{	
-			case 1:
-			
-			if (stages == 1) 
-			{
+	public void mouseDragged() {
+		switch (mode) {
+		case 1:
+
+			if (stages == 1) {
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
 
-				Square a = new Square(x * boxSize, y * boxSize, userC,this);
+				Square a = new Square(x * boxSize, y * boxSize, userC, this);
 				squares.add(a);
+			}
+			break;
+
+		case 2:
+			mouse = new PVector(mouseX, mouseY);
+
+			if (stages == 1) {
+				for (int i = 0; i < squares.size(); i++) {
+					Square temp = squares.get(i);
+
+					if (temp.pos.dist(mouse) < boxSize / 2) {
+						squares.remove(i);
+					}
+				}
 			}
 			break;
 		}
 	}
 
-	public void load(PImage img) 
-	{
+	public void load(PImage img) {
 		// Load functionality will be changed to be file explorer in future.
 
 		/*
@@ -212,29 +205,22 @@ public class Pixel extends PApplet {
 		 */
 	}
 
-	public void keyPressed() 
-	{
-		if (stages == 1) 
-		{
-			if (key == 't') 
-			{
+	public void keyPressed() {
+		if (stages == 1) {
+			if (key == 't') {
 				showLines = !showLines;
 			}
 
-			if (key == 'd') 
-			{
+			if (key == 'd') {
 				mode = 1;
 			}
 
-			if (key == 'e') 
-			{
+			if (key == 'e') {
 				mode = 2;
 			}
 
-			if (key == 'f') 
-			{
-				for (int i = 0; i < squares.size(); i++) 
-				{
+			if (key == 'f') {
+				for (int i = 0; i < squares.size(); i++) {
 					squares.get(i).y = -y;
 
 				}
@@ -242,62 +228,75 @@ public class Pixel extends PApplet {
 				println("flipped");
 			}
 
-			if (key == 's') 
-			{
+			if (key == 's') {
 
-				
-				  File file = new File("data/" + "art.ser");
-				  String basePath = new File("").getAbsolutePath();
-				    System.out.println(basePath);
-				  
-				  //save("data/art.jpeg");
-				  
-				  save(file, squares);
-				  
-				  System.out.println("image saved");
-				 
+				File file = new File("data/" + "art.ser");
+				String basePath = new File("").getAbsolutePath();
+				System.out.println(basePath);
+
+				// save("data/art.jpeg");
+
+				save(file, squares);
+
+				System.out.println("image saved");
+
 			}
 
-			if (key == 'l') 
-			{
+			if (key == 'l') {
 
-				
-				 File file = new File("data/" + "art.ser");
-				 System.out.println("image loaded");
-				 
-				  squares = loaded(file);
-				 
+				File file = new File("data/" + "art.ser");
+				System.out.println("image loaded");
+
+				squares = loaded(file);
+
 			}
 
 		}
 	}
+	
+	//To delete over written squares (there is a bug here i think)
+	public void overWriteSquare() {
+		// Goes through the array of squares and compares the position of
+		// everyone
+		for (int i = 0; i < squares.size(); i++) {
+			Square squareOne = squares.get(i);
+			for (int j = 0; j < squares.size(); j++) {
+				Square squareTwo = squares.get(j);
 
-	public static void save(File path, ArrayList<Square> squares2) 
-	{
+				// Makes sure we're not comparing the same square
+				if (i != j) {
+					if ((squareOne.pos).dist(squareTwo.pos) == 0) {
+						// Removing the bottom layer
+						if (i > j) {
+							squares.remove(j);
+						} else {
+							squares.remove(i);
+						}
+					}
+				}
+			}
+		}
+	}
 
-		try (ObjectOutputStream write = new ObjectOutputStream(new FileOutputStream(path))) 
-		{
+	public static void save(File path, ArrayList<Square> squares2) {
+
+		try (ObjectOutputStream write = new ObjectOutputStream(new FileOutputStream(path))) {
 			write.writeObject(squares2);
 			write.close();
 		}
 
-		catch (NotSerializableException nse) 
-		{
+		catch (NotSerializableException nse) {
 			println("Exception not seriliazble");
-		} 
-		catch (IOException eio)
-		{
+		} catch (IOException eio) {
 			println("IO Exception");
 		}
 	}
 
-	public static ArrayList<Square> loaded(File path) 
-	{
+	public static ArrayList<Square> loaded(File path) {
 		Object square2 = null;
 		ArrayList<Square> sq = new ArrayList<Square>();
 
-		try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream(path))) 
-		{
+		try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream(path))) {
 			square2 = inFile.readObject();
 
 			sq = (ArrayList<Square>) square2;
@@ -305,27 +304,23 @@ public class Pixel extends PApplet {
 			return sq;
 		}
 
-		catch (ClassNotFoundException cnfe) 
-		{
+		catch (ClassNotFoundException cnfe) {
 			println("Class not found");
-		} 
-		
-		catch (FileNotFoundException fnfe) 
-		{
+		}
+
+		catch (FileNotFoundException fnfe) {
 			println("File not found");
-		} 
-		
-		catch (IOException e)
-		{
+		}
+
+		catch (IOException e) {
 			println("IO Exception ");
 		}
-		
+
 		return null;
 	}
-	
-	private void readObject(java.io.ObjectInputStream in)
-		    throws IOException, ClassNotFoundException {
-		    in.defaultReadObject();
-		    Square.parent = parent ;
-		}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
+		Square.parent = parent;
+	}
 }
