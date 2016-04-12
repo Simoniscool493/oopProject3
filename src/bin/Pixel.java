@@ -287,18 +287,20 @@ public class Pixel extends PApplet {
 
 	// To delete over written squares (there is a bug here i think)
 	public void overWriteSquare() {
-		// Goes through the array of squares and compares the position of
-		// everyone
-		for (int i = squares.size() - 1; i < 1; i--) {
-			println(squares.size());
-			Square squareOne = squares.get(i);
-			if (squares.size() > 1) {
-				for (int j = i - 1; j > 1; j--) {
-					Square squareTwo = squares.get(j);
-
+		// Goes through the array of squares and compares the position every square underneath it
+		if (squares.size() > 0) {
+			for (int i = squares.size() - 1; i > 1; i--) {
+				Square squareOne = squares.get(i);
+				if (squares.size() > 1) {
 					// Makes sure we're not comparing the same square
-					if ((squareOne.pos).dist(squareTwo.pos) == 0) {
-						squares.remove(j);
+					for (int j = i - 1; j > 1; j--) {
+						Square squareTwo = squares.get(j);
+
+						if ((squareOne.pos).dist(squareTwo.pos) == 0) {
+							squares.remove(j);
+							i = i - 1;
+							println("removed");
+						}
 					}
 				}
 			}
