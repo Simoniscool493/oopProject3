@@ -20,7 +20,7 @@ public class Pixel extends PApplet {
 	boolean load = false;
 	static boolean flip;
 	static boolean showLines;
-
+	PImage pen,eraser;
 	static PApplet parent;
 
 	int backGround;
@@ -43,9 +43,14 @@ public class Pixel extends PApplet {
 	Scanner scanIn = new Scanner(System.in);
 
 	public void setup() {
+		
 		size(screenSize, screenSize);
 		stages = 0;
 		boxSize = 0;
+		cursor(CROSS);
+		
+		pen = loadImage("pen.png");
+		eraser = loadImage("eraser.png");
 
 		// Start color off as black
 		r = g = b = 0;
@@ -90,6 +95,21 @@ public class Pixel extends PApplet {
 			}
 
 			break;
+		}
+		
+		if(mode==3)
+		{
+			cursor(pen);
+		}
+
+		else if(mode==2)
+		{
+			cursor(eraser);
+		}
+		
+		else
+		{
+			cursor(CROSS);
 		}
 
 		/*
@@ -149,6 +169,7 @@ public class Pixel extends PApplet {
 			break;
 
 		case 3:
+			
 			mouse = new PVector(mouseX, mouseY);
 			if (stages == 1) {
 				for (int i = 0; i < squares.size(); i++) {
@@ -159,7 +180,11 @@ public class Pixel extends PApplet {
 					}
 				}
 			}
+			
+			
+			mode=1; //Changes back to draw mode for convenience 
 			break;
+			
 		}
 
 		if (stages == 0) {

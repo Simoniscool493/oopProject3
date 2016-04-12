@@ -124,6 +124,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Pixel.mode = 3;
+				
 			}
 		});
 
