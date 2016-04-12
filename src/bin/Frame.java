@@ -86,8 +86,12 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JButton gridButton = new JButton("Show Grid (T)");
 		buttonsPanel.add(gridButton);
 
+		JButton magicPen = new JButton("Magic Pen");
+		buttonsPanel.add(magicPen);
+		
 		JButton EraseallButton = new JButton("Erase all");
 		buttonsPanel.add(EraseallButton);
+		
 
 		// Button action listeners
 		drawButton.addActionListener(new ActionListener() {
@@ -113,6 +117,14 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 				Pixel.showLines = !Pixel.showLines;
 			}
 
+		});
+		
+		magicPen.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Pixel.mode = 3;
+			}
 		});
 
 		EraseallButton.addActionListener(new ActionListener() {

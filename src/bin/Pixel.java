@@ -147,6 +147,19 @@ public class Pixel extends PApplet {
 				}
 			}
 			break;
+
+		case 3:
+			mouse = new PVector(mouseX, mouseY);
+			if (stages == 1) {
+				for (int i = 0; i < squares.size(); i++) {
+					Square temp = squares.get(i);
+
+					if (temp.pos.dist(mouse) < boxSize / 2) {
+						userC = temp.c;
+					}
+				}
+			}
+			break;
 		}
 
 		if (stages == 0) {
@@ -287,7 +300,8 @@ public class Pixel extends PApplet {
 
 	// To delete over written squares (there is a bug here i think)
 	public void overWriteSquare() {
-		// Goes through the array of squares and compares the position every square underneath it
+		// Goes through the array of squares and compares the position every
+		// square underneath it
 		if (squares.size() > 0) {
 			for (int i = squares.size() - 1; i > 1; i--) {
 				Square squareOne = squares.get(i);
