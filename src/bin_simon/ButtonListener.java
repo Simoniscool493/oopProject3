@@ -19,7 +19,7 @@ class ButtonListener implements ItemListener
 	
 	    if (s == "Background") 
 	    {
-	    	Sketch.showBackground = !Sketch.showBackground;
+	    	PSketch.showBackground = !PSketch.showBackground;
 	    }
 	    else if (s == "Holding Sliders") 
 	    {
@@ -27,28 +27,27 @@ class ButtonListener implements ItemListener
 	    }
 	    else if (s == "Pause Animation") 
 	    {
-	    	Sketch.enableDraw = !Sketch.enableDraw;
+	    	PSketch.enableDraw = !PSketch.enableDraw;
 	    }
 	    else if (s == "Random Stroke") 
 	    {
-	    	Sketch.randomStroke = !Sketch.randomStroke;
+	    	PSketch.randomStroke = !PSketch.randomStroke;
 	    }
 	    else if (s == "Random Fill") 
 	    {
-	    	Sketch.randomFill = !Sketch.randomFill;
+	    	PSketch.randomFill = !PSketch.randomFill;
 	    }
-	    /*
 	    else if(s == "Repeat")
 	    {
 	    	int num = ((CycleBox)source).id;
-	    	Sketch.repeating[num] = !(Sketch.repeating[num]);
+	    	PSketch.repeating[num] = !(PSketch.repeating[num]);
 	    }
 	    else if(s == "Reverse")
 	    {
 	    	int num = ((CycleBox)source).id;
-	    	Sketch.reversed[num] = !(Sketch.reversed[num]);
+	    	PSketch.reversed[num] = !(PSketch.reversed[num]);
 	    }
-	    */
+	    
 
 	}
 }

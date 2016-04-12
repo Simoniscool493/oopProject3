@@ -15,17 +15,11 @@ public class DrawWindow extends JFrame
 	public void addSketch()
 	{
 		JPanel sketch = new JPanel();
-		processing.core.PApplet p = new Sketch();
+		processing.core.PApplet p = new PSketch();
 		sketch.setBounds(0, 0, 0, 0);
 		sketch.add(p);
 		this.add(sketch);
 		p.init();
 	}
 	
-	/*
-	public void createWindow();
-	{
-	
-	}
-	*/
 }

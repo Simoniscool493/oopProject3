@@ -10,7 +10,7 @@ class MenuActionListener implements ActionListener
 	    System.out.println("Selected: " + e.getActionCommand());
 	    if(e.getActionCommand() == "Save as image")
 	    {
-			Sketch.saveImage = true;
+	    	PSketch.saveImage = true;
 	    }
 	    else if(e.getActionCommand() == "comboBoxChanged")
 	    {
@@ -18,7 +18,7 @@ class MenuActionListener implements ActionListener
 	    	String chosen = (String)cb.getSelectedItem();
 	    	System.out.println(chosen);
 	    	
-	    	Sketch.currentAnimation = chosen;
+	    	PSketch.currentAnimation = chosen;
 	    }
 
 	  }

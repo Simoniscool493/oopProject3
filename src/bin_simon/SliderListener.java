@@ -19,12 +19,12 @@ class SliderListener implements ChangeListener
         JSlider source = (JSlider)e.getSource();
         if (!source.getValueIsAdjusting() || slidingSliders)
 		{
-            Sketch.num[index] = (int)source.getValue();
+        	PSketch.num[index] = (int)source.getValue();
             System.out.println(index);
             
             if(index == 0)
             {
-            	Sketch.frameRateChanged = true;
+            	PSketch.frameRateChanged = true;
             }
         }
         

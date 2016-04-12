@@ -2,7 +2,7 @@ package bin_simon;
 
 import processing.core.PApplet;
 
-public class Sketch extends PApplet
+public class PSketch extends PApplet
 {
 	public static boolean showBackground = false;
 	public static boolean saveImage = false;
@@ -20,7 +20,7 @@ public class Sketch extends PApplet
 	float rad2 = 200;
 	float numPoints = 5;
 	
-	public static int[] num = new int[Main.numSliders];
+	public static int[] num = new int[Main.numSliders+6];
 	public static boolean[] repeating = new boolean[Main.numSliders];
 	public static boolean[] reversed = new boolean[Main.numSliders];
 
@@ -34,7 +34,7 @@ public class Sketch extends PApplet
 		
 		for(int i=0;i<Main.numSliders;i++)
 		{
-			num[i] = ControlWindow.sliderInit;
+			num[i] = MainWindow.sliderInit;
 		}
 	}
 	
@@ -142,7 +142,7 @@ public class Sketch extends PApplet
 				{
 					num[i]++;
 
-					if(num[i]==ControlWindow.sliderMax)
+					if(num[i]==MainWindow.sliderMax)
 					{
 						num[i]=0;
 					}
@@ -151,9 +151,9 @@ public class Sketch extends PApplet
 				{
 					num[i]--;
 
-					if(num[i]==ControlWindow.sliderMin)
+					if(num[i]==MainWindow.sliderMin)
 					{
-						num[i]=ControlWindow.sliderMax;
+						num[i]=MainWindow.sliderMax;
 					}
 				}
 			}
