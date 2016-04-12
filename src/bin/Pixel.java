@@ -26,7 +26,7 @@ public class Pixel extends PApplet {
 	int backGround;
 	int userC;
 	int x, y;
-	int bk=0;
+	int bk = 0;
 	int stages;
 	int pixNum;
 
@@ -95,8 +95,7 @@ public class Pixel extends PApplet {
 		/*
 		 * if(load==true) { image(img,width/2,height/2); }
 		 */
-		
-		overWriteSquare();
+
 	}
 
 	public void drawGrid() {
@@ -244,71 +243,62 @@ public class Pixel extends PApplet {
 			if (key == 'l') {
 
 				File file = new File("data/" + "art.ser");
-				
 
 				squares = loaded(file);
 				System.out.println("image loaded");
 
 			}
-			
-			if(key == '\u001A' && !squares.isEmpty())
-			{
-					bk--;
-					if(bk > 0)
-					{
-						File file = new File("data/" + "art" +bk +".ser");
-						
-						squares = loaded(file);
-						//System.out.println("image loaded");
-						println(bk+"loading");
-					}
-					if(bk < 0)
-					{
-						bk=2;
-					}
-	
+
+			if (key == '\u001A' && !squares.isEmpty()) {
+				bk--;
+				if (bk > 0) {
+					File file = new File("data/" + "art" + bk + ".ser");
+
+					squares = loaded(file);
+					// System.out.println("image loaded");
+					println(bk + "loading");
+				}
+				if (bk < 0) {
+					bk = 2;
+				}
+
 			}
 
 		}
 	}
-	
-	public void	mouseReleased()
-	{
-		if(!squares.isEmpty())
-		{
+
+	public void mouseReleased() {
+		overWriteSquare();
+
+		if (!squares.isEmpty()) {
 			bk++;
-			File file = new File("data/" + "art" +bk + ".ser");
-	
+			File file = new File("data/" + "art" + bk + ".ser");
+
 			// save("data/art.jpeg");
-	
+
 			save(file, squares);
-	
+
 			System.out.println("image saved");
-			
-			
+
 			println(bk);
 		}
-		
+
 	}
-	
-	//To delete over written squares (there is a bug here i think)
+
+	// To delete over written squares (there is a bug here i think)
 	public void overWriteSquare() {
 		// Goes through the array of squares and compares the position of
 		// everyone
-		for (int i = 0; i < squares.size(); i++) {
+		for (int i = squares.size() - 1; i < 1; i--) {
+			println(squares.size());
 			Square squareOne = squares.get(i);
-			for (int j = 0; j < squares.size(); j++) {
-				Square squareTwo = squares.get(j);
+			if (squares.size() > 1) {
+				for (int j = i - 1; j > 1; j--) {
+					Square squareTwo = squares.get(j);
 
-				// Makes sure we're not comparing the same square
-				if (i != j) {
+					// Makes sure we're not comparing the same square
 					if ((squareOne.pos).dist(squareTwo.pos) == 0) {
-						// Removing the bottom layer
-						if (i > j) {
-							squares.remove(j);
-						} else {
-							squares.remove(i);
-						}
+						squares.remove(j);
 					}
 				}
 			}
@@ -328,13 +318,11 @@ public class Pixel extends PApplet {
 			println("IO Exception");
 		}
 	}
-	
 
-	public static ArrayList<Square> loaded(File path) 
-	{
+	public static ArrayList<Square> loaded(File path) {
 		Object square2 = null;
 		ArrayList<Square> sq = new ArrayList<Square>();
-		
+
 		try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream(path))) {
 			square2 = inFile.readObject();
 
@@ -358,7 +346,6 @@ public class Pixel extends PApplet {
 
 		return null;
 	}
-	
 
 	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
