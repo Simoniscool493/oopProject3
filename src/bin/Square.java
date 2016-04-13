@@ -2,6 +2,7 @@ package bin;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
+import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class Square implements java.io.Serializable
@@ -12,10 +13,13 @@ public class Square implements java.io.Serializable
 	float x;
 	float y; 
 	int c; 
+	static PGraphics art;
 
-	Square(float x, float y, int c, PApplet p)
+	Square(float x, float y, int c, PApplet p, PGraphics pArt)
 	{
 		parent = p;
+		
+		this.art = pArt;
 		this.x = x;
 		this.y = y;
 		this.c = c;
@@ -27,6 +31,14 @@ public class Square implements java.io.Serializable
 		parent.stroke(c);
 		parent.fill(c);
 		parent.rect(x, y, Pixel.boxSize-1, Pixel.boxSize-1);
+	}
+
+	//If user wants to save image with no background
+	public void saveImageTrans()
+	{
+		art.stroke(c);
+		art.fill(c);
+		art.rect(x, y, Pixel.boxSize-1, Pixel.boxSize-1);
 	}
 	
 	/*Lets you see what the contents of an arralist are normally

@@ -12,11 +12,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import processing.core.PImage;
 import processing.core.PVector;
 
 public class Pixel extends PApplet {
 
+	PGraphics pArt;
+	
 	boolean load = false;
 	static boolean flip;
 	static boolean showLines;
@@ -45,12 +48,13 @@ public class Pixel extends PApplet {
 	public void setup() {
 		
 		size(screenSize, screenSize);
+		pArt = createGraphics(width,height, JAVA2D);
 		stages = 0;
 		boxSize = 0;
 		cursor(CROSS);
 		
-		pen = loadImage("pen.png");
-		eraser = loadImage("eraser.png");
+		//pen = loadImage("pen.png");
+		//eraser = loadImage("eraser.png");
 
 		// Start color off as black
 		r = g = b = 0;
@@ -82,7 +86,7 @@ public class Pixel extends PApplet {
 			break;
 
 		case 1:
-
+			
 			boxSize = (float) (width) / (float) (pixNum);
 
 			for (int i = 0; i < squares.size(); i++) {
@@ -93,10 +97,10 @@ public class Pixel extends PApplet {
 			if (showLines == true) {
 				drawGrid();
 			}
-
 			break;
 		}
 		
+		/*
 		if(mode==3)
 		{
 			cursor(pen);
@@ -111,6 +115,7 @@ public class Pixel extends PApplet {
 		{
 			cursor(CROSS);
 		}
+		*/
 
 		/*
 		 * if(load==true) { image(img,width/2,height/2); }
@@ -148,7 +153,7 @@ public class Pixel extends PApplet {
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
 
-				Square a = new Square(x * boxSize, y * boxSize, userC, this);
+				Square a = new Square(x * boxSize, y * boxSize, userC, this, pArt);
 				squares.add(a);
 			}
 			break;
@@ -208,7 +213,7 @@ public class Pixel extends PApplet {
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
 
-				Square a = new Square(x * boxSize, y * boxSize, userC, this);
+				Square a = new Square(x * boxSize, y * boxSize, userC, this, pArt);
 				squares.add(a);
 			}
 			break;
@@ -229,20 +234,6 @@ public class Pixel extends PApplet {
 		}
 	}
 
-	public void load(PImage img) {
-		// Load functionality will be changed to be file explorer in future.
-
-		/*
-		 * String name;
-		 * 
-		 * System.out.println("Enter a word or quit: "); name =
-		 * scanIn.nextLine();
-		 * 
-		 * img = loadImage(name + ".jpeg"); imageMode(CENTER);
-		 * 
-		 */
-	}
-
 	public void keyPressed() {
 		if (stages == 1) {
 			if (key == 't') {
@@ -255,15 +246,6 @@ public class Pixel extends PApplet {
 
 			if (key == 'e') {
 				mode = 2;
-			}
-
-			if (key == 'f') {
-				for (int i = 0; i < squares.size(); i++) {
-					squares.get(i).y = -y;
-
-				}
-
-				println("flipped");
 			}
 
 			if (key == 's') {
@@ -285,6 +267,19 @@ public class Pixel extends PApplet {
 				squares = loaded(file);
 				System.out.println("image loaded");
 
+			}
+			
+			if(key == 'j')
+			{
+				pArt.beginDraw();
+				
+				for (int i = 0; i < squares.size(); i++) {
+					Square squ = squares.get(i);
+					squ.saveImageTrans();
+				}
+				pArt.endDraw();
+				
+				pArt.save("Drawing.png");
 			}
 
 			if (key == '\u001A' && !squares.isEmpty()) {
@@ -323,7 +318,7 @@ public class Pixel extends PApplet {
 
 	}
 
-	// To delete over written squares (there is a bug here i think)
+	//Bug is fixed
 	public void overWriteSquare() {
 		// Goes through the array of squares and compares the position every
 		// square underneath it
@@ -337,8 +332,9 @@ public class Pixel extends PApplet {
 
 						if ((squareOne.pos).dist(squareTwo.pos) == 0) {
 							squares.remove(j);
+							
+							//Shift index back one after deletion
 							i = i - 1;
-							println("removed");
 						}
 					}
 				}
@@ -391,5 +387,6 @@ public class Pixel extends PApplet {
 	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 		Square.parent = parent;
+		Square.art = pArt;
 	}
 }
