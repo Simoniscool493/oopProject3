@@ -39,10 +39,12 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 	
 	int sliderMin = 0;
 	int sliderMax = 255;
-	int componentWidth = (int) screenSize.getWidth() / 4;
+	int componentWidth = (int) (screenSize.getWidth()*0.2);
 	int componentHeight = 50;
 
 	Color backgroundColor = new Color(204, 255, 255);
+	
+	GridBagConstraints gridC = new GridBagConstraints();
 
 	public Frame() {
 
@@ -50,7 +52,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		this.setTitle("Pixel Art Tool");
 		this.setSize(1000, 1000);
-		this.setLayout(new BorderLayout());
+		this.setLayout(new GridBagLayout());
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		init();
 		this.setVisible(true);
@@ -58,23 +60,24 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 	}
 
 	public void init() {
+		//Adding sketch as a component
 		JPanel sketch = new JPanel();
 		Pixel pixel = new Pixel();
-
-		// sketch.setLayout(new BorderLayout());
 		sketch.add(pixel);
-		sketch.setPreferredSize(new Dimension(Pixel.screenSize, Pixel.screenSize));
+		sketch.setLayout(new GridLayout());
 		sketch.setBackground(backgroundColor);
 
+		//Creating the toolBar on the RHS
 		JPanel toolBar = new JPanel();
 		toolBar.setLayout(new GridLayout(2, 1));
 		toolBar.setBackground(backgroundColor);
 
+		//ButtonPanel will be nested inside toolbar
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new GridLayout(4, 2, 10, 5));
 		buttonsPanel.setBackground(Color.WHITE);
 
-		// BUTTONS
+		// Creating BUTTONS for Button Panel
 		// Draw
 		JButton drawButton = new JButton("Draw (D)");
 		buttonsPanel.add(drawButton);
@@ -92,8 +95,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JButton EraseallButton = new JButton("Erase all");
 		buttonsPanel.add(EraseallButton);
 		
-
-		// Button action listeners
+		// All Button action listeners
 		drawButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -127,6 +129,9 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 				
 			}
 		});
+		
+		//Check if a color is selected on the screen
+		sketch.addMouseListener(pixel);
 
 		EraseallButton.addActionListener(new ActionListener() {
 
@@ -141,7 +146,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JLabel blank = new JLabel();
 		buttonsPanel.add(blank);
 		
-		//Initial color set
+		//Initial color set for colour Preview
 		JPanel colourPre = new JPanel();
 		colourPre.setBackground(new Color(Pixel.r, Pixel.g, Pixel.b));
 		buttonsPanel.add(colourPre);
@@ -205,6 +210,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		});
 
 		JPanel leftTool = new JPanel();
+		leftTool.setLayout(new GridLayout(1,1));
 		leftTool.setBackground(backgroundColor);
 
 		// To control background Colour, Found out you can't reuse the same
@@ -279,9 +285,15 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		sliderBackPanel.add(blueBack);
 
 		// Add things into frames
-		add(sketch, BorderLayout.CENTER);
-		add(toolBar, BorderLayout.EAST);
-		add(leftTool, BorderLayout.WEST);
+		gridC.weightx = 1;
+		
+		gridC.gridx = 0;
+		add(leftTool, gridC);
+		gridC.gridx = 1;
+		add(sketch, gridC);
+		gridC.gridx = 2;
+		add(toolBar, gridC);
+		
 		leftTool.add(sliderBackPanel);
 		toolBar.add((buttonsPanel));
 		toolBar.add(sliderPanel);

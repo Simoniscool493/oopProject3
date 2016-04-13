@@ -19,11 +19,11 @@ import processing.core.PVector;
 public class Pixel extends PApplet {
 
 	PGraphics pArt;
-	
+
 	boolean load = false;
 	static boolean flip;
 	static boolean showLines;
-	PImage pen,eraser;
+	PImage pen, eraser;
 	static PApplet parent;
 
 	int backGround;
@@ -46,15 +46,15 @@ public class Pixel extends PApplet {
 	Scanner scanIn = new Scanner(System.in);
 
 	public void setup() {
-		
+
 		size(screenSize, screenSize);
-		pArt = createGraphics(width,height, JAVA2D);
+		pArt = createGraphics(width, height, JAVA2D);
 		stages = 0;
 		boxSize = 0;
 		cursor(CROSS);
-		
-		//pen = loadImage("pen.png");
-		//eraser = loadImage("eraser.png");
+
+		// pen = loadImage("pen.png");
+		// eraser = loadImage("eraser.png");
 
 		// Start color off as black
 		r = g = b = 0;
@@ -86,7 +86,7 @@ public class Pixel extends PApplet {
 			break;
 
 		case 1:
-			
+
 			boxSize = (float) (width) / (float) (pixNum);
 
 			for (int i = 0; i < squares.size(); i++) {
@@ -99,23 +99,14 @@ public class Pixel extends PApplet {
 			}
 			break;
 		}
-		
-		/*
-		if(mode==3)
-		{
-			cursor(pen);
-		}
 
-		else if(mode==2)
-		{
-			cursor(eraser);
-		}
-		
-		else
-		{
-			cursor(CROSS);
-		}
-		*/
+		/*
+		 * if(mode==3) { cursor(pen); }
+		 * 
+		 * else if(mode==2) { cursor(eraser); }
+		 * 
+		 * else { cursor(CROSS); }
+		 */
 
 		/*
 		 * if(load==true) { image(img,width/2,height/2); }
@@ -174,7 +165,7 @@ public class Pixel extends PApplet {
 			break;
 
 		case 3:
-			
+
 			mouse = new PVector(mouseX, mouseY);
 			if (stages == 1) {
 				for (int i = 0; i < squares.size(); i++) {
@@ -185,11 +176,10 @@ public class Pixel extends PApplet {
 					}
 				}
 			}
-			
-			
-			mode=1; //Changes back to draw mode for convenience 
+
+			mode = 1; // Changes back to draw mode for convenience
 			break;
-			
+
 		}
 
 		if (stages == 0) {
@@ -268,18 +258,9 @@ public class Pixel extends PApplet {
 				System.out.println("image loaded");
 
 			}
-			
-			if(key == 'j')
-			{
-				pArt.beginDraw();
-				
-				for (int i = 0; i < squares.size(); i++) {
-					Square squ = squares.get(i);
-					squ.saveImageTrans();
-				}
-				pArt.endDraw();
-				
-				pArt.save("Drawing.png");
+
+			if (key == 'j') {
+				saveTrans();
 			}
 
 			if (key == '\u001A' && !squares.isEmpty()) {
@@ -300,6 +281,18 @@ public class Pixel extends PApplet {
 		}
 	}
 
+	public void saveTrans() {
+		pArt.beginDraw();
+
+		for (int i = 0; i < squares.size(); i++) {
+			Square squ = squares.get(i);
+			squ.saveImageTrans();
+		}
+		pArt.endDraw();
+
+		pArt.save("Drawing.png");
+	}
+
 	public void mouseReleased() {
 		overWriteSquare();
 
@@ -318,7 +311,7 @@ public class Pixel extends PApplet {
 
 	}
 
-	//Bug is fixed
+	// Bug is fixed
 	public void overWriteSquare() {
 		// Goes through the array of squares and compares the position every
 		// square underneath it
@@ -332,8 +325,8 @@ public class Pixel extends PApplet {
 
 						if ((squareOne.pos).dist(squareTwo.pos) == 0) {
 							squares.remove(j);
-							
-							//Shift index back one after deletion
+
+							// Shift index back one after deletion
 							i = i - 1;
 						}
 					}
