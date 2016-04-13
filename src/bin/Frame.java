@@ -1,20 +1,26 @@
 package bin;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
+import java.io.File;
 import java.util.Hashtable;
-import java.awt.event.*;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
-
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Frame extends JFrame { // implements ActionListener, KeyListener,
 									// MenuListener {
@@ -26,10 +32,13 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 	// Some fields
 	// ButtonListener bListen = new ButtonListener();
-	JMenuBar menuBar;
-	JMenu useIt, seeItRun, viewTheCode, exit;
-	JMenuItem SirOpen, sirSave, sirType, sirDir;
-	JMenuItem vtcOpen, vtcSave, vtcType, vtcDir;
+	
+	public JTextField filename = new JTextField();
+	 
+
+	public JTextField dir = new JTextField();
+	public  JButton open = new JButton("Open"), save = new JButton("Save");
+
 
 	// Some fields
 	// ButtonListener bListen = new ButtonListener();
@@ -57,9 +66,12 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		init();
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
 	}
 
 	public void init() {
+
 		//Adding sketch as a component
 		JPanel sketch = new JPanel();
 		Pixel pixel = new Pixel();
@@ -74,7 +86,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		//ButtonPanel will be nested inside toolbar
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(new GridLayout(4, 2, 10, 5));
+		buttonsPanel.setLayout(new GridLayout(5, 4, 6, 5));
 		buttonsPanel.setBackground(Color.WHITE);
 
 		// Creating BUTTONS for Button Panel
@@ -94,6 +106,14 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		
 		JButton EraseallButton = new JButton("Erase all");
 		buttonsPanel.add(EraseallButton);
+		
+		JButton op = new JButton("Open");
+		buttonsPanel.add(op);
+		
+		JButton sv = new JButton("Save");
+		buttonsPanel.add(sv);
+
+	
 		
 		// All Button action listeners
 		drawButton.addActionListener(new ActionListener() {
@@ -141,21 +161,17 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 			}
 
 		});
-
-		// Blank JLabels
-		JLabel blank = new JLabel();
-		buttonsPanel.add(blank);
 		
-		//Initial color set for colour Preview
-		JPanel colourPre = new JPanel();
-		colourPre.setBackground(new Color(Pixel.r, Pixel.g, Pixel.b));
-		buttonsPanel.add(colourPre);
+		//file explorer action listeners
+	    op.addActionListener(new OpenL());
+
+	    sv.addActionListener(new SaveL());
 
 		// Adding sliders
 		JPanel sliderPanel = new JPanel();
 		sliderPanel.setBackground(Color.WHITE);
 
-		sliderPanel.setLayout(new GridLayout(6, 1));
+		sliderPanel.setLayout(new GridLayout(6, 2));
 
 		JLabel redLabel = new JLabel("Red");
 		JSlider red = new JSlider();
@@ -168,6 +184,18 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JLabel blueLabel = new JLabel("Blue");
 		JSlider blue = new JSlider();
 		blue = makeSlider(colorInit);
+		
+		//File explorer
+
+		 dir.setEditable(false);
+		 filename.setEditable(false);
+		
+
+	    
+		//Initial color set for colour Preview
+		JPanel colourPre = new JPanel();
+		colourPre.setBackground(new Color(Pixel.r, Pixel.g, Pixel.b));
+		buttonsPanel.add(colourPre);
 
 		// Slider listeners
 		red.addChangeListener(new ChangeListener() {
@@ -300,56 +328,6 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		pixel.init();
 
-		/*
-		 * menuBar = new JMenuBar();
-		 * 
-		 * useIt = new JMenu("Using File explorer"); useIt.addMenuListener(new
-		 * MenuListener() {
-		 * 
-		 * @Override public void menuSelected(MenuEvent e) { // TODO
-		 * Auto-generated method stub
-		 * 
-		 * }
-		 * 
-		 * @Override public void menuDeselected(MenuEvent e) { // TODO
-		 * Auto-generated method stub
-		 * 
-		 * }
-		 * 
-		 * @Override public void menuCanceled(MenuEvent e) { // TODO
-		 * Auto-generated method stub
-		 * 
-		 * } }); menuBar.add(useIt);
-		 * 
-		 * exit= new JMenu("Exit"); exit.setMnemonic(KeyEvent.VK_X);
-		 * exit.addMenuListener(new thisMenuListener()); menuBar.add(exit);
-		 * 
-		 * seeItRun = new JMenu("Seeing it run"); seeItRun.addMenuListener(new
-		 * thisMenuListener()); useIt.add(seeItRun);
-		 * 
-		 * viewTheCode = new JMenu("Viewing the code");
-		 * viewTheCode.addMenuListener(new thisMenuListener());
-		 * useIt.add(viewTheCode);
-		 * 
-		 * SirOpen= new JMenuItem("Open a file", new ImageIcon
-		 * ("images/open.gif")); SirOpen.addActionListener(this);
-		 * seeItRun.add(SirOpen);
-		 * 
-		 * sirSave = new JMenuItem("Save a file", new ImageIcon
-		 * ("images/save.gif")); sirSave.addActionListener(this);
-		 * seeItRun.add(sirSave);
-		 * 
-		 * sirType = new JMenuItem("select a file type", new ImageIcon
-		 * ("images/type.gif")); sirType.addActionListener(this);
-		 * seeItRun.add(sirType);
-		 * 
-		 * sirDir = new JMenuItem("select a file type", new ImageIcon
-		 * ("images/dir.gif"));
-		 * 
-		 * sirDir.addActionListener(this); seeItRun.add(sirDir);
-		 * 
-		 * this.setJMenuBar(menuBar); add(lblCode);
-		 */
 
 	}
 
@@ -370,37 +348,60 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		slider.setLabelTable(colorLabel);
 		return slider;
 	}
+	
+	//Opens a new .pix file
+	  class OpenL implements ActionListener 
+	  {
+	    public void actionPerformed(ActionEvent e) 
+	    {
+	    FileNameExtensionFilter f = new FileNameExtensionFilter("Pixel", "pix");
+	     JFileChooser c = new JFileChooser("./data");
+	     c.setFileFilter(f);
+	      
+	      int opp = c.showOpenDialog(Frame.this);
+	      
+	      if (opp == JFileChooser.APPROVE_OPTION) 
+	      {
+	    	
+	    	File o = c.getSelectedFile();
+	    	Pixel.file=o;
+	    	Pixel.loads=true;
+	        System.out.println(Pixel.file.getParent());
+	        System.out.println(Pixel.file.getName());
+	      
+	      }
+	    }
+	  }
+
+	  //Saves a new .pix file with the .pix extension
+	  class SaveL implements ActionListener 
+	  {
+	    public void actionPerformed(ActionEvent e)
+	    {
+	      JFileChooser c = new JFileChooser();
+	      c.setCurrentDirectory(new File("./data"));
+
+	      int sv = c.showSaveDialog(Frame.this);
+	      
+	      if (sv == JFileChooser.APPROVE_OPTION) 
+	      {
+		    String s = c.getSelectedFile().getAbsolutePath() +".pix";
+
+		    File fi = new File(s);
+		    
+		    Pixel.filen=fi;
+		    Pixel.save=true;
+		    System.out.println(Pixel.filen.getParent());
+            System.out.println(Pixel.filen.getName());
+
+	      }
+
+	    }
+	  }
 
 	public static void main(String[] args) {
 		Frame f = new Frame();
-		/*
-		 * MenuBar m = new MenuBar(); maximiseFrame(Frame());
-		 * m.setVisible(true);
-		 */
 	}
-
-	/*
-	 * @Override public void keyPressed(KeyEvent arg0) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void keyReleased(KeyEvent arg0) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void keyTyped(KeyEvent arg0) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * 
-	 * 
-	 * public void actionPerformed(ActionEvent e) { //...Get information from
-	 * the action event... //...Display it in the text area... }
-	 * 
-	 * public void itemStateChanged(ItemEvent e) { //...Get information from the
-	 * item event... //...Display it in the text area... }
-	 */
+	
+	
 }

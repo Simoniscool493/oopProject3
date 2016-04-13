@@ -11,6 +11,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JButton;
+import javax.swing.JTextField;
+
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PImage;
@@ -20,11 +23,17 @@ public class Pixel extends PApplet {
 
 	PGraphics pArt;
 
+
 	boolean load = false;
 	static boolean flip;
 	static boolean showLines;
 	PImage pen, eraser;
 	static PApplet parent;
+	static boolean loads = false;
+	static boolean save = false;
+
+	 static File file = new File("");
+	 static File filen = new File("");
 
 	int backGround;
 	int userC;
@@ -44,6 +53,7 @@ public class Pixel extends PApplet {
 	public static ArrayList<Square> squares = new ArrayList<Square>();
 
 	Scanner scanIn = new Scanner(System.in);
+
 
 	public void setup() {
 
@@ -66,10 +76,12 @@ public class Pixel extends PApplet {
 
 		showLines = true;
 		flip = false;
-
+	     System.out.println(file.getParent());
+	      System.out.println(file.getName());
 	}
 
 	public void draw() {
+		
 		background(backR, backG, backB);
 		rectMode(CORNER);
 		fill(255);
@@ -108,9 +120,19 @@ public class Pixel extends PApplet {
 		 * else { cursor(CROSS); }
 		 */
 
-		/*
-		 * if(load==true) { image(img,width/2,height/2); }
-		 */
+		if (loads) 
+		{
+			squares = loaded(file);
+			System.out.println("image loaded");
+			loads=false;
+		}
+		if(save)
+		{
+			save(filen, squares);
+			System.out.println("image saved");
+			save=false;
+		}
+
 
 	}
 
@@ -238,26 +260,7 @@ public class Pixel extends PApplet {
 				mode = 2;
 			}
 
-			if (key == 's') {
 
-				File file = new File("data/" + "art.ser");
-
-				// save("data/art.jpeg");
-
-				save(file, squares);
-
-				System.out.println("image saved");
-
-			}
-
-			if (key == 'l') {
-
-				File file = new File("data/" + "art.ser");
-
-				squares = loaded(file);
-				System.out.println("image loaded");
-
-			}
 
 			if (key == 'j') {
 				saveTrans();
@@ -266,7 +269,7 @@ public class Pixel extends PApplet {
 			if (key == '\u001A' && !squares.isEmpty()) {
 				bk--;
 				if (bk > 0) {
-					File file = new File("data/" + "art" + bk + ".ser");
+					File file = new File("data/" +  ".pix");
 
 					squares = loaded(file);
 					// System.out.println("image loaded");
@@ -298,7 +301,7 @@ public class Pixel extends PApplet {
 
 		if (!squares.isEmpty()) {
 			bk++;
-			File file = new File("data/" + "art" + bk + ".ser");
+			File file = new File(".art");
 
 			// save("data/art.jpeg");
 
