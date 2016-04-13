@@ -11,7 +11,6 @@ class SliderListener implements ChangeListener
 	public SliderListener(int n)
 	{
 		index = n;
-		System.out.println(index);
 	}
 	
     public void stateChanged(ChangeEvent e)
@@ -19,8 +18,16 @@ class SliderListener implements ChangeListener
         JSlider source = (JSlider)e.getSource();
         if (!source.getValueIsAdjusting() || slidingSliders)
 		{
-        	PSketch.num[index] = (int)source.getValue();
-            System.out.println(index);
+    		PSketch.num[index] = (int)source.getValue();
+
+
+        	if(index>=Main.numSliders)
+        	{
+        		PSketch.colorChanged = true;
+        		PSketch.indexColorChanged = index-Main.numSliders;
+        		System.out.println(PSketch.num[PSketch.indexColorChanged]);
+
+        	}
             
             if(index == 0)
             {

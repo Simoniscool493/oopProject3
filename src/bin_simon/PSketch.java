@@ -1,5 +1,8 @@
 package bin_simon;
 
+import java.util.ArrayList;
+import java.awt.Color;
+import javax.swing.JCheckBox;
 import processing.core.PApplet;
 
 public class PSketch extends PApplet
@@ -10,8 +13,10 @@ public class PSketch extends PApplet
 	public static boolean frameRateChanged = false;
 	public static boolean randomStroke = false;
 	public static boolean randomFill = false;
-
+	public static boolean colorChanged = false;
 	
+	public static int indexColorChanged = 0;
+
 	float range = 40.0f;
 	float theta = 0;
 	float thetaInc;
@@ -20,10 +25,11 @@ public class PSketch extends PApplet
 	float rad2 = 200;
 	float numPoints = 5;
 	
-	public static int[] num = new int[Main.numSliders+6];
+	public static int[] num = new int[Main.numSliders+(Main.numColorChoosers*3)];
 	public static boolean[] repeating = new boolean[Main.numSliders];
 	public static boolean[] reversed = new boolean[Main.numSliders];
-
+	
+	public static ArrayList<Color> colors = new ArrayList<Color>();
 	
 	public static String currentAnimation = "Circle";
 
@@ -35,6 +41,11 @@ public class PSketch extends PApplet
 		for(int i=0;i<Main.numSliders;i++)
 		{
 			num[i] = MainWindow.sliderInit;
+		}
+		for(int i=0;i<Main.numColorChoosers;i++)
+		{
+			Color c = new Color(0,0,0);
+			colors.add(c);
 		}
 	}
 	
@@ -49,6 +60,10 @@ public class PSketch extends PApplet
 		{
 			fill(random(255),random(255),random(255));
 		}
+		if(colorChanged)
+		{
+			changeColor();
+		}
 		
 		if(enableDraw)
 		{
@@ -62,7 +77,7 @@ public class PSketch extends PApplet
 		
 		if(saveImage)
 		{
-			save("art"+(int)random(1000)+".jpeg");
+			save("samples/art"+(int)random(1000)+".jpeg");
 			saveImage = false;
 		}
 		
@@ -158,6 +173,48 @@ public class PSketch extends PApplet
 				}
 			}
 		}
+	}
+	
+	public void changeColor()
+	{
+		if(indexColorChanged<3)
+		{
+			Color c = getNewColor(0);
+			background(c.getRed(),c.getGreen(),c.getBlue());
+		}
+		else if(indexColorChanged<6)
+		{
+			Color c = getNewColor(1);
+			fill(c.getRed(),c.getGreen(),c.getBlue());
+		}
+		else if(indexColorChanged<9)
+		{
+			Color c = getNewColor(2);
+			stroke(c.getRed(),c.getGreen(),c.getBlue());
+		}
+		colorChanged = false;
+	}
+	
+	public Color getNewColor(int n)
+	{
+		Color c = colors.get(n);
+		
+		if(indexColorChanged%3 == 0)
+		{
+			c  = new Color(num[indexColorChanged+Main.numSliders],c.getGreen(),c.getBlue());
+		}
+		if(indexColorChanged%3 == 1)
+		{
+			c  = new Color(c.getRed(),num[indexColorChanged+Main.numSliders],c.getBlue());
+		}
+		if(indexColorChanged%3 == 2)
+		{
+			c  = new Color(c.getRed(),c.getGreen(),num[indexColorChanged+Main.numSliders]);
+		}
+
+		colors.set(n,c);
+		
+		return c;
 	}
 	
 	

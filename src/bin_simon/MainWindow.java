@@ -11,14 +11,13 @@ import java.util.ArrayList;
 
 public class MainWindow extends JFrame
 {
-	
 	static int sliderMin = 0;
 	static int sliderMax = 100;
 	static int sliderInit = 50;
 	
 	static int colorSliderMin = 0;
 	static int colorSliderMax = 255;
-	static int colorSliderInit = 0;
+	static int colorSliderInit = 180;
 
 	static int componentWidth = 700;
 	static int componentHeight = 100;
@@ -32,6 +31,7 @@ public class MainWindow extends JFrame
 	public static ArrayList<CycleBox> cycles = new ArrayList<CycleBox>();
 	public static ArrayList<CycleBox> reversers = new ArrayList<CycleBox>();
 	public static ArrayList<JPanel> colorChoosers = new ArrayList<JPanel>();
+	//public static ArrayList<JPanel>
 
 		
 	ButtonListener b = new ButtonListener();
