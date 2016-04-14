@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Hashtable;
 
@@ -32,27 +34,25 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 	// Some fields
 	// ButtonListener bListen = new ButtonListener();
-	
+
 	public JTextField filename = new JTextField();
-	 
 
 	public JTextField dir = new JTextField();
-	public  JButton open = new JButton("Open"), save = new JButton("Save");
-
+	public JButton open = new JButton("Open"), save = new JButton("Save");
 
 	// Some fields
 	// ButtonListener bListen = new ButtonListener();
 	// For sliders
 	int backGroundInit = 200;
 	int colorInit = 0;
-	
+
 	int sliderMin = 0;
 	int sliderMax = 255;
-	int componentWidth = (int) (screenSize.getWidth()*0.2);
+	int componentWidth = (int) (screenSize.getWidth() * 0.2);
 	int componentHeight = 50;
 
 	Color backgroundColor = new Color(204, 255, 255);
-	
+
 	GridBagConstraints gridC = new GridBagConstraints();
 
 	public Frame() {
@@ -67,24 +67,23 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
 	}
 
 	public void init() {
 
-		//Adding sketch as a component
+		// Adding sketch as a component
 		JPanel sketch = new JPanel();
 		Pixel pixel = new Pixel();
 		sketch.add(pixel);
 		sketch.setLayout(new GridLayout());
 		sketch.setBackground(backgroundColor);
 
-		//Creating the toolBar on the RHS
+		// Creating the toolBar on the RHS
 		JPanel toolBar = new JPanel();
 		toolBar.setLayout(new GridLayout(2, 1));
 		toolBar.setBackground(backgroundColor);
 
-		//ButtonPanel will be nested inside toolbar
+		// ButtonPanel will be nested inside toolbar
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new GridLayout(5, 4, 6, 5));
 		buttonsPanel.setBackground(Color.WHITE);
@@ -104,17 +103,18 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JButton magicPen = new JButton("Magic Pen");
 		buttonsPanel.add(magicPen);
 		
+		JButton flip = new JButton("Flip");
+		buttonsPanel.add(flip);
+
 		JButton EraseallButton = new JButton("Erase all");
 		buttonsPanel.add(EraseallButton);
-		
+
 		JButton op = new JButton("Open");
 		buttonsPanel.add(op);
-		
+
 		JButton sv = new JButton("Save");
 		buttonsPanel.add(sv);
 
-	
-		
 		// All Button action listeners
 		drawButton.addActionListener(new ActionListener() {
 
@@ -140,17 +140,26 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 			}
 
 		});
-		
+
 		magicPen.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Pixel.mode = 3;
-				
+
 			}
 		});
 		
-		//Check if a color is selected on the screen
+		flip.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pixel.flip();
+				
+			}
+		});
+
+		// Check if a color is selected on the screen
 		sketch.addMouseListener(pixel);
 
 		EraseallButton.addActionListener(new ActionListener() {
@@ -161,11 +170,11 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 			}
 
 		});
-		
-		//file explorer action listeners
-	    op.addActionListener(new OpenL());
 
-	    sv.addActionListener(new SaveL());
+		// file explorer action listeners
+		op.addActionListener(new OpenL());
+
+		sv.addActionListener(new SaveL());
 
 		// Adding sliders
 		JPanel sliderPanel = new JPanel();
@@ -184,15 +193,13 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JLabel blueLabel = new JLabel("Blue");
 		JSlider blue = new JSlider();
 		blue = makeSlider(colorInit);
-		
-		//File explorer
 
-		 dir.setEditable(false);
-		 filename.setEditable(false);
-		
+		// File explorer
 
-	    
-		//Initial color set for colour Preview
+		dir.setEditable(false);
+		filename.setEditable(false);
+
+		// Initial color set for colour Preview
 		JPanel colourPre = new JPanel();
 		colourPre.setBackground(new Color(Pixel.r, Pixel.g, Pixel.b));
 		buttonsPanel.add(colourPre);
@@ -237,8 +244,18 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 			}
 		});
 
+		pixel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println(Pixel.mode);
+
+				colourPre.setBackground(new Color(pixel.userC));
+				colourPre.repaint();
+			}
+		});
+
 		JPanel leftTool = new JPanel();
-		leftTool.setLayout(new GridLayout(1,1));
+		leftTool.setLayout(new GridLayout(1, 1));
 		leftTool.setBackground(backgroundColor);
 
 		// To control background Colour, Found out you can't reuse the same
@@ -259,9 +276,9 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JLabel blueBackLabel = new JLabel("Blue");
 		JSlider blueBack = new JSlider();
 		blueBack = makeSlider(backGroundInit);
-		
+
 		redBack.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider) e.getSource();
@@ -269,29 +286,28 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 				Pixel.backR = (int) source.getValue();
 			}
 		});
-		
+
 		greenBack.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider) e.getSource();
 
 				Pixel.backG = (int) source.getValue();
-				
+
 			}
 		});
-		
+
 		blueBack.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider) e.getSource();
 
 				Pixel.backB = (int) source.getValue();
-				
 			}
 		});
-		
+
 		// Adding Sliders into Toolbar
 		sliderPanel.add(redBackLabel);
 		sliderPanel.add(red);
@@ -314,21 +330,19 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		// Add things into frames
 		gridC.weightx = 1;
-		
+
 		gridC.gridx = 0;
 		add(leftTool, gridC);
 		gridC.gridx = 1;
 		add(sketch, gridC);
 		gridC.gridx = 2;
 		add(toolBar, gridC);
-		
+
 		leftTool.add(sliderBackPanel);
 		toolBar.add((buttonsPanel));
 		toolBar.add(sliderPanel);
 
 		pixel.init();
-
-
 	}
 
 	public JSlider makeSlider(int sliderInit) {
@@ -348,60 +362,53 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		slider.setLabelTable(colorLabel);
 		return slider;
 	}
-	
-	//Opens a new .pix file
-	  class OpenL implements ActionListener 
-	  {
-	    public void actionPerformed(ActionEvent e) 
-	    {
-	    FileNameExtensionFilter f = new FileNameExtensionFilter("Pixel", "pix");
-	     JFileChooser c = new JFileChooser("./data");
-	     c.setFileFilter(f);
-	      
-	      int opp = c.showOpenDialog(Frame.this);
-	      
-	      if (opp == JFileChooser.APPROVE_OPTION) 
-	      {
-	    	
-	    	File o = c.getSelectedFile();
-	    	Pixel.file=o;
-	    	Pixel.loads=true;
-	        System.out.println(Pixel.file.getParent());
-	        System.out.println(Pixel.file.getName());
-	      
-	      }
-	    }
-	  }
 
-	  //Saves a new .pix file with the .pix extension
-	  class SaveL implements ActionListener 
-	  {
-	    public void actionPerformed(ActionEvent e)
-	    {
-	      JFileChooser c = new JFileChooser();
-	      c.setCurrentDirectory(new File("./data"));
+	// Opens a new .pix file
+	class OpenL implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			FileNameExtensionFilter f = new FileNameExtensionFilter("Pixel", "pix");
+			JFileChooser c = new JFileChooser("./data");
+			c.setFileFilter(f);
 
-	      int sv = c.showSaveDialog(Frame.this);
-	      
-	      if (sv == JFileChooser.APPROVE_OPTION) 
-	      {
-		    String s = c.getSelectedFile().getAbsolutePath() +".pix";
+			int opp = c.showOpenDialog(Frame.this);
 
-		    File fi = new File(s);
-		    
-		    Pixel.filen=fi;
-		    Pixel.save=true;
-		    System.out.println(Pixel.filen.getParent());
-            System.out.println(Pixel.filen.getName());
+			if (opp == JFileChooser.APPROVE_OPTION) {
 
-	      }
+				File o = c.getSelectedFile();
+				Pixel.file = o;
+				Pixel.loads = true;
+				System.out.println(Pixel.file.getParent());
+				System.out.println(Pixel.file.getName());
 
-	    }
-	  }
+			}
+		}
+	}
+
+	// Saves a new .pix file with the .pix extension
+	class SaveL implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser c = new JFileChooser();
+			c.setCurrentDirectory(new File("./data"));
+
+			int sv = c.showSaveDialog(Frame.this);
+
+			if (sv == JFileChooser.APPROVE_OPTION) {
+				String s = c.getSelectedFile().getAbsolutePath() + ".pix";
+
+				File fi = new File(s);
+
+				Pixel.filen = fi;
+				Pixel.save = true;
+				System.out.println(Pixel.filen.getParent());
+				System.out.println(Pixel.filen.getName());
+
+			}
+
+		}
+	}
 
 	public static void main(String[] args) {
 		Frame f = new Frame();
 	}
-	
-	
+
 }

@@ -23,7 +23,6 @@ public class Pixel extends PApplet {
 
 	PGraphics pArt;
 
-
 	boolean load = false;
 	static boolean flip;
 	static boolean showLines;
@@ -32,8 +31,8 @@ public class Pixel extends PApplet {
 	static boolean loads = false;
 	static boolean save = false;
 
-	 static File file = new File("");
-	 static File filen = new File("");
+	static File file = new File("");
+	static File filen = new File("");
 
 	int backGround;
 	int userC;
@@ -53,7 +52,6 @@ public class Pixel extends PApplet {
 	public static ArrayList<Square> squares = new ArrayList<Square>();
 
 	Scanner scanIn = new Scanner(System.in);
-
 
 	public void setup() {
 
@@ -76,12 +74,12 @@ public class Pixel extends PApplet {
 
 		showLines = true;
 		flip = false;
-	     System.out.println(file.getParent());
-	      System.out.println(file.getName());
+		System.out.println(file.getParent());
+		System.out.println(file.getName());
 	}
 
 	public void draw() {
-		
+
 		background(backR, backG, backB);
 		rectMode(CORNER);
 		fill(255);
@@ -95,12 +93,14 @@ public class Pixel extends PApplet {
 			text("How many pixels would you like to work with?", width / 2, 100);
 			text("16 x 16", width / 2, 200);// 256
 			text("32 x 32", width / 2, 300);// 1024
+			text("64 x 64", width / 2, 400);// 4096
 			break;
 
 		case 1:
 
 			boxSize = (float) (width) / (float) (pixNum);
 
+			rectMode(CENTER);
 			for (int i = 0; i < squares.size(); i++) {
 				Square squ = squares.get(i);
 				squ.drawShape();
@@ -120,19 +120,16 @@ public class Pixel extends PApplet {
 		 * else { cursor(CROSS); }
 		 */
 
-		if (loads) 
-		{
+		if (loads) {
 			squares = loaded(file);
 			System.out.println("image loaded");
-			loads=false;
+			loads = false;
 		}
-		if(save)
-		{
+		if (save) {
 			save(filen, squares);
 			System.out.println("image saved");
-			save=false;
+			save = false;
 		}
-
 
 	}
 
@@ -214,6 +211,11 @@ public class Pixel extends PApplet {
 				pixNum = 32;
 				stages = 1;
 			}
+
+			if (mouseX > 100 && mouseX < width - 100 && mouseY < 420 && mouseY > 380) {
+				pixNum = 64;
+				stages = 1;
+			}
 		}
 	}
 
@@ -260,8 +262,46 @@ public class Pixel extends PApplet {
 				mode = 2;
 			}
 
+			if (key == 'f') {
+				flip();
+			}
 
+			//Used to move the drawing area
+			if (key == CODED) {
+				if (keyCode == UP) {
+					for (int i = 0; i < squares.size(); i++) {
+						Square squ = squares.get(i);
 
+						squ.pos.y = squ.pos.y - boxSize;
+					}
+				}
+				
+				if (keyCode == DOWN) {
+					for (int i = 0; i < squares.size(); i++) {
+						Square squ = squares.get(i);
+
+						squ.pos.y = squ.pos.y + boxSize;
+					}
+				}
+				
+				if (keyCode == LEFT) {
+					for (int i = 0; i < squares.size(); i++) {
+						Square squ = squares.get(i);
+
+						squ.pos.x = squ.pos.x - boxSize;
+					}
+				}
+				
+				if (keyCode == RIGHT) {
+					for (int i = 0; i < squares.size(); i++) {
+						Square squ = squares.get(i);
+
+						squ.pos.x = squ.pos.x + boxSize;
+					}
+				}
+			}
+
+			// This is also a test
 			if (key == 'j') {
 				saveTrans();
 			}
@@ -269,7 +309,7 @@ public class Pixel extends PApplet {
 			if (key == '\u001A' && !squares.isEmpty()) {
 				bk--;
 				if (bk > 0) {
-					File file = new File("data/" +  ".pix");
+					File file = new File("data/" + ".pix");
 
 					squares = loaded(file);
 					// System.out.println("image loaded");
@@ -282,6 +322,15 @@ public class Pixel extends PApplet {
 			}
 
 		}
+	}
+
+	public void flip() {
+		for (int i = 0; i < squares.size(); i++) {
+			Square squ = squares.get(i);
+
+			squ.pos.x = width - squ.pos.x;
+		}
+
 	}
 
 	public void saveTrans() {

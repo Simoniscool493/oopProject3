@@ -30,7 +30,7 @@ public class Square implements java.io.Serializable
 	{
 		parent.stroke(c);
 		parent.fill(c);
-		parent.rect(x, y, Pixel.boxSize-1, Pixel.boxSize-1);
+		parent.rect(pos.x, pos.y, Pixel.boxSize-1, Pixel.boxSize-1);
 	}
 
 	//If user wants to save image with no background
