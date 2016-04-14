@@ -51,6 +51,7 @@ public class MainWindow extends JFrame
 		
 		this.setLayout(new GridBagLayout());
 		c.fill = GridBagConstraints.BOTH;
+		c.weighty = 0.5;
 		
 		titlePanel.add(guiText("Graphics Control Menu"));
 		
@@ -70,11 +71,13 @@ public class MainWindow extends JFrame
 		
 		controlPanel.setPreferredSize(new Dimension(componentWidth,componentHeight/2));
 
+		c.gridx = 1;
 		c.gridy = 0;
 		this.add(titlePanel,c);
 		
 		c.gridy = 1;
 		this.add(controlPanel,c);
+		
 		
 		addSliders();
 		addColorSliders();
@@ -92,7 +95,36 @@ public class MainWindow extends JFrame
 	
 	public void addColorSliders()
 	{
-		c.gridx = 3;
+		int sliderIndex = 0;
+
+		c.gridx = 2;
+		c.gridy = 2;
+		
+		for(int i=0;i<Main.numColorChoosers;i++)
+		{
+			if(i==2) 
+			{ 
+				c.gridx=0;
+				c.gridy=2; 
+			}
+			
+		JPanel colorPre = new JPanel();
+		colorPre.setBackground(new Color(0,0,0));
+		colorChoosers.add(colorPre);
+		this.add((colorPre),c);
+
+		for(int j=0;j<3;j++)
+		{
+			c.gridy++;
+			this.add(makeColorSlider(sliderIndex),c);
+			sliderIndex++;
+		}
+			c.gridy++;
+		}
+		
+		
+
+		/*c.gridx = 3;
 		int sliderIndex = 0;
 		
 		for(int i=0;i<Main.numColorChoosers;i++)
@@ -111,7 +143,7 @@ public class MainWindow extends JFrame
 				this.add(makeColorSlider(sliderIndex),c);
 				sliderIndex++;
 			}
-		}
+		}*/
 
 	}
 	
@@ -150,15 +182,23 @@ public class MainWindow extends JFrame
 	
 	public void addSliders()
 	{
+		
 		for(int i=0;i<Main.numSliders;i++)
 		{
 			c.gridy++;
+			
+			JPanel j = new JPanel();
+			j.add(makeSlider(i));
+
 			makeCycleBox(i,"Repeat");
 			makeCycleBox(i,"Reverse");
-			this.add(makeSlider(i),c);
-			this.add(cycles.get(i),c);
-			this.add(reversers.get(i),c);
-
+			
+			JPanel k = new JPanel(new BorderLayout());
+			k.add(cycles.get(i),BorderLayout.NORTH);
+			k.add(reversers.get(i),BorderLayout.CENTER);
+			
+			j.add(k);
+			this.add(j,c);
 		}
 	}
 

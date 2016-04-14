@@ -35,7 +35,8 @@ public class PSketch extends PApplet
 
 	public void setup()
 	{
-		size(1000,1000);
+		int windowSize = (int)(Main.screenSize.getWidth())/3;
+		size(windowSize,windowSize);
 		background(255);
 		
 		for(int i=0;i<Main.numSliders;i++)

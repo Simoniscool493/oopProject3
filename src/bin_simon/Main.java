@@ -1,12 +1,17 @@
 package bin_simon;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 public class Main
 {	
+	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
 	static MainWindow c;
 	static DrawWindow d;
 
 	public static int numColorChoosers = 3;
-	public static int numSliders = 7;
+	public static int numSliders = 8;
 	
 	public static String[] sliderNames = 
 	{ 		"Framerate", 	"Dimension 1", 	"Dimension 2", 
