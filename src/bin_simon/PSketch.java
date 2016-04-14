@@ -16,6 +16,9 @@ public class PSketch extends PApplet
 	public static boolean colorChanged = false;
 	
 	public static int indexColorChanged = 0;
+	public static int whichColorChanged = 0;
+	public static int whichChooser = 0;
+
 
 	float range = 40.0f;
 	float theta = 0;
@@ -35,9 +38,17 @@ public class PSketch extends PApplet
 
 	public void setup()
 	{
+		colors.add(new Color(0,0,0));
+		colors.add(new Color(255,255,255));
+		colors.add(new Color(0,0,0));
+		
+		fill(colors.get(1).getRed(),colors.get(1).getGreen(),colors.get(1).getBlue());
+		stroke(colors.get(2).getRed(),colors.get(2).getGreen(),colors.get(2).getBlue());
+
 		int windowSize = (int)(Main.screenSize.getWidth())/3;
 		size(windowSize,windowSize);
-		background(255);
+		
+		background(colors.get(0).getRed(),colors.get(0).getGreen(),colors.get(0).getBlue());
 		
 		for(int i=0;i<Main.numSliders;i++)
 		{
@@ -61,19 +72,21 @@ public class PSketch extends PApplet
 		{
 			fill(random(255),random(255),random(255));
 		}
-		if(colorChanged)
-		{
-			changeColor();
-		}
 		
 		if(enableDraw)
 		{
 			if(showBackground)
 			{
-				background(255);
+				background(colors.get(0).getRed(),colors.get(0).getGreen(),colors.get(0).getBlue());
+				System.out.println(colors.get(0).getRed());
 			}
 			
 			drawAnimation();
+			
+			if(colorChanged)
+			{
+				changeColor();
+			}
 		}
 		
 		if(saveImage)
@@ -178,42 +191,41 @@ public class PSketch extends PApplet
 	
 	public void changeColor()
 	{
-		if(indexColorChanged<3)
+		Color c = getNewColor();
+		
+		if(whichChooser == 0)
 		{
-			Color c = getNewColor(0);
 			background(c.getRed(),c.getGreen(),c.getBlue());
 		}
-		else if(indexColorChanged<6)
+		if(whichChooser == 1)
 		{
-			Color c = getNewColor(1);
 			fill(c.getRed(),c.getGreen(),c.getBlue());
 		}
-		else if(indexColorChanged<9)
+		else if(whichChooser == 2)
 		{
-			Color c = getNewColor(2);
 			stroke(c.getRed(),c.getGreen(),c.getBlue());
 		}
 		colorChanged = false;
 	}
 	
-	public Color getNewColor(int n)
+	public Color getNewColor()
 	{
-		Color c = colors.get(n);
+		Color c = colors.get(whichChooser);
 		
-		if(indexColorChanged%3 == 0)
+		if(whichColorChanged == 0)
 		{
-			c  = new Color(num[indexColorChanged+Main.numSliders],c.getGreen(),c.getBlue());
+			c  = new Color(num[indexColorChanged],c.getGreen(),c.getBlue());
 		}
-		if(indexColorChanged%3 == 1)
+		if(whichColorChanged == 1)
 		{
-			c  = new Color(c.getRed(),num[indexColorChanged+Main.numSliders],c.getBlue());
+			c  = new Color(c.getRed(),num[indexColorChanged],c.getBlue());
 		}
-		if(indexColorChanged%3 == 2)
+		if(whichColorChanged == 2)
 		{
-			c  = new Color(c.getRed(),c.getGreen(),num[indexColorChanged+Main.numSliders]);
+			c  = new Color(c.getRed(),c.getGreen(),num[indexColorChanged]);
 		}
 
-		colors.set(n,c);
+		colors.set(whichChooser,c);
 		
 		return c;
 	}

@@ -21,12 +21,12 @@ class SliderListener implements ChangeListener
     		PSketch.num[index] = (int)source.getValue();
 
 
-        	if(index>=Main.numSliders)
+        	if(source instanceof ColorSlider)
         	{
         		PSketch.colorChanged = true;
-        		PSketch.indexColorChanged = index-Main.numSliders;
-        		System.out.println(PSketch.num[PSketch.indexColorChanged]);
-
+        		PSketch.indexColorChanged = ((ColorSlider)source).index;
+        		PSketch.whichColorChanged = ((ColorSlider)source).color;
+        		PSketch.whichChooser = ((ColorSlider)source).which;
         	}
             
             if(index == 0)

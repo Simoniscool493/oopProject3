@@ -15,12 +15,11 @@ public class MainWindow extends JFrame
 	static int sliderMax = 100;
 	static int sliderInit = 50;
 	
-	static int colorSliderMin = 0;
-	static int colorSliderMax = 255;
-	static int colorSliderInit = 180;
-
 	static int componentWidth = 700;
 	static int componentHeight = 100;
+	
+	static Dimension componentSize = new Dimension(componentWidth,componentHeight);
+	
 	static Font font = new Font("Serif",Font.BOLD,30);
 	
 	public static JCheckBox backgroundCheckbox;
@@ -32,12 +31,12 @@ public class MainWindow extends JFrame
 	public static ArrayList<CycleBox> reversers = new ArrayList<CycleBox>();
 	public static ArrayList<JPanel> colorChoosers = new ArrayList<JPanel>();
 	//public static ArrayList<JPanel>
-
+	
+	public static GridBagConstraints c = new GridBagConstraints();
 		
 	ButtonListener b = new ButtonListener();
 	MenuActionListener m = new MenuActionListener();	
 	
-	GridBagConstraints c = new GridBagConstraints();
 	//BorderFactory bf = new BorderFactory();
 	
 	JPanel titlePanel = new JPanel();
@@ -96,67 +95,12 @@ public class MainWindow extends JFrame
 	public void addColorSliders()
 	{
 		int sliderIndex = 0;
-
-		c.gridx = 2;
-		c.gridy = 2;
 		
-		for(int i=0;i<Main.numColorChoosers;i++)
-		{
-			if(i==2) 
-			{ 
-				c.gridx=0;
-				c.gridy=2; 
-			}
-			
-		JPanel colorPre = new JPanel();
-		colorPre.setBackground(new Color(0,0,0));
-		colorChoosers.add(colorPre);
-		this.add((colorPre),c);
-
-		for(int j=0;j<3;j++)
-		{
-			c.gridy++;
-			this.add(makeColorSlider(sliderIndex),c);
-			sliderIndex++;
-		}
-			c.gridy++;
-		}
-		
-		
-
-		/*c.gridx = 3;
-		int sliderIndex = 0;
-		
-		for(int i=0;i<Main.numColorChoosers;i++)
-		{
-			c.gridx++;
-			c.gridy = 2;
-			
-			JPanel colorPre = new JPanel();
-			colorPre.setBackground(new Color(0,0,0));
-			colorChoosers.add(colorPre);
-			this.add((colorPre),c);
-			
-			for(int j=0;j<3;j++)
-			{
-				c.gridy++;
-				this.add(makeColorSlider(sliderIndex),c);
-				sliderIndex++;
-			}
-		}*/
-
+		ColorChooser c1 = new ColorChooser(0,this,Main.numSliders,2,2);
+		ColorChooser c2 = new ColorChooser(1,this,Main.numSliders+3,2,6);
+		ColorChooser c3 = new ColorChooser(2,this,Main.numSliders+6,0,2);
 	}
-	
-	public JSlider makeColorSlider(int n)
-	{
-		JSlider slider = new JSlider(JSlider.HORIZONTAL,colorSliderMin,colorSliderMax,colorSliderInit);
-		slider = initializeSlider(slider,5,1,false,false,Main.colorNames[n%3],componentWidth/2,componentHeight);
 		
-		slider.addChangeListener(new SliderListener(Main.numSliders + n));
-		
-		return slider;
-	}
-	
 	public JSlider makeSlider(int n)
 	{
 		JSlider slider = new JSlider(JSlider.HORIZONTAL,sliderMin,sliderMax,sliderInit);
