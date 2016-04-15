@@ -425,7 +425,6 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 				System.out.println(Pixel.filen.getName());
 
 			}
-
 		}
 	}
 

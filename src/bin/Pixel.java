@@ -22,7 +22,12 @@ import processing.core.PVector;
 public class Pixel extends PApplet {
 
 	PGraphics pArt;
-
+	PImage lastFrame;
+	
+	int frameNum;
+	
+	boolean loop = false;
+	
 	boolean load = false;
 	static boolean flip;
 	static boolean showLines;
@@ -50,6 +55,7 @@ public class Pixel extends PApplet {
 	PVector mouse;
 
 	public static ArrayList<Square> squares = new ArrayList<Square>();
+	public static ArrayList<PImage> frames = new ArrayList<PImage>();
 
 	Scanner scanIn = new Scanner(System.in);
 
@@ -60,6 +66,8 @@ public class Pixel extends PApplet {
 		stages = 0;
 		boxSize = 0;
 		cursor(CROSS);
+		
+		frameRate(24);
 
 		// pen = loadImage("pen.png");
 		// eraser = loadImage("eraser.png");
@@ -67,6 +75,8 @@ public class Pixel extends PApplet {
 		// Start color off as black
 		r = g = b = 0;
 		backR = backG = backB = 200;
+		
+		frameNum = 0;
 
 		backGround = color(backR, backG, backB);
 		userC = color(r, g, b);
@@ -96,7 +106,13 @@ public class Pixel extends PApplet {
 			text("64 x 64", width / 2, 400);// 4096
 			break;
 
+		//The actual drawing	
 		case 1:
+			
+			if(frameNum > 0)
+			{
+				lastFrame();
+			}
 
 			boxSize = (float) (width) / (float) (pixNum);
 
@@ -110,6 +126,10 @@ public class Pixel extends PApplet {
 				drawGrid();
 			}
 			break;
+			
+		//For animation
+		case 3:
+			runAnimation();
 		}
 
 		/*
@@ -302,8 +322,13 @@ public class Pixel extends PApplet {
 			}
 
 			// This is also a test
-			if (key == 'j') {
-				saveTrans();
+			if (key == 's') {
+				addFrame();
+			}
+			
+			if (key == 'h')
+			{
+				stages = 3;
 			}
 
 			if (key == '\u001A' && !squares.isEmpty()) {
@@ -427,6 +452,40 @@ public class Pixel extends PApplet {
 		}
 
 		return null;
+	}
+	
+	public void addFrame()
+	{
+		
+		pArt.beginDraw();
+
+		for (int i = 0; i < squares.size(); i++) {
+			Square squ = squares.get(i);
+			squ.saveImageTrans();
+		}
+		pArt.endDraw();
+
+		pArt.save("Frame/frame"+frameNum+".png");
+		
+		pArt.clear();
+		squares.clear();
+		
+		lastFrame = loadImage("Frame/frame"+(frameNum)+".png");
+		frames.add(lastFrame);
+		frameNum++;
+	}
+	
+	public void lastFrame()
+	{
+		tint(255, 50);
+		image(frames.get(frameNum-1),0,0);
+	}
+	
+	public void runAnimation()
+	{
+		//DONT FORGET LOOP
+		Animation animation = new Animation(frames, true, this);
+		animation.runAnimation();
 	}
 
 	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
