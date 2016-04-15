@@ -89,7 +89,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		// ButtonPanel will be nested inside toolbar
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(new GridLayout(5, 4, 6, 5));
+		buttonsPanel.setLayout(new GridLayout(6, 2, 6, 5));
 		buttonsPanel.setBackground(Color.WHITE);
 
 		// Creating BUTTONS for Button Panel
@@ -104,13 +104,19 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JButton gridButton = new JButton("Show Grid (T)");
 		buttonsPanel.add(gridButton);
 
-		JButton magicPen = new JButton("Magic Pen");
+		JButton magicPen = new JButton("Magic Pen (M)");
 		buttonsPanel.add(magicPen);
 		
-		JButton flip = new JButton("Flip");
+		JButton flip = new JButton("Flip (F)");
 		buttonsPanel.add(flip);
+		
+		JButton removeFrame = new JButton("Remove last Frame");
+		buttonsPanel.add(removeFrame);
+		
+		JButton run = new JButton("Start/Stop Animation");
+		buttonsPanel.add(run);
 
-		JButton EraseallButton = new JButton("Erase all");
+		JButton EraseallButton = new JButton("Erase Blank");
 		buttonsPanel.add(EraseallButton);
 
 		JButton op = new JButton("Open");
@@ -162,9 +168,33 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 				
 			}
 		});
-
-		// Check if a color is selected on the screen
-		sketch.addMouseListener(pixel);
+		
+		run.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(Pixel.stages == 2)
+				{
+					Pixel.stages = 1;
+				}
+				else
+				{
+					Pixel.stages = 2;
+				}
+				
+				
+				
+			}
+		});
+		
+		removeFrame.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pixel.removeLastFrame();
+				
+			}
+		});
 
 		EraseallButton.addActionListener(new ActionListener() {
 

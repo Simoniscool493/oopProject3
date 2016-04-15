@@ -25,7 +25,9 @@ public class Pixel extends PApplet {
 	PImage lastFrame;
 	
 	int frameNum;
+	int frameCount;
 	
+	boolean animationSet = false;
 	boolean loop = false;
 	
 	boolean load = false;
@@ -43,9 +45,9 @@ public class Pixel extends PApplet {
 	int userC;
 	int x, y;
 	int bk = 0;
-	int stages;
 	int pixNum;
 
+	static int stages;
 	static int r, g, b;
 	static int backR, backG, backB;
 	static int mode;
@@ -109,7 +111,7 @@ public class Pixel extends PApplet {
 		//The actual drawing	
 		case 1:
 			
-			if(frameNum > 0)
+			if(frames.size() > 0)
 			{
 				lastFrame();
 			}
@@ -128,7 +130,7 @@ public class Pixel extends PApplet {
 			break;
 			
 		//For animation
-		case 3:
+		case 2:
 			runAnimation();
 		}
 
@@ -281,6 +283,10 @@ public class Pixel extends PApplet {
 			if (key == 'e') {
 				mode = 2;
 			}
+			
+			if (key == 'm') {
+				mode = 3;
+			}
 
 			if (key == 'f') {
 				flip();
@@ -328,7 +334,7 @@ public class Pixel extends PApplet {
 			
 			if (key == 'h')
 			{
-				stages = 3;
+				stages = 2;
 			}
 
 			if (key == '\u001A' && !squares.isEmpty()) {
@@ -481,11 +487,16 @@ public class Pixel extends PApplet {
 		image(frames.get(frameNum-1),0,0);
 	}
 	
+	public void removeLastFrame()
+	{
+		frames.remove(frameNum-1);
+		frameNum--;
+	}
+	
 	public void runAnimation()
 	{
-		//DONT FORGET LOOP
-		Animation animation = new Animation(frames, true, this);
-		animation.runAnimation();
+		frameCount = (frameCount+1) % frames.size();
+		image(frames.get(frameCount), 0, 0);
 	}
 
 	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {

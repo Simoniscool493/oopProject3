@@ -41,7 +41,7 @@ public class Square implements java.io.Serializable
 		art.rect(x, y, Pixel.boxSize-1, Pixel.boxSize-1);
 	}
 	
-	/*Lets you see what the contents of an arralist are normally
+	/*Lets you see what the contents of an arraylist are normally
 	*/
     @Override
     public String toString() {
