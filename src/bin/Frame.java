@@ -89,7 +89,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		// ButtonPanel will be nested inside toolbar
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(new GridLayout(6, 2, 6, 5));
+		buttonsPanel.setLayout(new GridLayout(7, 2, 6, 5));
 		buttonsPanel.setBackground(Color.WHITE);
 
 		// Creating BUTTONS for Button Panel
@@ -106,15 +106,21 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		JButton magicPen = new JButton("Magic Pen (M)");
 		buttonsPanel.add(magicPen);
-		
+
 		JButton flip = new JButton("Flip (F)");
 		buttonsPanel.add(flip);
-		
+
 		JButton removeFrame = new JButton("Remove last Frame");
 		buttonsPanel.add(removeFrame);
-		
+
 		JButton run = new JButton("Start/Stop Animation");
 		buttonsPanel.add(run);
+
+		JButton prev = new JButton("Previous Frame");
+		buttonsPanel.add(prev);
+
+		JButton next = new JButton("Next Frame");
+		buttonsPanel.add(next);
 
 		JButton EraseallButton = new JButton("Erase Blank");
 		buttonsPanel.add(EraseallButton);
@@ -159,40 +165,52 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 			}
 		});
-		
+
 		flip.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pixel.flip();
-				
+
 			}
 		});
-		
+
 		run.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(Pixel.stages == 2)
-				{
+				if (Pixel.stages == 2) {
 					Pixel.stages = 1;
-				}
-				else
-				{
+					Pixel.frameCount = 0;
+				} else {
 					Pixel.stages = 2;
 				}
-				
-				
-				
+
 			}
 		});
-		
+
+		prev.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pixel.prevFrame();
+			}
+		});
+
+		next.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pixel.nextFrame();
+			}
+		});
+
 		removeFrame.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pixel.removeLastFrame();
-				
+
 			}
 		});
 
@@ -297,7 +315,9 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JPanel sliderBackPanel = new JPanel();
 		sliderBackPanel.setBackground(Color.WHITE);
 
-		sliderBackPanel.setLayout(new GridLayout(6, 1));
+		sliderBackPanel.setLayout(new GridLayout(9, 1));
+		
+		JLabel bgcLabel = new JLabel("Background Colour");
 
 		JLabel redBackLabel = new JLabel("Red");
 		JSlider redBack = new JSlider();
@@ -310,6 +330,22 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JLabel blueBackLabel = new JLabel("Blue");
 		JSlider blueBack = new JSlider();
 		blueBack = makeSlider(backGroundInit);
+		
+		//Slider for frameRate
+		JLabel frameLabel = new JLabel("Frame Rate");
+		JSlider frameSlider = new JSlider(JSlider.HORIZONTAL, 1, 59, 59);
+
+		frameSlider.setPreferredSize(new Dimension(componentWidth, componentHeight));
+		frameSlider.setMajorTickSpacing(10);
+		frameSlider.setMinorTickSpacing(1);
+		frameSlider.setPaintTicks(true);
+		frameSlider.setPaintLabels(true);
+		frameSlider.setBackground(Color.WHITE);
+		Hashtable<Object, Object> frameRLabel = new Hashtable<>();
+		frameRLabel.put(new Integer(0), new JLabel("1"));
+		frameRLabel.put(new Integer(60), new JLabel("59"));
+		frameSlider.setLabelTable(frameRLabel);
+		
 
 		redBack.addChangeListener(new ChangeListener() {
 
@@ -342,22 +378,31 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 			}
 		});
 		
-		//Add menu bar
+		frameSlider.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				JSlider source = (JSlider) e.getSource();
+
+				Pixel.frameRate = (int) source.getValue();
+			}
+		});
+
+		// Add menu bar
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu("File");
 		menuBar.add(menu);
-		
+
 		JMenuItem menuItem1 = new JMenuItem("Save as image");
 		menuItem1.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pixel.saveTrans();
-				
+
 			}
 		});
 		menu.add(menuItem1);
-		
 		this.setJMenuBar(menuBar);
 
 		// Adding Sliders into Toolbar
@@ -371,6 +416,8 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		sliderPanel.add(blue);
 
 		// Adding sliders into leftToolbar
+		sliderBackPanel.add(bgcLabel);
+		
 		sliderBackPanel.add(redLabel);
 		sliderBackPanel.add(redBack);
 
@@ -379,15 +426,22 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		sliderBackPanel.add(blueLabel);
 		sliderBackPanel.add(blueBack);
+		
+		sliderBackPanel.add(frameLabel);
+		sliderBackPanel.add(frameSlider);
+		
+		
 
 		// Add things into frames
 		gridC.weightx = 1;
 
-		gridC.gridx = 0;
-		add(leftTool, gridC);
 		gridC.gridx = 1;
-		add(sketch, gridC);
+		add(leftTool, gridC);
+		
 		gridC.gridx = 2;
+		add(sketch, gridC);
+		
+		gridC.gridx = 3;
 		add(toolBar, gridC);
 
 		leftTool.add(sliderBackPanel);

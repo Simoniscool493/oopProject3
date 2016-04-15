@@ -24,8 +24,9 @@ public class Pixel extends PApplet {
 	PGraphics pArt;
 	PImage lastFrame;
 	
-	int frameNum;
-	int frameCount;
+	static int maxFrameNum;
+	static int frameNum;
+	static int frameCount;
 	
 	boolean animationSet = false;
 	boolean loop = false;
@@ -53,6 +54,7 @@ public class Pixel extends PApplet {
 	static int mode;
 	static int screenSize;
 	static float boxSize;
+	static int frameRate;
 
 	PVector mouse;
 
@@ -68,8 +70,6 @@ public class Pixel extends PApplet {
 		stages = 0;
 		boxSize = 0;
 		cursor(CROSS);
-		
-		frameRate(24);
 
 		// pen = loadImage("pen.png");
 		// eraser = loadImage("eraser.png");
@@ -79,6 +79,7 @@ public class Pixel extends PApplet {
 		backR = backG = backB = 200;
 		
 		frameNum = 0;
+		frameRate = 59;
 
 		backGround = color(backR, backG, backB);
 		userC = color(r, g, b);
@@ -95,6 +96,7 @@ public class Pixel extends PApplet {
 		background(backR, backG, backB);
 		rectMode(CORNER);
 		fill(255);
+		maxFrameNum = frames.size()-1;
 
 		switch (stages) {
 		case 0:
@@ -111,7 +113,7 @@ public class Pixel extends PApplet {
 		//The actual drawing	
 		case 1:
 			
-			if(frames.size() > 0)
+			if(frames.size() > 0 && frameNum != 0)
 			{
 				lastFrame();
 			}
@@ -477,7 +479,7 @@ public class Pixel extends PApplet {
 		squares.clear();
 		
 		lastFrame = loadImage("Frame/frame"+(frameNum)+".png");
-		frames.add(lastFrame);
+		frames.add(frameNum,lastFrame);
 		frameNum++;
 	}
 	
@@ -490,13 +492,34 @@ public class Pixel extends PApplet {
 	public void removeLastFrame()
 	{
 		frames.remove(frameNum-1);
-		frameNum--;
+		if(frameNum == frames.size() - 1)
+		{
+			frameNum--;
+		}
 	}
 	
 	public void runAnimation()
 	{
+		frameRate(frameRate);
+		tint(255,255);
 		frameCount = (frameCount+1) % frames.size();
 		image(frames.get(frameCount), 0, 0);
+	}
+	
+	public void prevFrame()
+	{
+		if(frameNum > 0)
+		{
+			frameNum--;
+		}
+	}
+	
+	public void nextFrame()
+	{
+		if(frameNum < maxFrameNum)
+		{
+			frameNum++;
+		}
 	}
 
 	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
