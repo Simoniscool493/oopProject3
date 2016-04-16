@@ -4,8 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.border.*;
-
-import bin.Pixel;
+import javax.swing.colorchooser.*;
 
 import java.util.ArrayList;
 
@@ -15,8 +14,8 @@ public class MainWindow extends JFrame
 	static int sliderMax = 100;
 	static int sliderInit = 50;
 	
-	static int componentWidth = 700;
-	static int componentHeight = 100;
+	static int componentWidth = (int)((Main.screenSize.getWidth())/5);
+	static int componentHeight = (int)((Main.screenSize.getHeight())/15);
 	
 	static Dimension componentSize = new Dimension(componentWidth,componentHeight);
 	
@@ -29,13 +28,13 @@ public class MainWindow extends JFrame
 	public static ArrayList<JCheckBox> boxes = new ArrayList<JCheckBox>();
 	public static ArrayList<CycleBox> cycles = new ArrayList<CycleBox>();
 	public static ArrayList<CycleBox> reversers = new ArrayList<CycleBox>();
-	public static ArrayList<JPanel> colorChoosers = new ArrayList<JPanel>();
-	//public static ArrayList<JPanel>
+	public static ArrayList<ColorSelectionModel> colorChoosers = new ArrayList<ColorSelectionModel>();
 	
 	public static GridBagConstraints c = new GridBagConstraints();
 		
 	ButtonListener b = new ButtonListener();
 	MenuActionListener m = new MenuActionListener();	
+	ColorListener cl = new ColorListener();
 	
 	//BorderFactory bf = new BorderFactory();
 	
@@ -93,12 +92,39 @@ public class MainWindow extends JFrame
 	}
 	
 	public void addColorSliders()
+	{		
+		makeChooser("Background",2,2);
+		makeChooser("Fill",2,3);
+		makeChooser("Stroke",2,4);
+	}
+	
+	public void makeChooser (String name,int w,int h)
 	{
-		int sliderIndex = 0;
+		JColorChooser j = new JColorChooser();
 		
-		ColorChooser c1 = new ColorChooser(0,this,Main.numSliders,2,2);
-		ColorChooser c2 = new ColorChooser(1,this,Main.numSliders+3,2,6);
-		ColorChooser c3 = new ColorChooser(2,this,Main.numSliders+6,0,2);
+		c.gridx = w;
+		c.gridy = h;
+
+		j.setPreferredSize(new Dimension((int)(componentWidth*0.75),componentHeight));
+		
+		AbstractColorChooserPanel[] panels = j.getChooserPanels();
+		
+		for (AbstractColorChooserPanel accp : panels) 
+		{
+		   if(!accp.getDisplayName().equals("Swatches")) 
+		   {
+		      j.removeChooserPanel(accp);
+		   } 
+		}
+		
+		j.setPreviewPanel(new JPanel());
+		j.getSelectionModel().addChangeListener(cl);
+		colorChoosers.add(j.getSelectionModel());
+		
+		TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY),name);		
+		j.setBorder(title);
+
+		this.add(j,c);
 	}
 		
 	public JSlider makeSlider(int n)
@@ -165,6 +191,7 @@ public class MainWindow extends JFrame
 	
 	public void init()
 	{
+		this.setResizable(false);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

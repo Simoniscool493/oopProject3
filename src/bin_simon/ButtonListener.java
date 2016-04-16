@@ -15,7 +15,6 @@ class ButtonListener implements ItemListener
 	{
 	    Object source = e.getItemSelectable();
 	    String s = ((JCheckBox)source).getText();
-	    System.out.println(s);
 	
 	    if (s == "Background") 
 	    {

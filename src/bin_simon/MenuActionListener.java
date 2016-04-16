@@ -15,9 +15,7 @@ class MenuActionListener implements ActionListener
 	    else if(e.getActionCommand() == "comboBoxChanged")
 	    {
 	    	JComboBox cb = (JComboBox)e.getSource();
-	    	String chosen = (String)cb.getSelectedItem();
-	    	System.out.println(chosen);
-	    	
+	    	String chosen = (String)cb.getSelectedItem();	    	
 	    	PSketch.currentAnimation = chosen;
 	    }
 

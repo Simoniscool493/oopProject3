@@ -19,15 +19,6 @@ class SliderListener implements ChangeListener
         if (!source.getValueIsAdjusting() || slidingSliders)
 		{
     		PSketch.num[index] = (int)source.getValue();
-
-
-        	if(source instanceof ColorSlider)
-        	{
-        		PSketch.colorChanged = true;
-        		PSketch.indexColorChanged = ((ColorSlider)source).index;
-        		PSketch.whichColorChanged = ((ColorSlider)source).color;
-        		PSketch.whichChooser = ((ColorSlider)source).which;
-        	}
             
             if(index == 0)
             {

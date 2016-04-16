@@ -3,10 +3,11 @@ package bin_simon;
 import javax.swing.*;
 
 public class DrawWindow extends JFrame
-{
+{	
 	public DrawWindow()
 	{
-	 	this.setSize(1130,1130);
+	 	this.setSize((int)(Main.screenSize.getWidth()/2.8),(int)(Main.screenSize.getWidth()/2.8));
+
 	 	addSketch();
 	 	this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

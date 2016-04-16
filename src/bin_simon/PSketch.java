@@ -16,10 +16,12 @@ public class PSketch extends PApplet
 	public static boolean colorChanged = false;
 	
 	public static int indexColorChanged = 0;
-	public static int whichColorChanged = 0;
-	public static int whichChooser = 0;
+	//public static int whichColorChanged = 0;
+	//public static int whichChooser = 0;
+	public static Color newColor; 
 
 
+	float speed = 0;
 	float range = 40.0f;
 	float theta = 0;
 	float thetaInc;
@@ -27,8 +29,11 @@ public class PSketch extends PApplet
 	float rad1 = 100;
 	float rad2 = 200;
 	float numPoints = 5;
+	float angle1;
+	float angle2;
+
 	
-	public static int[] num = new int[Main.numSliders+(Main.numColorChoosers*3)];
+	public static int[] num = new int[Main.numSliders];
 	public static boolean[] repeating = new boolean[Main.numSliders];
 	public static boolean[] reversed = new boolean[Main.numSliders];
 	
@@ -38,7 +43,7 @@ public class PSketch extends PApplet
 
 	public void setup()
 	{
-		colors.add(new Color(0,0,0));
+		colors.add(new Color(255,255,255));
 		colors.add(new Color(255,255,255));
 		colors.add(new Color(0,0,0));
 		
@@ -54,7 +59,7 @@ public class PSketch extends PApplet
 		{
 			num[i] = MainWindow.sliderInit;
 		}
-		for(int i=0;i<Main.numColorChoosers;i++)
+		for(int i=0;i<3;i++)
 		{
 			Color c = new Color(0,0,0);
 			colors.add(c);
@@ -153,12 +158,32 @@ public class PSketch extends PApplet
 		}
 		if(currentAnimation == "Orbit")
 		{
+			if(num[1]<1)
+			{
+				num[1] = 1;
+			}
+		    strokeWeight((num[1]/5));
+
+			float posx,posy;
+			posx = posy = width/2;
 			
+		    double ball1X = (posx + sin(angle1) * num[4]*5);
+		    double ball1Y = (posy + cos(angle1) * num[5]*5);
+		    double ball2X = (posx + sin(-angle2) * num[6]*5);
+		    double ball2Y = (posy + cos(-angle2) * num[7]*5);
+
+		    //strokeWeight(1);
+		    
+		    ellipse((float)ball1X,(float)ball1Y,num[2]*5,num[2]*5);
+		    ellipse((float)ball2X,(float)ball2Y,num[2]*5,num[2]*5);
+
+		    angle1+=(float)(num[3]/600.0f)+0.003;
+		    angle2+=(float)(num[3]/600.0f)+0.003;
 		}
 		endShape(CLOSE);
 		
+		System.out.println(num[5]);
 		cycle();
-
 	}
 	
 	public void cycle()
@@ -191,45 +216,26 @@ public class PSketch extends PApplet
 	
 	public void changeColor()
 	{
-		Color c = getNewColor();
+		int red = newColor.getRed();
+		int green = newColor.getGreen();
+		int blue = newColor.getBlue();
+
 		
-		if(whichChooser == 0)
+		if(indexColorChanged == 0)
 		{
-			background(c.getRed(),c.getGreen(),c.getBlue());
+			background(red,green,blue);
 		}
-		if(whichChooser == 1)
+		if(indexColorChanged == 1)
 		{
-			fill(c.getRed(),c.getGreen(),c.getBlue());
+			fill(red,green,blue);
 		}
-		else if(whichChooser == 2)
+		else if(indexColorChanged == 2)
 		{
-			stroke(c.getRed(),c.getGreen(),c.getBlue());
+			stroke(red,green,blue);
 		}
+		
+		colors.set(indexColorChanged,newColor);
 		colorChanged = false;
 	}
-	
-	public Color getNewColor()
-	{
-		Color c = colors.get(whichChooser);
-		
-		if(whichColorChanged == 0)
-		{
-			c  = new Color(num[indexColorChanged],c.getGreen(),c.getBlue());
-		}
-		if(whichColorChanged == 1)
-		{
-			c  = new Color(c.getRed(),num[indexColorChanged],c.getBlue());
-		}
-		if(whichColorChanged == 2)
-		{
-			c  = new Color(c.getRed(),c.getGreen(),num[indexColorChanged]);
-		}
-
-		colors.set(whichChooser,c);
-		
-		return c;
-	}
-	
-	
 
 }
