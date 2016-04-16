@@ -25,7 +25,9 @@ public class Pixel extends PApplet {
 	PImage lastFrame;
 	
 	static int maxFrameNum;
+	//The number of frame i am on
 	static int frameNum;
+	//The frame count for animation
 	static int frameCount;
 	
 	boolean animationSet = false;
@@ -346,7 +348,7 @@ public class Pixel extends PApplet {
 
 					squares = loaded(file);
 					// System.out.println("image loaded");
-					println(bk + "loading");
+					//println(bk + "loading");
 				}
 				if (bk < 0) {
 					bk = 2;
@@ -389,9 +391,9 @@ public class Pixel extends PApplet {
 
 			save(file, squares);
 
-			System.out.println("image saved");
+			//System.out.println("image saved");
 
-			println(bk);
+			//println(bk);
 		}
 
 	}
@@ -479,7 +481,7 @@ public class Pixel extends PApplet {
 		squares.clear();
 		
 		lastFrame = loadImage("Frame/frame"+(frameNum)+".png");
-		frames.add(frameNum,lastFrame);
+		frames.add(frameNum ,lastFrame);
 		frameNum++;
 	}
 	
@@ -492,7 +494,7 @@ public class Pixel extends PApplet {
 	public void removeLastFrame()
 	{
 		frames.remove(frameNum-1);
-		if(frameNum == frames.size() - 1)
+		if(frameNum >= frames.size() - 1)
 		{
 			frameNum--;
 		}
