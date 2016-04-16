@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -79,7 +80,6 @@ public class Pixel extends PApplet {
 		// Start color off as black
 		r = g = b = 0;
 		backR = backG = backB = 200;
-		
 		frameNum = 0;
 		frameRate = 59;
 
@@ -97,6 +97,7 @@ public class Pixel extends PApplet {
 
 		background(backR, backG, backB);
 		rectMode(CORNER);
+		
 		fill(255);
 		maxFrameNum = frames.size()-1;
 
@@ -114,6 +115,8 @@ public class Pixel extends PApplet {
 
 		//The actual drawing	
 		case 1:
+			//I realised the program is slower to respond if the frameRate is slower
+			frameRate(60);
 			
 			if(frames.size() > 0 && frameNum != 0)
 			{
@@ -180,6 +183,7 @@ public class Pixel extends PApplet {
 	}
 
 	public void mousePressed() {
+		
 		switch (mode) {
 
 		case 1:
@@ -303,6 +307,10 @@ public class Pixel extends PApplet {
 						Square squ = squares.get(i);
 
 						squ.pos.y = squ.pos.y - boxSize;
+						
+						//I change X and Y for PGraphics
+						squ.x = (int) squ.pos.x - (boxSize/2-1);
+						squ.y = (int) squ.pos.y - (boxSize/2-1);
 					}
 				}
 				
@@ -311,6 +319,8 @@ public class Pixel extends PApplet {
 						Square squ = squares.get(i);
 
 						squ.pos.y = squ.pos.y + boxSize;
+						squ.x = (int) squ.pos.x - (boxSize/2-1);
+						squ.y = (int) squ.pos.y - (boxSize/2-1);
 					}
 				}
 				
@@ -319,6 +329,8 @@ public class Pixel extends PApplet {
 						Square squ = squares.get(i);
 
 						squ.pos.x = squ.pos.x - boxSize;
+						squ.x = (int) squ.pos.x - (boxSize/2-1);
+						squ.y = (int) squ.pos.y - (boxSize/2-1);
 					}
 				}
 				
@@ -327,6 +339,8 @@ public class Pixel extends PApplet {
 						Square squ = squares.get(i);
 
 						squ.pos.x = squ.pos.x + boxSize;
+						squ.x = (int) squ.pos.x - (boxSize/2-1);
+						squ.y = (int) squ.pos.y - (boxSize/2-1);
 					}
 				}
 			}
@@ -364,6 +378,8 @@ public class Pixel extends PApplet {
 			Square squ = squares.get(i);
 
 			squ.pos.x = width - squ.pos.x;
+			squ.x = (int) squ.pos.x - (boxSize/2-1);
+			squ.y = (int) squ.pos.y - (boxSize/2-1);
 		}
 
 	}

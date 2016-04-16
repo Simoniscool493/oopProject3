@@ -18,8 +18,8 @@ public class Square implements java.io.Serializable
 	Square(float x, float y, int c, PApplet p, PGraphics pArt)
 	{
 		parent = p;
+		art = pArt;
 		
-		this.art = pArt;
 		this.x = x;
 		this.y = y;
 		this.c = c;
@@ -38,6 +38,8 @@ public class Square implements java.io.Serializable
 	{
 		art.stroke(c);
 		art.fill(c);
+	
+		//I draw using X and Y because changing rectMode for PGraphics gives problems
 		art.rect(x, y, Pixel.boxSize-1, Pixel.boxSize-1);
 	}
 	
