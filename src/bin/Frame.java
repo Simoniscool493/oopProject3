@@ -490,44 +490,66 @@ public class Frame extends JFrame {
 
 	// Opens a new .pix file
 	class OpenL implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			FileNameExtensionFilter f = new FileNameExtensionFilter("Pixel", "pix");
-			JFileChooser c = new JFileChooser("./data");
-			c.setFileFilter(f);
+		public void actionPerformed(ActionEvent e) 
+		{
+			if(Pixel.stages==1)
+			{
+				
+				FileNameExtensionFilter f = new FileNameExtensionFilter("Pixel", "pix");
+				JFileChooser c = new JFileChooser("./data");
+				c.setFileFilter(f);
+	
+				int opp = c.showOpenDialog(Frame.this);
+	
+				if (opp == JFileChooser.APPROVE_OPTION)
+				{
+	
+					File o = c.getSelectedFile();
+					Pixel.file = o;
+					Pixel.loads = true;
+					System.out.println(Pixel.file.getParent());
+					System.out.println(Pixel.file.getName());
 
-			int opp = c.showOpenDialog(Frame.this);
-
-			if (opp == JFileChooser.APPROVE_OPTION) {
-
-				File o = c.getSelectedFile();
-				Pixel.file = o;
-				Pixel.loads = true;
-				System.out.println(Pixel.file.getParent());
-				System.out.println(Pixel.file.getName());
-
+				}
 			}
+			else
+			{
+				System.out.println("Can't open yet");
+				
+			}
+			
+			
 		}
 	}
 
 	// Saves a new .pix file with the .pix extension
 	class SaveL implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			JFileChooser c = new JFileChooser();
-			c.setCurrentDirectory(new File("./data"));
-
-			int sv = c.showSaveDialog(Frame.this);
-
-			if (sv == JFileChooser.APPROVE_OPTION) {
-				String s = c.getSelectedFile().getAbsolutePath() + ".pix";
-
-				File fi = new File(s);
-
-				Pixel.filen = fi;
-				Pixel.save = true;
-				System.out.println(Pixel.filen.getParent());
-				System.out.println(Pixel.filen.getName());
-
+		public void actionPerformed(ActionEvent e) 
+		{
+			if(Pixel.stages==1)
+			{
+				JFileChooser c = new JFileChooser();
+				c.setCurrentDirectory(new File("./data"));
+	
+				int sv = c.showSaveDialog(Frame.this);
+	
+				if (sv == JFileChooser.APPROVE_OPTION) {
+					String s = c.getSelectedFile().getAbsolutePath() + ".pix";
+	
+					File fi = new File(s);
+	
+					Pixel.filen = fi;
+					Pixel.save = true;
+					System.out.println(Pixel.filen.getParent());
+					System.out.println(Pixel.filen.getName());
+	
+				}
 			}
+			else
+			{
+				System.out.println("Can't save yet");
+			}
+			
 		}
 	}
 
