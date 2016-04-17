@@ -24,16 +24,16 @@ public class Pixel extends PApplet {
 
 	PGraphics pArt;
 	PImage lastFrame;
-	
+
 	static int maxFrameNum;
-	//The number of frame i am on
+	// The number of frame i am on
 	static int frameNum;
-	//The frame count for animation
+	// The frame count for animation
 	static int frameCount;
-	
+
 	boolean animationSet = false;
 	boolean loop = false;
-	
+
 	boolean load = false;
 	static boolean flip;
 	static boolean showLines;
@@ -62,7 +62,7 @@ public class Pixel extends PApplet {
 	PVector mouse;
 
 	public static ArrayList<Square> squares = new ArrayList<Square>();
-	public static ArrayList<PImage> frames = new ArrayList<PImage>();
+	public static ArrayList<Framedata> data = new ArrayList<Framedata>();
 
 	Scanner scanIn = new Scanner(System.in);
 
@@ -97,9 +97,9 @@ public class Pixel extends PApplet {
 
 		background(backR, backG, backB);
 		rectMode(CORNER);
-		
+
 		fill(255);
-		maxFrameNum = frames.size()-1;
+		maxFrameNum = data.size() - 1;
 
 		switch (stages) {
 		case 0:
@@ -113,13 +113,13 @@ public class Pixel extends PApplet {
 			text("64 x 64", width / 2, 400);// 4096
 			break;
 
-		//The actual drawing	
+		// The actual drawing
 		case 1:
-			//I realised the program is slower to respond if the frameRate is slower
+			// I realised the program is slower to respond if the frameRate is
+			// slower
 			frameRate(60);
-			
-			if(frames.size() > 0 && frameNum != 0)
-			{
+
+			if (data.size() > 0 && frameNum != 0) {
 				lastFrame();
 			}
 
@@ -135,8 +135,8 @@ public class Pixel extends PApplet {
 				drawGrid();
 			}
 			break;
-			
-		//For animation
+
+		// For animation
 		case 2:
 			runAnimation();
 		}
@@ -183,7 +183,7 @@ public class Pixel extends PApplet {
 	}
 
 	public void mousePressed() {
-		
+
 		switch (mode) {
 
 		case 1:
@@ -291,7 +291,7 @@ public class Pixel extends PApplet {
 			if (key == 'e') {
 				mode = 2;
 			}
-			
+
 			if (key == 'm') {
 				mode = 3;
 			}
@@ -300,47 +300,47 @@ public class Pixel extends PApplet {
 				flip();
 			}
 
-			//Used to move the drawing area
+			// Used to move the drawing area
 			if (key == CODED) {
 				if (keyCode == UP) {
 					for (int i = 0; i < squares.size(); i++) {
 						Square squ = squares.get(i);
 
 						squ.pos.y = squ.pos.y - boxSize;
-						
-						//I change X and Y for PGraphics
-						squ.x = (int) squ.pos.x - (boxSize/2-1);
-						squ.y = (int) squ.pos.y - (boxSize/2-1);
+
+						// I change X and Y for PGraphics
+						squ.x = (int) squ.pos.x - (boxSize / 2 - 1);
+						squ.y = (int) squ.pos.y - (boxSize / 2 - 1);
 					}
 				}
-				
+
 				if (keyCode == DOWN) {
 					for (int i = 0; i < squares.size(); i++) {
 						Square squ = squares.get(i);
 
 						squ.pos.y = squ.pos.y + boxSize;
-						squ.x = (int) squ.pos.x - (boxSize/2-1);
-						squ.y = (int) squ.pos.y - (boxSize/2-1);
+						squ.x = (int) squ.pos.x - (boxSize / 2 - 1);
+						squ.y = (int) squ.pos.y - (boxSize / 2 - 1);
 					}
 				}
-				
+
 				if (keyCode == LEFT) {
 					for (int i = 0; i < squares.size(); i++) {
 						Square squ = squares.get(i);
 
 						squ.pos.x = squ.pos.x - boxSize;
-						squ.x = (int) squ.pos.x - (boxSize/2-1);
-						squ.y = (int) squ.pos.y - (boxSize/2-1);
+						squ.x = (int) squ.pos.x - (boxSize / 2 - 1);
+						squ.y = (int) squ.pos.y - (boxSize / 2 - 1);
 					}
 				}
-				
+
 				if (keyCode == RIGHT) {
 					for (int i = 0; i < squares.size(); i++) {
 						Square squ = squares.get(i);
 
 						squ.pos.x = squ.pos.x + boxSize;
-						squ.x = (int) squ.pos.x - (boxSize/2-1);
-						squ.y = (int) squ.pos.y - (boxSize/2-1);
+						squ.x = (int) squ.pos.x - (boxSize / 2 - 1);
+						squ.y = (int) squ.pos.y - (boxSize / 2 - 1);
 					}
 				}
 			}
@@ -349,9 +349,8 @@ public class Pixel extends PApplet {
 			if (key == 's') {
 				addFrame();
 			}
-			
-			if (key == 'h')
-			{
+
+			if (key == 'h') {
 				stages = 2;
 			}
 
@@ -362,7 +361,7 @@ public class Pixel extends PApplet {
 
 					squares = loaded(file);
 					// System.out.println("image loaded");
-					//println(bk + "loading");
+					// println(bk + "loading");
 				}
 				if (bk < 0) {
 					bk = 2;
@@ -378,8 +377,8 @@ public class Pixel extends PApplet {
 			Square squ = squares.get(i);
 
 			squ.pos.x = width - squ.pos.x;
-			squ.x = (int) squ.pos.x - (boxSize/2-1);
-			squ.y = (int) squ.pos.y - (boxSize/2-1);
+			squ.x = (int) squ.pos.x - (boxSize / 2 - 1);
+			squ.y = (int) squ.pos.y - (boxSize / 2 - 1);
 		}
 
 	}
@@ -407,9 +406,9 @@ public class Pixel extends PApplet {
 
 			save(file, squares);
 
-			//System.out.println("image saved");
+			// System.out.println("image saved");
 
-			//println(bk);
+			// println(bk);
 		}
 
 	}
@@ -479,10 +478,9 @@ public class Pixel extends PApplet {
 
 		return null;
 	}
-	
-	public void addFrame()
-	{
-		
+
+	public void addFrame() {
+
 		pArt.beginDraw();
 
 		for (int i = 0; i < squares.size(); i++) {
@@ -491,52 +489,70 @@ public class Pixel extends PApplet {
 		}
 		pArt.endDraw();
 
-		pArt.save("Frame/frame"+frameNum+".png");
-		
+		pArt.save("Frame/frame" + frameNum + ".png");
+
 		pArt.clear();
+		lastFrame = loadImage("Frame/frame" + (frameNum) + ".png");
+
+		Framedata newFrame = new Framedata(squares, lastFrame);
+		data.add(newFrame);
+
 		squares.clear();
-		
-		lastFrame = loadImage("Frame/frame"+(frameNum)+".png");
-		frames.add(frameNum ,lastFrame);
+
+		// test
+		Framedata test = data.get(0);
+		test.showArray();
+
 		frameNum++;
 	}
-	
-	public void lastFrame()
-	{
+
+	public void lastFrame() {
 		tint(255, 50);
-		image(frames.get(frameNum-1),0,0);
+		// Load up last frame
+		Framedata tempImage = data.get(frameNum - 1);
+		image(tempImage.lastFrame, 0, 0);
 	}
-	
-	public void removeLastFrame()
-	{
-		frames.remove(frameNum-1);
-		if(frameNum >= frames.size() - 1)
-		{
+
+	public void removeLastFrame() {
+		data.remove(frameNum - 1);
+		if (frameNum >= data.size() - 1) {
 			frameNum--;
 		}
 	}
-	
-	public void runAnimation()
-	{
+
+	public void runAnimation() {
 		frameRate(frameRate);
-		tint(255,255);
-		frameCount = (frameCount+1) % frames.size();
-		image(frames.get(frameCount), 0, 0);
+		tint(255, 255);
+		frameCount = (frameCount + 1) % data.size();
+
+		// Load up last frame
+		Framedata tempImage = data.get(frameCount);
+		image(tempImage.lastFrame, 0, 0);
 	}
-	
-	public void prevFrame()
-	{
-		if(frameNum > 0)
-		{
+
+	public void prevFrame() {
+		if (frameNum > 0) {
 			frameNum--;
+			loadFramePixels();
 		}
 	}
-	
-	public void nextFrame()
-	{
-		if(frameNum < maxFrameNum)
-		{
+
+	public void nextFrame() {
+		if (frameNum <= maxFrameNum) {
 			frameNum++;
+			loadFramePixels();
+		}
+	}
+
+	public void loadFramePixels() {
+		//since it can't load what isn't made yet
+		if (frameNum != data.size()) {
+			println(frameNum);
+			Framedata tempPixel = data.get(frameNum);
+			tempPixel.showArray();
+			squares = new ArrayList<Square>(tempPixel.pixels);
+			
+			//System.out.println(squares);
 		}
 	}
 
