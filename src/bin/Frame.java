@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.Hashtable;
 
 import javax.swing.JButton;
@@ -407,17 +408,11 @@ public class Frame extends JFrame {
 		JMenuItem saveimg = new JMenuItem("Save as image");
 		JMenuItem savefile = new JMenuItem("Save as .pix");
 		
-		open.addActionListener(new OpenL());
-		savefile.addActionListener(new SaveL());
+		open.addActionListener(new Open());
+		savefile.addActionListener(new Save());
 		
-		saveimg.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				pixel.saveTrans();
-
-			}
-		});
+		saveimg.addActionListener(new Saveimg());
+		
 		
 		menu.add(open);
 		menu.add(saveimg);
@@ -489,7 +484,7 @@ public class Frame extends JFrame {
 	}
 
 	// Opens a new .pix file
-	class OpenL implements ActionListener {
+	class Open implements ActionListener {
 		public void actionPerformed(ActionEvent e) 
 		{
 			if(Pixel.stages==1)
@@ -517,13 +512,11 @@ public class Frame extends JFrame {
 				System.out.println("Can't open yet");
 				
 			}
-			
-			
 		}
 	}
 
-	// Saves a new .pix file with the .pix extension
-	class SaveL implements ActionListener {
+	// Saves a new .pix file with the .pix extension if the user hasnt specified
+	class Save implements ActionListener {
 		public void actionPerformed(ActionEvent e) 
 		{
 			if(Pixel.stages==1)
@@ -533,16 +526,33 @@ public class Frame extends JFrame {
 	
 				int sv = c.showSaveDialog(Frame.this);
 	
-				if (sv == JFileChooser.APPROVE_OPTION) {
-					String s = c.getSelectedFile().getAbsolutePath() + ".pix";
-	
-					File fi = new File(s);
-	
-					Pixel.filen = fi;
-					Pixel.save = true;
-					System.out.println(Pixel.filen.getParent());
-					System.out.println(Pixel.filen.getName());
-	
+				if (sv == JFileChooser.APPROVE_OPTION) 
+				{
+					String s = c.getSelectedFile().getAbsolutePath();
+					String p = ".pix";
+					
+					if (s.toLowerCase().indexOf(p.toLowerCase()) != -1 ) 
+					{
+						
+						File fi = new File(s);
+		
+						Pixel.filen = fi;
+						Pixel.save = true;
+						System.out.println(Pixel.filen.getParent());
+						System.out.println(Pixel.filen.getName());
+					}
+					else
+					{
+						s+=".pix";
+						
+						File fi = new File(s);
+						
+						Pixel.filen = fi;
+						Pixel.save = true;
+						System.out.println(Pixel.filen.getParent());
+						System.out.println(Pixel.filen.getName());
+						
+					}
 				}
 			}
 			else
@@ -550,6 +560,52 @@ public class Frame extends JFrame {
 				System.out.println("Can't save yet");
 			}
 			
+		}
+	}
+	
+	class Saveimg implements ActionListener {
+		public void actionPerformed(ActionEvent e) 
+		{
+			if(Pixel.stages==1)
+			{
+				File Dir = new File("./data/img");
+				JFileChooser c = new JFileChooser();
+				
+				if (Dir.exists()) 
+				{
+					c.setCurrentDirectory(new File("./data/img"));
+		
+					int sv = c.showSaveDialog(Frame.this);
+		
+					if (sv == JFileChooser.APPROVE_OPTION) 
+					{
+						String s = c.getSelectedFile().getAbsolutePath();
+						String p = ".png";
+						
+						if (s.toLowerCase().indexOf(p.toLowerCase()) != -1 ) 
+						{
+							Pixel.png=s;
+							Pixel.svimg=true;
+						}
+						else
+						{
+							s+=".png";	
+							Pixel.png=s;
+							Pixel.svimg=true;
+						}
+					}
+					else
+					{
+						System.out.println("Can't save yet");
+					}
+					
+				}
+				else
+				{
+					 Dir.mkdir();
+					 System.out.println("Directory imgs not found making folder imgs");
+				}
+			}
 		}
 	}
 

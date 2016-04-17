@@ -24,6 +24,7 @@ public class Pixel extends PApplet {
 
 	PGraphics pArt;
 	PImage lastFrame;
+	static String png = "";
 
 	static int maxFrameNum;
 	// The number of frame i am on
@@ -41,6 +42,7 @@ public class Pixel extends PApplet {
 	static PApplet parent;
 	static boolean loads = false;
 	static boolean save = false;
+	static boolean svimg = false;
 
 	static File file = new File("");
 	static File filen = new File("");
@@ -149,15 +151,20 @@ public class Pixel extends PApplet {
 		 * else { cursor(CROSS); }
 		 */
 
-		if (loads) {
+		if (loads) 
+		{
 			squares = loaded(file);
-			System.out.println("image loaded");
 			loads = false;
 		}
-		if (save) {
+		if (save) 
+		{
 			save(filen, squares);
-			System.out.println("image saved");
 			save = false;
+		}
+		if(svimg)
+		{
+			saveTrans();
+			svimg=false;
 		}
 
 	}
@@ -384,7 +391,9 @@ public class Pixel extends PApplet {
 
 	}
 
-	public void saveTrans() {
+	public void saveTrans()
+	{
+			
 		pArt.beginDraw();
 
 		for (int i = 0; i < squares.size(); i++) {
@@ -393,7 +402,7 @@ public class Pixel extends PApplet {
 		}
 		pArt.endDraw();
 
-		pArt.save("Drawing.png");
+		pArt.save(png);
 	}
 
 	public void mouseReleased() {
