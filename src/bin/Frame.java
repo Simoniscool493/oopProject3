@@ -124,7 +124,8 @@ public class Frame extends JFrame {
 		JButton removeFrame = new JButton("Remove last Frame");
 		buttonsPanel.add(removeFrame);
 
-		JButton EraseallButton = new JButton("Erase Blank");
+		//temp name
+		JButton EraseallButton = new JButton("New(removes tiles)");
 		buttonsPanel.add(EraseallButton);
 
 		//JButton op = new JButton("Open");
@@ -417,9 +418,6 @@ public class Frame extends JFrame {
 
 			}
 		});
-		
-		
-
 		
 		menu.add(open);
 		menu.add(saveimg);
