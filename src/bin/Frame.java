@@ -109,10 +109,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		JButton flip = new JButton("Flip (F)");
 		buttonsPanel.add(flip);
-
-		JButton removeFrame = new JButton("Remove last Frame");
-		buttonsPanel.add(removeFrame);
-
+		
 		JButton run = new JButton("Start/Stop Animation");
 		buttonsPanel.add(run);
 
@@ -121,6 +118,12 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 		JButton next = new JButton("Next Frame");
 		buttonsPanel.add(next);
+		
+		JButton add = new JButton("Add into Frame");
+		buttonsPanel.add(add);
+		
+		JButton removeFrame = new JButton("Remove last Frame");
+		buttonsPanel.add(removeFrame);
 
 		JButton EraseallButton = new JButton("Erase Blank");
 		buttonsPanel.add(EraseallButton);
@@ -186,6 +189,15 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 					Pixel.stages = 2;
 				}
 
+			}
+		});
+		
+		add.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pixel.addFrame();
+				
 			}
 		});
 
