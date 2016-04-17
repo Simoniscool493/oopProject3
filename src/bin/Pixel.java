@@ -64,10 +64,10 @@ public class Pixel extends PApplet {
 	PVector mouse;
 
 	public static ArrayList<Square> squares = new ArrayList<Square>();
-	
-	//Temp array for new pixels
+
+	// Temp array for new pixels
 	public static ArrayList<Square> tempNew = new ArrayList<Square>();
-	
+
 	public static ArrayList<Framedata> data = new ArrayList<Framedata>();
 
 	Scanner scanIn = new Scanner(System.in);
@@ -144,7 +144,9 @@ public class Pixel extends PApplet {
 
 		// For animation
 		case 2:
-			runAnimation();
+			if (data.size() > 0) {
+				runAnimation();
+			}
 		}
 
 		/*
@@ -155,20 +157,17 @@ public class Pixel extends PApplet {
 		 * else { cursor(CROSS); }
 		 */
 
-		if (loads) 
-		{
+		if (loads) {
 			squares = loaded(file);
 			loads = false;
 		}
-		if (save) 
-		{
+		if (save) {
 			save(filen, squares);
 			save = false;
 		}
-		if(svimg)
-		{
+		if (svimg) {
 			saveTrans();
-			svimg=false;
+			svimg = false;
 		}
 
 	}
@@ -365,7 +364,7 @@ public class Pixel extends PApplet {
 				stages = 2;
 			}
 
-			//Undo 
+			// Undo
 			if (key == '\u001A' && !squares.isEmpty()) {
 				bk--;
 				if (bk > 0) {
@@ -395,9 +394,7 @@ public class Pixel extends PApplet {
 
 	}
 
-	public void saveTrans()
-	{
-			
+	public void saveTrans() {
 		pArt.beginDraw();
 
 		for (int i = 0; i < squares.size(); i++) {
@@ -412,14 +409,12 @@ public class Pixel extends PApplet {
 	public void mouseReleased() {
 		overWriteSquare();
 
-		if (!squares.isEmpty()) 
-		{
+		if (!squares.isEmpty()) {
 			bk++;
-			
+
 			File file = new File("Bak/" + bk + ".bak");
 
 			save(file, squares);
-
 
 		}
 
@@ -507,7 +502,14 @@ public class Pixel extends PApplet {
 		lastFrame = loadImage("Frame/frame" + (frameNum) + ".png");
 
 		Framedata newFrame = new Framedata(squares, lastFrame);
-		data.add(frameNum,newFrame);
+		data.add(frameNum, newFrame);
+
+		// If working on a previous frame, then overwrite it
+		if (data.size() > 0) {
+			if (frameNum != data.size() - 1) {
+				data.remove(frameNum+1);
+			}
+		}
 
 		squares.clear();
 
@@ -539,13 +541,12 @@ public class Pixel extends PApplet {
 	}
 
 	public void prevFrame() {
-		
-		if(frameNum == data.size())
-		{
+
+		if (frameNum == data.size()) {
 			println("yea");
 			tempNew = new ArrayList<Square>(squares);
 		}
-		
+
 		if (frameNum > 0) {
 			frameNum--;
 			loadFramePixels();
@@ -557,22 +558,21 @@ public class Pixel extends PApplet {
 			frameNum++;
 			loadFramePixels();
 		}
-		
-		if(frameNum == data.size())
-		{
+
+		if (frameNum == data.size()) {
 			squares = new ArrayList<Square>(tempNew);
 		}
 	}
 
 	public void loadFramePixels() {
-		//since it can't load what isn't made yet
+		// since it can't load what isn't made yet
 		if (frameNum != data.size()) {
 			println(frameNum);
 			Framedata tempPixel = data.get(frameNum);
 			tempPixel.showArray();
 			squares = new ArrayList<Square>(tempPixel.pixels);
-			
-			//System.out.println(squares);
+
+			// System.out.println(squares);
 		}
 	}
 

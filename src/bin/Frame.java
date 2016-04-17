@@ -186,8 +186,14 @@ public class Frame extends JFrame {
 				if (Pixel.stages == 2) {
 					Pixel.stages = 1;
 					Pixel.frameCount = 0;
-				} else {
-					Pixel.stages = 2;
+				} 
+				else if(Pixel.stages == 0)
+				{
+					
+				}
+				else if(Pixel.stages == 1)
+				{
+					Pixel.stages = 2 ;
 				}
 
 			}
