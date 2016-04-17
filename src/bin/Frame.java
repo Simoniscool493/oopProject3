@@ -55,7 +55,6 @@ public class Frame extends JFrame {
 	int componentWidth = (int) (screenSize.getWidth() * 0.2);
 	int componentHeight = 50;
 
-	Color backgroundColor = new Color(204, 255, 255);
 
 	GridBagConstraints gridC = new GridBagConstraints();
 
@@ -65,7 +64,7 @@ public class Frame extends JFrame {
 
 		this.setTitle("Pixel Art Tool");
 		this.setSize(1000, 1000);
-		this.setLayout(new GridBagLayout());
+		//this.setLayout(new GridBagLayout());
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		init();
 		this.setVisible(true);
@@ -74,19 +73,20 @@ public class Frame extends JFrame {
 	}
 
 	public void init() {
+		
+		JPanel wrap = new JPanel(new GridBagLayout());
+		wrap.setBackground(Color.WHITE);
 
 		// Adding sketch as a component
 		JPanel sketch = new JPanel();
 		Pixel pixel = new Pixel();
 		sketch.add(pixel);
 		sketch.setLayout(new GridLayout());
-		sketch.setBackground(backgroundColor);
 
 		// Creating the toolBar on the RHS
 		JPanel toolBar = new JPanel();
 		toolBar.setLayout(new GridLayout(2, 1));
-		toolBar.setBackground(backgroundColor);
-
+		
 		// ButtonPanel will be nested inside toolbar
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new GridLayout(7, 2, 6, 5));
@@ -325,7 +325,6 @@ public class Frame extends JFrame {
 
 		JPanel leftTool = new JPanel();
 		leftTool.setLayout(new GridLayout(1, 1));
-		leftTool.setBackground(backgroundColor);
 
 		// To control background Colour, Found out you can't reuse the same
 		// labels
@@ -456,17 +455,19 @@ public class Frame extends JFrame {
 		gridC.weightx = 1;
 
 		gridC.gridx = 1;
-		add(leftTool, gridC);
+		wrap.add(leftTool, gridC);
 		
 		gridC.gridx = 2;
-		add(sketch, gridC);
+		wrap.add(sketch, gridC);
 		
 		gridC.gridx = 3;
-		add(toolBar, gridC);
+		wrap.add(toolBar, gridC);
 
 		leftTool.add(sliderBackPanel);
 		toolBar.add((buttonsPanel));
 		toolBar.add(sliderPanel);
+		
+		add(wrap);
 
 		pixel.init();
 	}
