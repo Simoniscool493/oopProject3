@@ -64,6 +64,10 @@ public class Pixel extends PApplet {
 	PVector mouse;
 
 	public static ArrayList<Square> squares = new ArrayList<Square>();
+	
+	//Temp array for new pixels
+	public static ArrayList<Square> tempNew = new ArrayList<Square>();
+	
 	public static ArrayList<Framedata> data = new ArrayList<Framedata>();
 
 	Scanner scanIn = new Scanner(System.in);
@@ -365,7 +369,7 @@ public class Pixel extends PApplet {
 			if (key == '\u001A' && !squares.isEmpty()) {
 				bk--;
 				if (bk > 0) {
-					File file = new File(bk + ".bak");
+					File file = new File("Bak/" + bk + ".bak");
 
 					squares = loaded(file);
 					// System.out.println("image loaded");
@@ -412,7 +416,7 @@ public class Pixel extends PApplet {
 		{
 			bk++;
 			
-			File file = new File(bk+".bak");
+			File file = new File("Bak/" + bk + ".bak");
 
 			save(file, squares);
 
@@ -503,13 +507,9 @@ public class Pixel extends PApplet {
 		lastFrame = loadImage("Frame/frame" + (frameNum) + ".png");
 
 		Framedata newFrame = new Framedata(squares, lastFrame);
-		data.add(newFrame);
+		data.add(frameNum,newFrame);
 
 		squares.clear();
-
-		// test
-		Framedata test = data.get(0);
-		test.showArray();
 
 		frameNum++;
 	}
@@ -539,6 +539,13 @@ public class Pixel extends PApplet {
 	}
 
 	public void prevFrame() {
+		
+		if(frameNum == data.size())
+		{
+			println("yea");
+			tempNew = new ArrayList<Square>(squares);
+		}
+		
 		if (frameNum > 0) {
 			frameNum--;
 			loadFramePixels();
@@ -549,6 +556,11 @@ public class Pixel extends PApplet {
 		if (frameNum <= maxFrameNum) {
 			frameNum++;
 			loadFramePixels();
+		}
+		
+		if(frameNum == data.size())
+		{
+			squares = new ArrayList<Square>(tempNew);
 		}
 	}
 
