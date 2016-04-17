@@ -28,8 +28,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class Frame extends JFrame { // implements ActionListener, KeyListener,
-									// MenuListener {
+public class Frame extends JFrame { 
 
 	// Getting screen size to make layout
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -128,11 +127,11 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JButton EraseallButton = new JButton("Erase Blank");
 		buttonsPanel.add(EraseallButton);
 
-		JButton op = new JButton("Open");
-		buttonsPanel.add(op);
+		//JButton op = new JButton("Open");
+		//buttonsPanel.add(op);
 
-		JButton sv = new JButton("Save");
-		buttonsPanel.add(sv);
+		//JButton sv = new JButton("Save");
+	//	buttonsPanel.add(sv);
 
 		// All Button action listeners
 		drawButton.addActionListener(new ActionListener() {
@@ -236,9 +235,7 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		});
 
 		// file explorer action listeners
-		op.addActionListener(new OpenL());
 
-		sv.addActionListener(new SaveL());
 
 		// Adding sliders
 		JPanel sliderPanel = new JPanel();
@@ -405,8 +402,14 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 		JMenu menu = new JMenu("File");
 		menuBar.add(menu);
 
-		JMenuItem menuItem1 = new JMenuItem("Save as image");
-		menuItem1.addActionListener(new ActionListener() {
+		JMenuItem open = new JMenuItem("Open file");
+		JMenuItem saveimg = new JMenuItem("Save as image");
+		JMenuItem savefile = new JMenuItem("Save as .pix");
+		
+		open.addActionListener(new OpenL());
+		savefile.addActionListener(new SaveL());
+		
+		saveimg.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -414,7 +417,13 @@ public class Frame extends JFrame { // implements ActionListener, KeyListener,
 
 			}
 		});
-		menu.add(menuItem1);
+		
+		
+
+		
+		menu.add(open);
+		menu.add(saveimg);
+		menu.add(savefile);
 		this.setJMenuBar(menuBar);
 
 		// Adding Sliders into Toolbar
