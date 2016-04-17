@@ -95,6 +95,12 @@ public class Pixel extends PApplet {
 
 		showLines = true;
 		flip = false;
+		
+		//Need this to initialise the arraylist for loading pixels on start up
+		Square init = new Square(0,0,255,this,pArt);
+		squares.add(init);
+		squares.remove(0);
+		
 		System.out.println(file.getParent());
 		System.out.println(file.getName());
 	}
@@ -355,15 +361,6 @@ public class Pixel extends PApplet {
 				}
 			}
 
-			// This is also a test
-			if (key == 's') {
-				addFrame();
-			}
-
-			if (key == 'h') {
-				stages = 2;
-			}
-
 			// Undo
 			if (key == '\u001A' && !squares.isEmpty()) {
 				bk--;
@@ -543,7 +540,6 @@ public class Pixel extends PApplet {
 	public void prevFrame() {
 
 		if (frameNum == data.size()) {
-			println("yea");
 			tempNew = new ArrayList<Square>(squares);
 		}
 
@@ -567,7 +563,6 @@ public class Pixel extends PApplet {
 	public void loadFramePixels() {
 		// since it can't load what isn't made yet
 		if (frameNum != data.size()) {
-			println(frameNum);
 			Framedata tempPixel = data.get(frameNum);
 			tempPixel.showArray();
 			squares = new ArrayList<Square>(tempPixel.pixels);

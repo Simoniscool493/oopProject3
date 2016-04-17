@@ -189,7 +189,7 @@ public class Frame extends JFrame {
 				} 
 				else if(Pixel.stages == 0)
 				{
-					
+					//Do nothing
 				}
 				else if(Pixel.stages == 1)
 				{
