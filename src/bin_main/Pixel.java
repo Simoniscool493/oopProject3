@@ -41,6 +41,7 @@ public class Pixel extends PApplet {
 	static boolean save = false;
 	static boolean svimg = false;
 	static boolean fram = false;
+	static boolean bg = false;
 
 	static File file = new File("");
 	static File filen = new File("");
@@ -175,6 +176,12 @@ public class Pixel extends PApplet {
 		}
 		
 		if(fram)
+		{
+			saveFrame();
+			fram = false;
+		}
+		
+		if(bg)
 		{
 			saveFrame();
 			fram = false;
@@ -406,6 +413,13 @@ public class Pixel extends PApplet {
 
 		pArt.save(png);
 	}
+	
+	public void saveWithBG()
+	{
+		showLines = false;
+		save("png");
+		
+	}
 
 	public void mouseReleased() {
 		overWriteSquare();
@@ -584,7 +598,7 @@ public class Pixel extends PApplet {
 			frameNum--;
 		}
 	}
-
+	
 	public void runAnimation() {
 		frameRate(frameRate);
 		tint(255, 255);

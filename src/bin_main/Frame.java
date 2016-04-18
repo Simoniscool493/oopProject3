@@ -619,7 +619,8 @@ public class Frame extends JFrame
 		}
 	}
 	
-	class savef implements ActionListener {
+	class savef implements ActionListener
+	{
 		public void actionPerformed(ActionEvent e) 
 		{
 			File Dir = new File("./data/Frame");
@@ -642,8 +643,8 @@ public class Frame extends JFrame
 				Pixel.fram=true;
 			}
 		     
-			}
 		}
+	}
 
 	public static void begin() {
 		Frame f = new Frame();
