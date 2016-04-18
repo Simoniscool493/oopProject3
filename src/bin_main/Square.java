@@ -13,13 +13,15 @@ public class Square implements java.io.Serializable
 	float x;
 	float y; 
 	int c; 
+	int pixNum;
 	static PGraphics art;
 
-	Square(float x, float y, int c, PApplet p, PGraphics pArt)
+	Square(float x, float y, int c, int pixNum, PApplet p, PGraphics pArt)
 	{
 		parent = p;
 		art = pArt;
 		
+		this.pixNum = pixNum;
 		this.x = x;
 		this.y = y;
 		this.c = c;

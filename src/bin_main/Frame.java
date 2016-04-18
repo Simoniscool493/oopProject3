@@ -29,8 +29,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class Frame extends JFrame 
-{ 
+public class Frame extends JFrame {
 
 	// Getting screen size to make layout
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -41,7 +40,7 @@ public class Frame extends JFrame
 	// ButtonListener bListen = new ButtonListener();
 
 	public JTextField filename = new JTextField();
-	
+
 	public JTextField dir = new JTextField();
 	public JButton open = new JButton("Open"), save = new JButton("Save");
 
@@ -56,7 +55,6 @@ public class Frame extends JFrame
 	int componentWidth = (int) (screenSize.getWidth() * 0.2);
 	int componentHeight = 50;
 
-
 	GridBagConstraints gridC = new GridBagConstraints();
 
 	public Frame() {
@@ -65,7 +63,7 @@ public class Frame extends JFrame
 
 		this.setTitle("Pixel Art Tool");
 		this.setSize(1000, 1000);
-		//this.setLayout(new GridBagLayout());
+		// this.setLayout(new GridBagLayout());
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		init();
 		this.setVisible(true);
@@ -74,7 +72,7 @@ public class Frame extends JFrame
 	}
 
 	public void init() {
-		
+
 		JPanel wrap = new JPanel(new GridBagLayout());
 		wrap.setBackground(Color.WHITE);
 
@@ -87,7 +85,7 @@ public class Frame extends JFrame
 		// Creating the toolBar on the RHS
 		JPanel toolBar = new JPanel();
 		toolBar.setLayout(new GridLayout(2, 1));
-		
+
 		// ButtonPanel will be nested inside toolbar
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new GridLayout(7, 2, 6, 5));
@@ -110,7 +108,7 @@ public class Frame extends JFrame
 
 		JButton flip = new JButton("Flip (F)");
 		buttonsPanel.add(flip);
-		
+
 		JButton run = new JButton("Start/Stop Animation");
 		buttonsPanel.add(run);
 
@@ -119,22 +117,22 @@ public class Frame extends JFrame
 
 		JButton next = new JButton("Next Frame");
 		buttonsPanel.add(next);
-		
+
 		JButton add = new JButton("Add into Frame");
 		buttonsPanel.add(add);
-		
+
 		JButton removeFrame = new JButton("Remove last Frame");
 		buttonsPanel.add(removeFrame);
 
-		//temp name
+		// temp name
 		JButton EraseallButton = new JButton("New(removes tiles)");
 		buttonsPanel.add(EraseallButton);
 
-		//JButton op = new JButton("Open");
-		//buttonsPanel.add(op);
+		// JButton op = new JButton("Open");
+		// buttonsPanel.add(op);
 
-		//JButton sv = new JButton("Save");
-	//	buttonsPanel.add(sv);
+		// JButton sv = new JButton("Save");
+		// buttonsPanel.add(sv);
 
 		// All Button action listeners
 		drawButton.addActionListener(new ActionListener() {
@@ -187,25 +185,21 @@ public class Frame extends JFrame
 				if (Pixel.stages == 2) {
 					Pixel.stages = 1;
 					Pixel.frameCount = 0;
-				} 
-				else if(Pixel.stages == 0)
-				{
-					//Do nothing
-				}
-				else if(Pixel.stages == 1)
-				{
-					Pixel.stages = 2 ;
+				} else if (Pixel.stages == 0) {
+					// Do nothing
+				} else if (Pixel.stages == 1) {
+					Pixel.stages = 2;
 				}
 
 			}
 		});
-		
+
 		add.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pixel.addFrame();
-				
+
 			}
 		});
 
@@ -244,7 +238,6 @@ public class Frame extends JFrame
 		});
 
 		// file explorer action listeners
-
 
 		// Adding sliders
 		JPanel sliderPanel = new JPanel();
@@ -333,7 +326,7 @@ public class Frame extends JFrame
 		sliderBackPanel.setBackground(Color.WHITE);
 
 		sliderBackPanel.setLayout(new GridLayout(9, 1));
-		
+
 		JLabel bgcLabel = new JLabel("Background Colour");
 
 		JLabel redBackLabel = new JLabel("Red");
@@ -347,8 +340,8 @@ public class Frame extends JFrame
 		JLabel blueBackLabel = new JLabel("Blue");
 		JSlider blueBack = new JSlider();
 		blueBack = makeSlider(backGroundInit);
-		
-		//Slider for frameRate
+
+		// Slider for frameRate
 		JLabel frameLabel = new JLabel("Frame Rate");
 		JSlider frameSlider = new JSlider(JSlider.HORIZONTAL, 1, 59, 59);
 
@@ -362,7 +355,6 @@ public class Frame extends JFrame
 		frameRLabel.put(new Integer(0), new JLabel("1"));
 		frameRLabel.put(new Integer(60), new JLabel("59"));
 		frameSlider.setLabelTable(frameRLabel);
-		
 
 		redBack.addChangeListener(new ChangeListener() {
 
@@ -394,7 +386,7 @@ public class Frame extends JFrame
 				Pixel.backB = (int) source.getValue();
 			}
 		});
-		
+
 		frameSlider.addChangeListener(new ChangeListener() {
 
 			@Override
@@ -414,17 +406,71 @@ public class Frame extends JFrame
 		JMenuItem saveimg = new JMenuItem("Save as image");
 		JMenuItem savefile = new JMenuItem("Save as .pix");
 		JMenuItem saveframes = new JMenuItem("Save frames");
-		
+
 		open.addActionListener(new Open());
-		savefile.addActionListener(new Save());	
+		savefile.addActionListener(new Save());
 		saveimg.addActionListener(new Saveimg());
 		saveframes.addActionListener(new savef());
-		
+
 		menu.add(open);
 		menu.add(saveimg);
 		menu.add(savefile);
 		menu.add(saveframes);
-		
+
+		JMenu edit = new JMenu("Edit");
+		JMenuItem sixTeen = new JMenuItem("16 x 16");
+		JMenuItem thirtyTwo = new JMenuItem("32 x 32");
+		JMenuItem sixtyFour = new JMenuItem("64 x 64");
+
+		sixTeen.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (Pixel.pixNum != 16) {
+					Pixel.frameNum = 0;
+					Pixel.squares.clear();
+					Pixel.data.clear();
+					Pixel.pixNum = 16;
+				}
+			}
+		});
+
+		thirtyTwo.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (Pixel.pixNum != 32) {
+					Pixel.frameNum = 0;
+					Pixel.squares.clear();
+					Pixel.data.clear();
+					Pixel.pixNum = 32;
+				}
+
+			}
+		});
+
+		sixtyFour.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (Pixel.pixNum != 64) {
+					Pixel.frameNum = 0;
+					Pixel.squares.clear();
+					Pixel.data.clear();
+					Pixel.pixNum = 64;
+				}
+
+			}
+		});
+
+		edit.add(sixTeen);
+		edit.add(thirtyTwo);
+		edit.add(sixtyFour);
+		menuBar.add(edit);
+
 		this.setJMenuBar(menuBar);
 
 		// Adding Sliders into Toolbar
@@ -439,7 +485,7 @@ public class Frame extends JFrame
 
 		// Adding sliders into leftToolbar
 		sliderBackPanel.add(bgcLabel);
-		
+
 		sliderBackPanel.add(redLabel);
 		sliderBackPanel.add(redBack);
 
@@ -448,28 +494,26 @@ public class Frame extends JFrame
 
 		sliderBackPanel.add(blueLabel);
 		sliderBackPanel.add(blueBack);
-		
+
 		sliderBackPanel.add(frameLabel);
 		sliderBackPanel.add(frameSlider);
-		
-		
 
 		// Add things into frames
 		gridC.weightx = 1;
 
 		gridC.gridx = 1;
 		wrap.add(leftTool, gridC);
-		
+
 		gridC.gridx = 2;
 		wrap.add(sketch, gridC);
-		
+
 		gridC.gridx = 3;
 		wrap.add(toolBar, gridC);
 
 		leftTool.add(sliderBackPanel);
 		toolBar.add((buttonsPanel));
 		toolBar.add(sliderPanel);
-		
+
 		add(wrap);
 
 		pixel.init();
@@ -495,20 +539,17 @@ public class Frame extends JFrame
 
 	// Opens a new .pix file
 	class Open implements ActionListener {
-		public void actionPerformed(ActionEvent e) 
-		{
-			if(Pixel.stages==1)
-			{
-				
+		public void actionPerformed(ActionEvent e) {
+			if (Pixel.stages == 1) {
+
 				FileNameExtensionFilter f = new FileNameExtensionFilter("Pixel", "pix");
 				JFileChooser c = new JFileChooser("./data");
 				c.setFileFilter(f);
-	
+
 				int opp = c.showOpenDialog(Frame.this);
-	
-				if (opp == JFileChooser.APPROVE_OPTION)
-				{
-	
+
+				if (opp == JFileChooser.APPROVE_OPTION) {
+
 					File o = c.getSelectedFile();
 					Pixel.file = o;
 					Pixel.loads = true;
@@ -516,133 +557,109 @@ public class Frame extends JFrame
 					System.out.println(Pixel.file.getName());
 
 				}
-			}
-			else
-			{
+			} else {
 				System.out.println("Can't open yet");
-				
+
 			}
 		}
 	}
 
 	// Saves a new .pix file with the .pix extension if the user hasnt specified
 	class Save implements ActionListener {
-		public void actionPerformed(ActionEvent e) 
-		{
-			if(Pixel.stages==1)
-			{
+		public void actionPerformed(ActionEvent e) {
+			if (Pixel.stages == 1) {
 				JFileChooser c = new JFileChooser();
 				c.setCurrentDirectory(new File("./data"));
-	
+
 				int sv = c.showSaveDialog(Frame.this);
-	
-				if (sv == JFileChooser.APPROVE_OPTION) 
-				{
+
+				if (sv == JFileChooser.APPROVE_OPTION) {
 					String s = c.getSelectedFile().getAbsolutePath();
 					String p = ".pix";
-					
-					if (s.toLowerCase().indexOf(p.toLowerCase()) != -1 ) 
-					{
-						
+
+					if (s.toLowerCase().indexOf(p.toLowerCase()) != -1) {
+
 						File fi = new File(s);
-		
+
 						Pixel.filen = fi;
 						Pixel.save = true;
 						System.out.println(Pixel.filen.getParent());
 						System.out.println(Pixel.filen.getName());
-					}
-					else
-					{
-						s+=".pix";
-						
+					} else {
+						s += ".pix";
+
 						File fi = new File(s);
-						
+
 						Pixel.filen = fi;
 						Pixel.save = true;
 						System.out.println(Pixel.filen.getParent());
 						System.out.println(Pixel.filen.getName());
-						
+
 					}
 				}
-			}
-			else
-			{
+			} else {
 				System.out.println("Can't save yet");
 			}
-			
+
 		}
 	}
-	
+
 	class Saveimg implements ActionListener {
-		public void actionPerformed(ActionEvent e) 
-		{
-			if(Pixel.stages==1)
-			{
+		public void actionPerformed(ActionEvent e) {
+			if (Pixel.stages == 1) {
 				File Dir = new File("./data/img");
 				JFileChooser c = new JFileChooser();
-				
-					c.setCurrentDirectory(new File("./data/img"));
-		
-					int sv = c.showSaveDialog(Frame.this);
-		
-					if (sv == JFileChooser.APPROVE_OPTION) 
-					{
-						String s = c.getSelectedFile().getAbsolutePath();
-						String p = ".png";
-						
-						if (s.toLowerCase().indexOf(p.toLowerCase()) != -1 ) 
-						{
-							Pixel.png=s;
-							Pixel.svimg=true;
-						}
-						else
-						{
-							s+=".png";	
-							Pixel.png=s;
-							Pixel.svimg=true;
-						}
+
+				c.setCurrentDirectory(new File("./data/img"));
+
+				int sv = c.showSaveDialog(Frame.this);
+
+				if (sv == JFileChooser.APPROVE_OPTION) {
+					String s = c.getSelectedFile().getAbsolutePath();
+					String p = ".png";
+
+					if (s.toLowerCase().indexOf(p.toLowerCase()) != -1) {
+						Pixel.png = s;
+						Pixel.svimg = true;
+					} else {
+						s += ".png";
+						Pixel.png = s;
+						Pixel.svimg = true;
 					}
-					else
-					{
-						System.out.println("Can't save yet");
-					}
-					
-					if (!Dir.exists()) 
-					{
-						Dir.mkdir();
-					    System.out.println("Directory imgs not found making folder imgs");
-						
-					}
+				} else {
+					System.out.println("Can't save yet");
 				}
-			
-	
+
+				if (!Dir.exists()) {
+					Dir.mkdir();
+					System.out.println("Directory imgs not found making folder imgs");
+
+				}
+			}
+
 		}
 	}
-	
-	class savef implements ActionListener
-	{
-		public void actionPerformed(ActionEvent e) 
-		{
+
+	class savef implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
 			File Dir = new File("./data/Frame");
 			JFileChooser c = new JFileChooser();
-				
-			if (!Dir.exists()) 
-			{
+
+			if (!Dir.exists()) {
 				Dir.mkdir();
 			}
-				
+
 			c.setCurrentDirectory(new File("./data/Frame"));
-		
+
 			int sv = c.showSaveDialog(Frame.this);
-		
-			if (sv == JFileChooser.APPROVE_OPTION) 
-			{
+
+			if (sv == JFileChooser.APPROVE_OPTION) {
 				File s = c.getSelectedFile();
 
-				Pixel.Dir=s;
-				Pixel.fram=true;
+				Pixel.Dir = s;
+				Pixel.fram = true;
 			}
-		     
+
 		}
 	}
 

@@ -28,6 +28,8 @@ public class Pixel extends PApplet {
 	static int frameNum;
 	// The frame count for animation
 	static int frameCount;
+	//rows and cols of squares
+	static int pixNum;
 
 	boolean animationSet = false;
 	boolean loop = false;
@@ -50,7 +52,6 @@ public class Pixel extends PApplet {
 	int userC;
 	int x, y;
 	int bk = 0;
-	int pixNum;
 
 	static int stages;
 	static int r, g, b;
@@ -96,7 +97,7 @@ public class Pixel extends PApplet {
 		flip = false;
 		
 		//Need this to initialise the arraylist for loading pixels on start up
-		Square init = new Square(0,0,255,this,pArt);
+		Square init = new Square(0,0,255,pixNum,this,pArt);
 		squares.add(init);
 		squares.remove(0);
 		
@@ -220,7 +221,7 @@ public class Pixel extends PApplet {
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
 
-				Square a = new Square(x * boxSize, y * boxSize, userC, this, pArt);
+				Square a = new Square(x * boxSize, y * boxSize, userC, pixNum, this, pArt);
 				squares.add(a);
 			}
 			break;
@@ -284,7 +285,7 @@ public class Pixel extends PApplet {
 				x = (int) ((mouseX / boxSize));
 				y = (int) ((mouseY / boxSize));
 
-				Square a = new Square(x * boxSize, y * boxSize, userC, this, pArt);
+				Square a = new Square(x * boxSize, y * boxSize, userC, pixNum, this, pArt);
 				squares.add(a);
 			}
 			break;
