@@ -11,11 +11,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.JButton;
-import javax.swing.JTextField;
-
 import processing.core.PApplet;
-import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -25,6 +21,7 @@ public class Pixel extends PApplet {
 	PGraphics pArt;
 	PImage lastFrame;
 	static String png = "";
+	static File Dir = new File("");
 
 	static int maxFrameNum;
 	// The number of frame i am on
@@ -43,6 +40,7 @@ public class Pixel extends PApplet {
 	static boolean loads = false;
 	static boolean save = false;
 	static boolean svimg = false;
+	static boolean fram = false;
 
 	static File file = new File("");
 	static File filen = new File("");
@@ -174,6 +172,12 @@ public class Pixel extends PApplet {
 		if (svimg) {
 			saveTrans();
 			svimg = false;
+		}
+		
+		if(fram)
+		{
+			saveFrame();
+			fram = false;
 		}
 
 	}
@@ -406,6 +410,9 @@ public class Pixel extends PApplet {
 	public void mouseReleased() {
 		overWriteSquare();
 		
+		//remove squares outside of sketch
+		removeSquares();
+		
 		File Dir = new File("./data/Bak");
 		
 		if (!Dir.exists()) 
@@ -444,6 +451,18 @@ public class Pixel extends PApplet {
 						}
 					}
 				}
+			}
+		}
+	}
+	
+	public void removeSquares()
+	{
+		for(int i = 0; i < squares.size(); i++)
+		{
+			Square squ = squares.get(i);
+			if(squ.pos.x < 0 || squ.pos.x > width || squ.pos.y < 0 || squ.pos.y > height)
+			{
+				squares.remove(i);
 			}
 		}
 	}
@@ -527,6 +546,38 @@ public class Pixel extends PApplet {
 		image(tempImage.lastFrame, 0, 0);
 	}
 
+	public void saveFrame() 
+	{	
+		//Save the current squares
+		tempNew = new ArrayList<Square>(squares);
+		int i=0;
+		
+		Dir.mkdir();
+		String s = Dir.getAbsolutePath();
+		
+		println(s);
+		
+		for(i =0; i < data.size();i++)
+		{	
+			
+			Framedata d = data.get(i);
+			squares = new ArrayList<Square>(d.pixels);
+			
+			pArt.beginDraw();
+			
+			for (int j = 0; j < squares.size(); j++)
+			{
+				Square squ = squares.get(j);
+				squ.saveImageTrans();
+			}
+			pArt.endDraw();
+			pArt.save(s+ "/"+ i+ ".png");
+			pArt.clear();
+		}
+		//Reset squares to the previous squares
+		squares = new ArrayList<Square>(tempNew);
+		
+	}
 	public void removeLastFrame() {
 		data.remove(frameNum - 1);
 		if (frameNum >= data.size() - 1) {

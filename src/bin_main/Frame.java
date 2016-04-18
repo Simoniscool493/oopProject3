@@ -413,16 +413,18 @@ public class Frame extends JFrame
 		JMenuItem open = new JMenuItem("Open file");
 		JMenuItem saveimg = new JMenuItem("Save as image");
 		JMenuItem savefile = new JMenuItem("Save as .pix");
+		JMenuItem saveframes = new JMenuItem("Save frames");
 		
 		open.addActionListener(new Open());
-		savefile.addActionListener(new Save());
-		
+		savefile.addActionListener(new Save());	
 		saveimg.addActionListener(new Saveimg());
-		
+		saveframes.addActionListener(new savef());
 		
 		menu.add(open);
 		menu.add(saveimg);
 		menu.add(savefile);
+		menu.add(saveframes);
+		
 		this.setJMenuBar(menuBar);
 
 		// Adding Sliders into Toolbar
@@ -579,8 +581,6 @@ public class Frame extends JFrame
 				File Dir = new File("./data/img");
 				JFileChooser c = new JFileChooser();
 				
-				if (Dir.exists()) 
-				{
 					c.setCurrentDirectory(new File("./data/img"));
 		
 					int sv = c.showSaveDialog(Frame.this);
@@ -607,15 +607,43 @@ public class Frame extends JFrame
 						System.out.println("Can't save yet");
 					}
 					
+					if (!Dir.exists()) 
+					{
+						Dir.mkdir();
+					    System.out.println("Directory imgs not found making folder imgs");
+						
+					}
 				}
-				else
-				{
-					 Dir.mkdir();
-					 System.out.println("Directory imgs not found making folder imgs");
-				}
-			}
+			
+	
 		}
 	}
+	
+	class savef implements ActionListener {
+		public void actionPerformed(ActionEvent e) 
+		{
+			File Dir = new File("./data/Frame");
+			JFileChooser c = new JFileChooser();
+				
+			if (!Dir.exists()) 
+			{
+				Dir.mkdir();
+			}
+				
+			c.setCurrentDirectory(new File("./data/Frame"));
+		
+			int sv = c.showSaveDialog(Frame.this);
+		
+			if (sv == JFileChooser.APPROVE_OPTION) 
+			{
+				File s = c.getSelectedFile();
+
+				Pixel.Dir=s;
+				Pixel.fram=true;
+			}
+		     
+			}
+		}
 
 	public static void begin() {
 		Frame f = new Frame();
