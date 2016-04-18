@@ -1,8 +1,12 @@
 package bin_main;
 
-import java.util.ArrayList;
 import java.awt.Color;
-import javax.swing.JCheckBox;
+import java.io.File;
+import java.util.ArrayList;
+
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+
 import processing.core.PApplet;
 
 public class PSketch extends PApplet
@@ -96,7 +100,7 @@ public class PSketch extends PApplet
 		
 		if(saveImage)
 		{
-			save("samples/art"+(int)random(1000)+".jpeg");
+			saveDialog();
 			saveImage = false;
 		}
 		
@@ -236,6 +240,23 @@ public class PSketch extends PApplet
 		
 		colors.set(indexColorChanged,newColor);
 		colorChanged = false;
+	}
+	
+	public void saveDialog()
+	{
+		File f = new File("./data/Animations");
+		JFileChooser ch = new JFileChooser();
+		ch.setCurrentDirectory(f);
+		
+		int sv = ch.showSaveDialog(new JFrame());
+		
+		if(sv == JFileChooser.APPROVE_OPTION)
+		{
+			String s = ch.getSelectedFile().getAbsolutePath();
+			save(s + ".png");
+		}
+			
+			
 	}
 
 }
