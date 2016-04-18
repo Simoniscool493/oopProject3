@@ -29,7 +29,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class Frame extends JFrame { 
+public class Frame extends JFrame 
+{ 
 
 	// Getting screen size to make layout
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -40,7 +41,7 @@ public class Frame extends JFrame {
 	// ButtonListener bListen = new ButtonListener();
 
 	public JTextField filename = new JTextField();
-
+	
 	public JTextField dir = new JTextField();
 	public JButton open = new JButton("Open"), save = new JButton("Save");
 

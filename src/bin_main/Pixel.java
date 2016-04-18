@@ -365,7 +365,7 @@ public class Pixel extends PApplet {
 			if (key == '\u001A' && !squares.isEmpty()) {
 				bk--;
 				if (bk > 0) {
-					File file = new File("Bak/" + bk + ".bak");
+					File file = new File("./data/Bak/" + bk + ".bak");
 
 					squares = loaded(file);
 					// System.out.println("image loaded");
@@ -405,11 +405,18 @@ public class Pixel extends PApplet {
 
 	public void mouseReleased() {
 		overWriteSquare();
-
+		
+		File Dir = new File("./data/Bak");
+		
+		if (!Dir.exists()) 
+		{
+			Dir.mkdir();
+		}
+		
 		if (!squares.isEmpty()) {
 			bk++;
 
-			File file = new File("Bak/" + bk + ".bak");
+			File file = new File("./data/Bak/" + bk + ".bak");
 
 			save(file, squares);
 
