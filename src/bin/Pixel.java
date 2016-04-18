@@ -485,32 +485,39 @@ public class Pixel extends PApplet {
 
 	public void addFrame() {
 
-		pArt.beginDraw();
-
-		for (int i = 0; i < squares.size(); i++) {
-			Square squ = squares.get(i);
-			squ.saveImageTrans();
+		File Dir = new File("./data/Frame");
+		
+		if (!Dir.exists()) 
+		{
+			Dir.mkdir();
 		}
-		pArt.endDraw();
-
-		pArt.save("Frame/frame" + frameNum + ".png");
-
-		pArt.clear();
-		lastFrame = loadImage("Frame/frame" + (frameNum) + ".png");
-
-		Framedata newFrame = new Framedata(squares, lastFrame);
-		data.add(frameNum, newFrame);
-
-		// If working on a previous frame, then overwrite it
-		if (data.size() > 0) {
-			if (frameNum != data.size() - 1) {
-				data.remove(frameNum+1);
+		
+			pArt.beginDraw();
+	
+			for (int i = 0; i < squares.size(); i++) {
+				Square squ = squares.get(i);
+				squ.saveImageTrans();
 			}
-		}
-
-		squares.clear();
-
-		frameNum++;
+			pArt.endDraw();
+	
+			pArt.save("./data/Frame" + frameNum + ".png");
+	
+			pArt.clear();
+			lastFrame = loadImage("./data/Frame" + (frameNum) + ".png");
+	
+			Framedata newFrame = new Framedata(squares, lastFrame);
+			data.add(frameNum, newFrame);
+	
+			// If working on a previous frame, then overwrite it
+			if (data.size() > 0) {
+				if (frameNum != data.size() - 1) {
+					data.remove(frameNum+1);
+				}
+			}
+	
+			squares.clear();
+	
+			frameNum++;
 	}
 
 	public void lastFrame() {

@@ -14,8 +14,8 @@ public class MainWindow extends JFrame
 	static int sliderMax = 100;
 	static int sliderInit = 50;
 	
-	static int componentWidth = (int)((Main.screenSize.getWidth())/5);
-	static int componentHeight = (int)((Main.screenSize.getHeight())/15);
+	static int componentWidth = (int)((Main.screenSize.getWidth())/3);
+	static int componentHeight = (int)((Main.screenSize.getHeight())/10);
 	
 	static Dimension componentSize = new Dimension(componentWidth,componentHeight);
 	
