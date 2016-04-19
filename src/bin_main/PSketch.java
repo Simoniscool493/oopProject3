@@ -87,7 +87,6 @@ public class PSketch extends PApplet
 			if(showBackground)
 			{
 				background(colors.get(0).getRed(),colors.get(0).getGreen(),colors.get(0).getBlue());
-				System.out.println(colors.get(0).getRed());
 			}
 			
 			drawAnimation();
@@ -187,8 +186,6 @@ public class PSketch extends PApplet
 		    double ball1Y = (posy + cos(angle1) * num[5]*5);
 		    double ball2X = (posx + sin(-angle2) * num[6]*5);
 		    double ball2Y = (posy + cos(-angle2) * num[7]*5);
-
-		    //strokeWeight(1);
 		    
 		    ellipse((float)ball1X,(float)ball1Y,num[2]*5,num[2]*5);
 		    ellipse((float)ball2X,(float)ball2Y,num[2]*5,num[2]*5);
