@@ -58,7 +58,7 @@ public class Frame extends JFrame {
 
 		this.setTitle("Pixel Art Tool");
 		this.setSize(1000, 1000);
-		// this.setLayout(new GridBagLayout());
+		//this.setLayout(new GridBagLayout());
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		init();
 		this.setVisible(true);
@@ -120,7 +120,7 @@ public class Frame extends JFrame {
 		buttonsPanel.add(removeFrame);
 
 		// temp name
-		JButton EraseallButton = new JButton("New(removes tiles)");
+		JButton EraseallButton = new JButton("Remove all squares");
 		buttonsPanel.add(EraseallButton);
 
 		// All Button action listeners
@@ -217,11 +217,17 @@ public class Frame extends JFrame {
 			}
 		});
 
-		EraseallButton.addActionListener(new ActionListener() {
+		EraseallButton.addActionListener(new ActionListener() 
+		{
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				Pixel.squares.clear();
+			public void actionPerformed(ActionEvent e)
+			{
+				int reply = JOptionPane.showConfirmDialog(null, "Are you sure?", "Delete all pixels",  JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION)
+				{
+					Pixel.squares.clear();
+				}
 			}
 
 		});
