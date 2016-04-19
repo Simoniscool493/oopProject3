@@ -164,11 +164,19 @@ public class Pixel extends PApplet {
 		if (loads) {
 			squares = loaded(file);
 			loads = false;
+			
+			if(squares.size() > 0){
+				//Just pick a square for its value
+				Square temp = squares.get(0);
+				pixNum = temp.pixNum;
+			}
 		}
+		
 		if (save) {
 			save(filen, squares);
 			save = false;
 		}
+		
 		if (svimg) {
 			saveTrans();
 			svimg = false;
@@ -185,7 +193,6 @@ public class Pixel extends PApplet {
 			saveFrame();
 			fram = false;
 		}
-
 	}
 
 	public void drawGrid() {
@@ -306,6 +313,7 @@ public class Pixel extends PApplet {
 
 	public void keyPressed() {
 		if (stages == 1) {
+			
 			if (key == 't') {
 				showLines = !showLines;
 			}
@@ -626,6 +634,15 @@ public class Pixel extends PApplet {
 		image(tempImage.lastFrame, 0, 0);
 	}
 
+	public void copyLastFrame()
+	{
+		if(data.size() > 0)
+		{
+			Framedata temp = data.get(frameNum-1);
+			squares = new ArrayList<Square>(temp.pixels);
+		}
+	}
+	
 	public void prevFrame() {
 
 		if (frameNum == data.size()) {

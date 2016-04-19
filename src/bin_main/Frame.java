@@ -75,7 +75,7 @@ public class Frame extends JFrame {
 		JPanel sketch = new JPanel();
 		Pixel pixel = new Pixel();
 		sketch.add(pixel);
-		//sketch.setLayout(new GridLayout());
+		sketch.setBackground(Color.WHITE);
 
 		// Creating the toolBar on the RHS
 		JPanel toolBar = new JPanel();
@@ -123,13 +123,14 @@ public class Frame extends JFrame {
 		JButton EraseallButton = new JButton("Remove all squares");
 		buttonsPanel.add(EraseallButton);
 		
-				
+		JButton copy = new JButton("Copy Last");
+		buttonsPanel.add(copy);
+		
 		JButton bg = new JButton("Save with background");
 		bg.setBackground(new Color(224,224,224));
 		buttonsPanel.add(bg);
-		
 
-		
+		// All Button action listeners
 		bg.addActionListener(new ActionListener() {
 
 			@Override
@@ -149,9 +150,15 @@ public class Frame extends JFrame {
 				System.out.println(Pixel.savebg);
 			}
 		});
+		
+		copy.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pixel.copyLastFrame();
+			}
+		});
 
-
-		// All Button action listeners
 		drawButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -423,7 +430,8 @@ public class Frame extends JFrame {
 		JMenuItem open = new JMenuItem("Open file");
 		JMenuItem saveimg = new JMenuItem("Save as image");
 		JMenuItem savefile = new JMenuItem("Save as .pix");
-		JMenuItem saveframes = new JMenuItem("Save frames");
+		JMenuItem saveframes = new JMenuItem("Save all frames");
+		JMenuItem exit = new JMenuItem("Back to menu");
 
 		open.addActionListener(new Open());
 		savefile.addActionListener(new Save());
@@ -432,8 +440,18 @@ public class Frame extends JFrame {
 
 		menu.add(open);
 		menu.add(saveimg);
-		menu.add(savefile);
 		menu.add(saveframes);
+		menu.add(savefile);
+		menu.add(exit);
+		
+		exit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Main.f.setVisible(true);
+				Frame.this.dispose();	
+			}
+		});
 
 		JMenu edit = new JMenu("Edit");
 		JMenuItem sixTeen = new JMenuItem("16 x 16");
@@ -447,12 +465,10 @@ public class Frame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-
-				int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change modes?", "Change modes",  JOptionPane.YES_NO_OPTION);
-				if (reply == JOptionPane.YES_OPTION)
+				if (Pixel.pixNum != 16) {
+					int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change modes? \n All unsaved work will be lost!", "Change modes",  JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION)
 				{
-					   
-					if (Pixel.pixNum != 16) {
 						Pixel.frameNum = 0;
 						Pixel.squares.clear();
 						Pixel.data.clear();
@@ -468,11 +484,10 @@ public class Frame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change modes?", "Change modes",  JOptionPane.YES_NO_OPTION);
-				if (reply == JOptionPane.YES_OPTION)
-				{
-				   
-					if (Pixel.pixNum != 32) {
+				if (Pixel.pixNum != 32) {
+					int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change modes? \n All unsaved work will be lost!", "Change modes",  JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION)
+					{
 						Pixel.frameNum = 0;
 						Pixel.squares.clear();
 						Pixel.data.clear();
@@ -489,11 +504,10 @@ public class Frame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change modes?", "Change",  JOptionPane.YES_NO_OPTION);
-				if (reply == JOptionPane.YES_OPTION)
-				{
-				   
-					if (Pixel.pixNum != 64) {
+				if (Pixel.pixNum != 64) {
+					int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change modes? \n All unsaved work will be lost!", "Change",  JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION)
+					{
 						Pixel.frameNum = 0;
 						Pixel.squares.clear();
 						Pixel.data.clear();
