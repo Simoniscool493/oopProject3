@@ -3,6 +3,7 @@ package bin_main;
 import java.awt.event.*;
 import javax.swing.*;
 
+//listener class for the menu options in the animation sketch.
 class MenuActionListener implements ActionListener 
 {
 	  public void actionPerformed(ActionEvent e) 
@@ -18,6 +19,5 @@ class MenuActionListener implements ActionListener
 	    	String chosen = (String)cb.getSelectedItem();	    	
 	    	PSketch.currentAnimation = chosen;
 	    }
-
 	  }
 }

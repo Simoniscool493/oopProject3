@@ -6,6 +6,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentAdapter;
 import javax.swing.*;
 
+//class that starts an animation session and sticks the two windows together.
 public class AnimationInit
 {	
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -16,7 +17,7 @@ public class AnimationInit
 	public static int numSliders = 7;
 	
 	public static String[] sliderNames = 
-	{ 		"Framerate", 	"Stroke Weight", 	"Dimension 1", 
+	{ 		"Framerate", 	"Stroke Weight", "Dimension 1", 
 			"Dimension 2", 	"Dimension 3", 	"Dimension 4",
 			"Dimension 5",	"Dimension 6"};
 
@@ -24,7 +25,6 @@ public class AnimationInit
 	
 	public static void begin()
 	{		
-		
 		c = new MainWindow();
 		d = new DrawWindow();
 		c.createWindow();

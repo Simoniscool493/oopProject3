@@ -3,6 +3,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+//listener class for the sliders in the sketch.
 class SliderListener implements ChangeListener 
 {
 	int index;
@@ -25,6 +26,5 @@ class SliderListener implements ChangeListener
             	PSketch.frameRateChanged = true;
             }
         }
-        
     }
 }

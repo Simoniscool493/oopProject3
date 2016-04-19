@@ -5,6 +5,7 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JCheckBox;
 
+//listener class for checkboxes. flips booleans in the animation sketch.
 class ButtonListener implements ItemListener
 {	
 	public ButtonListener()
@@ -46,8 +47,6 @@ class ButtonListener implements ItemListener
 	    	int num = ((CycleBox)source).id;
 	    	PSketch.reversed[num] = !(PSketch.reversed[num]);
 	    }
-	    
-
 	}
 }
 

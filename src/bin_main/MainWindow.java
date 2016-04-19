@@ -8,6 +8,8 @@ import javax.swing.colorchooser.*;
 
 import java.util.ArrayList;
 
+//main control window for the animation sketch. contains all buttons, 
+//sliders and checkboxes.
 public class MainWindow extends JFrame
 {
 	static int sliderMin = 0;
@@ -161,10 +163,8 @@ public class MainWindow extends JFrame
 		return s;
 	}
 	
-	
 	public void addSliders()
 	{
-		
 		for(int i=0;i<AnimationInit.numSliders;i++)
 		{
 			c.gridy++;
@@ -198,7 +198,6 @@ public class MainWindow extends JFrame
 		{
 			reversers.add(c);
 		}
-		//return c;
 	}
 	
 	public void init()
@@ -223,14 +222,8 @@ public class MainWindow extends JFrame
 		menuItem1.addActionListener(m);
 		menu.add(menuItem1);
 		
-		JMenuItem menuItem2 = new JMenuItem("Save as code");
-		menu.setMnemonic(KeyEvent.VK_C);
-		menuItem2.addActionListener(m);
-		menu.add(menuItem2);
-
 		this.setJMenuBar(menuBar);
 	}
-
 	
 	public void makeCheckBox(String name,boolean selected,int k)
 	{
@@ -240,9 +233,7 @@ public class MainWindow extends JFrame
 		c.addItemListener(b);
 		boxes.add(c);
 		numControlBoxes++;
-		//return c;
 	}
-	
 	
 	public JLabel guiText(String s)
 	{
@@ -251,6 +242,5 @@ public class MainWindow extends JFrame
 		l.setPreferredSize(new Dimension(componentWidth,componentHeight/2));
 		return l;
 	}
-	
 }
 

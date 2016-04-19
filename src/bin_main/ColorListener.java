@@ -5,6 +5,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.colorchooser.*;
 import javax.swing.*;
 
+//listener class for the color pickers. sends color data to the animation sketch.
 public class ColorListener implements ChangeListener
 {
     public void stateChanged(ChangeEvent e)
@@ -22,8 +23,6 @@ public class ColorListener implements ChangeListener
         	break;
         }
         	i++;
-        }
-        
-        
+        }     
     }
 }

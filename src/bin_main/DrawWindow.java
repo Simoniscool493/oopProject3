@@ -2,6 +2,7 @@ package bin_main;
 
 import javax.swing.*;
 
+//JFrame that contains the animation sketch
 public class DrawWindow extends JFrame
 {	
 	public DrawWindow()
