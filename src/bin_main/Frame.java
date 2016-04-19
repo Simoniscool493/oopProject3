@@ -8,11 +8,9 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.Hashtable;
 
 import javax.swing.JButton;
@@ -22,9 +20,9 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -39,9 +37,6 @@ public class Frame extends JFrame {
 	// Some fields
 	// ButtonListener bListen = new ButtonListener();
 
-	public JTextField filename = new JTextField();
-
-	public JTextField dir = new JTextField();
 	public JButton open = new JButton("Open"), save = new JButton("Save");
 
 	// Some fields
@@ -59,7 +54,7 @@ public class Frame extends JFrame {
 
 	public Frame() {
 
-		Pixel.screenSize = (int) screenHeight - 200;
+		Pixel.screenSize = (int) screenHeight - 100;
 
 		this.setTitle("Pixel Art Tool");
 		this.setSize(1000, 1000);
@@ -127,12 +122,6 @@ public class Frame extends JFrame {
 		// temp name
 		JButton EraseallButton = new JButton("New(removes tiles)");
 		buttonsPanel.add(EraseallButton);
-
-		// JButton op = new JButton("Open");
-		// buttonsPanel.add(op);
-
-		// JButton sv = new JButton("Save");
-		// buttonsPanel.add(sv);
 
 		// All Button action listeners
 		drawButton.addActionListener(new ActionListener() {
@@ -256,11 +245,6 @@ public class Frame extends JFrame {
 		JLabel blueLabel = new JLabel("Blue");
 		JSlider blue = new JSlider();
 		blue = makeSlider(colorInit);
-
-		// File explorer
-
-		dir.setEditable(false);
-		filename.setEditable(false);
 
 		// Initial color set for colour Preview
 		JPanel colourPre = new JPanel();
@@ -421,31 +405,46 @@ public class Frame extends JFrame {
 		JMenuItem sixTeen = new JMenuItem("16 x 16");
 		JMenuItem thirtyTwo = new JMenuItem("32 x 32");
 		JMenuItem sixtyFour = new JMenuItem("64 x 64");
+		
+
 
 		sixTeen.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
 
-				if (Pixel.pixNum != 16) {
-					Pixel.frameNum = 0;
-					Pixel.squares.clear();
-					Pixel.data.clear();
-					Pixel.pixNum = 16;
+				int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change modes?", "Change modes",  JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION)
+				{
+					   
+					if (Pixel.pixNum != 16) {
+						Pixel.frameNum = 0;
+						Pixel.squares.clear();
+						Pixel.data.clear();
+						Pixel.pixNum = 16;
+					}
 				}
 			}
 		});
 
-		thirtyTwo.addActionListener(new ActionListener() {
+		thirtyTwo.addActionListener(new ActionListener() 
+		{
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				if (Pixel.pixNum != 32) {
-					Pixel.frameNum = 0;
-					Pixel.squares.clear();
-					Pixel.data.clear();
-					Pixel.pixNum = 32;
+			public void actionPerformed(ActionEvent e) 
+			{
+				int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change modes?", "Change modes",  JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION)
+				{
+				   
+					if (Pixel.pixNum != 32) {
+						Pixel.frameNum = 0;
+						Pixel.squares.clear();
+						Pixel.data.clear();
+						Pixel.pixNum = 32;
+					}
+				
 				}
 
 			}
@@ -454,13 +453,18 @@ public class Frame extends JFrame {
 		sixtyFour.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				if (Pixel.pixNum != 64) {
-					Pixel.frameNum = 0;
-					Pixel.squares.clear();
-					Pixel.data.clear();
-					Pixel.pixNum = 64;
+			public void actionPerformed(ActionEvent e)
+			{
+				int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change modes?", "Change",  JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION)
+				{
+				   
+					if (Pixel.pixNum != 64) {
+						Pixel.frameNum = 0;
+						Pixel.squares.clear();
+						Pixel.data.clear();
+						Pixel.pixNum = 64;
+					}
 				}
 
 			}
