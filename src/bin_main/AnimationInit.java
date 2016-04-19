@@ -12,8 +12,7 @@ public class AnimationInit
 
 	static MainWindow c;
 	static DrawWindow d;
-
-	//public static int numColorChoosers = 3;
+	
 	public static int numSliders = 8;
 	
 	public static String[] sliderNames = 
@@ -29,6 +28,7 @@ public class AnimationInit
 		c = new MainWindow();
 		d = new DrawWindow();
 		c.createWindow();
+		d.setSize(new Dimension(d.getWidth(),c.getHeight()));
 		
 		stick(c,d);
 	}
@@ -39,11 +39,13 @@ public class AnimationInit
         {
             public void componentMoved(ComponentEvent e) 
             {
-            	d.setLocation(c.getLocation().x-(int)(screenSize.getWidth()/2.9),c.getLocation().y);
+            	d.setLocation(c.getLocation().x-(int)(screenSize.getWidth()/2.83),c.getLocation().y);
             	d.setExtendedState(JFrame.NORMAL);
             }
         }
         );
+		d.setExtendedState(JFrame.ICONIFIED);
+		d.setExtendedState(JFrame.NORMAL);
 	}
 	
 } 

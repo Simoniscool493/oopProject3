@@ -8,9 +8,11 @@ import javax.swing.*;
 
 public class Main
 {	
+	public static JFrame f;
+	
 	public static void main(String[] args)
 	{		
-		JFrame f = new JFrame();
+		f = new JFrame();
 		f.setSize(new Dimension(1000,1000));
 		f.setVisible(true);
 		f.setLocationRelativeTo(null);
@@ -29,7 +31,7 @@ public class Main
 			{
 				AnimationInit.begin();
 				f.setVisible(false); 
-				f.dispose();
+				//f.dispose();
 			}
 		});
 		p.add(b1);

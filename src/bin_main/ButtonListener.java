@@ -24,7 +24,7 @@ class ButtonListener implements ItemListener
 	    {
 	    	SliderListener.slidingSliders = !SliderListener.slidingSliders;
 	    }
-	    else if (s == "Pause Animation") 
+	    else if (s == "Pause") 
 	    {
 	    	PSketch.enableDraw = !PSketch.enableDraw;
 	    }

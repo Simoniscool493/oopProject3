@@ -252,7 +252,7 @@ public class PSketch extends PApplet
 				{
 					num[i]++;
 
-					if(num[i]==MainWindow.sliderMax)
+					if(num[i]>=MainWindow.sliderMax)
 					{
 						num[i]=0;
 					}
@@ -261,7 +261,7 @@ public class PSketch extends PApplet
 				{
 					num[i]--;
 
-					if(num[i]==MainWindow.sliderMin)
+					if(num[i]<=MainWindow.sliderMin)
 					{
 						num[i]=MainWindow.sliderMax;
 					}

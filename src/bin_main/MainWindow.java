@@ -15,7 +15,7 @@ public class MainWindow extends JFrame
 	static int sliderInit = 50;
 	
 	static int componentWidth = (int)((AnimationInit.screenSize.getWidth())/5);
-	static int componentHeight = (int)((AnimationInit.screenSize.getHeight())/15);
+	static int componentHeight = (int)((AnimationInit.screenSize.getHeight())/12);
 	
 	static Dimension componentSize = new Dimension(componentWidth,componentHeight);
 	
@@ -35,9 +35,7 @@ public class MainWindow extends JFrame
 	ButtonListener b = new ButtonListener();
 	MenuActionListener m = new MenuActionListener();	
 	ColorListener cl = new ColorListener();
-	
-	//BorderFactory bf = new BorderFactory();
-	
+		
 	JPanel titlePanel = new JPanel();
 	JPanel controlPanel = new JPanel();
 	
@@ -59,10 +57,25 @@ public class MainWindow extends JFrame
 		animationList.addActionListener(m);
 		
 		makeCheckBox("Background",false,KeyEvent.VK_B);
-		makeCheckBox("Pause Animation",false,KeyEvent.VK_P);
+		makeCheckBox("Pause",false,KeyEvent.VK_P);
 		makeCheckBox("Holding Sliders",true,KeyEvent.VK_S);
 		makeCheckBox("Random Stroke",false,KeyEvent.VK_R);
 		makeCheckBox("Random Fill",false,KeyEvent.VK_F);
+		
+		JButton r = new JButton("Main Menu");
+		
+		r.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+            	Main.f.setVisible(true);
+            	AnimationInit.d.dispose();
+            	AnimationInit.c.dispose();
+            }
+        }
+        );
+		
+		controlPanel.add(r);
 
 		controlPanel.add(animationList);
 		addControlBoxes();
@@ -75,7 +88,6 @@ public class MainWindow extends JFrame
 		
 		c.gridy = 1;
 		this.add(controlPanel,c);
-		
 		
 		addSliders();
 		addColorSliders();
@@ -191,9 +203,9 @@ public class MainWindow extends JFrame
 	
 	public void init()
 	{
-		this.setResizable(false);
+		//this.setResizable(false);
 		this.setVisible(true);
-		this.setLocationRelativeTo(null);
+		this.setLocation((int)(AnimationInit.screenSize.getWidth()/2),0);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		makeMenu();
 	}
