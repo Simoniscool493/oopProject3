@@ -44,6 +44,7 @@ public class Pixel extends PApplet {
 	static boolean svimg = false;
 	static boolean fram = false;
 	static boolean bg = false;
+	boolean five = false;
 
 	static File file = new File("");
 	static File filen = new File("");
@@ -75,7 +76,7 @@ public class Pixel extends PApplet {
 	public void setup() {
 
 		size(screenSize, screenSize);
-		pArt = createGraphics(width, height, JAVA2D);
+		pArt = createGraphics(width, height);
 		stages = 0;
 		boxSize = 0;
 		cursor(CROSS);
@@ -101,8 +102,6 @@ public class Pixel extends PApplet {
 		squares.add(init);
 		squares.remove(0);
 		
-		System.out.println(file.getParent());
-		System.out.println(file.getName());
 	}
 
 	public void draw() {
@@ -376,16 +375,24 @@ public class Pixel extends PApplet {
 			// Undo
 			if (key == '\u001A' && !squares.isEmpty()) {
 				bk--;
-				if (bk > 0) {
+				
+				if (bk < 1 && !five) {
+					bk = 1;
+				}
+				if (bk < 1 && five) 
+				{
+					bk = 5;
+				}
+				
+				if (bk > 0) 
+				{
 					File file = new File("./data/Bak/" + bk + ".bak");
 
 					squares = loaded(file);
 					// System.out.println("image loaded");
 					// println(bk + "loading");
 				}
-				if (bk < 0) {
-					bk = 2;
-				}
+			
 
 			}
 
@@ -435,14 +442,26 @@ public class Pixel extends PApplet {
 			Dir.mkdir();
 		}
 		
-		if (!squares.isEmpty()) {
+		if (!squares.isEmpty()) 
+		{
 			bk++;
-
+			
+			if(bk > 5)
+			{
+				bk=1;
+			}
+			
+			if(bk ==5)
+			{
+				five=true;
+			}
+			
 			File file = new File("./data/Bak/" + bk + ".bak");
 
 			save(file, squares);
-
+			
 		}
+		println(bk);
 
 	}
 
@@ -570,7 +589,7 @@ public class Pixel extends PApplet {
 		Dir.mkdir();
 		String s = Dir.getAbsolutePath();
 		
-		println(s);
+		
 		
 		for(i =0; i < data.size();i++)
 		{	
