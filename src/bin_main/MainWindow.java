@@ -53,7 +53,7 @@ public class MainWindow extends JFrame
 		
 		titlePanel.add(guiText("Graphics Control Menu"));
 		
-		String[] animationTypes = { "Circle", "Star", "Square", "Bouncing", "Pendulum", "Orbit"};
+		String[] animationTypes = { "Circle", "Star", "Polygon", "Face", "Pendulum", "Orbit","Spiral","Square"};
 		JComboBox animationList = new JComboBox(animationTypes);
 		animationList.setSelectedIndex(0);
 		animationList.addActionListener(m);

@@ -144,14 +144,44 @@ public class PSketch extends PApplet
 			}
 
 		}
-		if(currentAnimation == "Square")
+		if(currentAnimation == "Polygon")
 		{
-	
+			 pushMatrix();
+			  
+			 float angle = TWO_PI /((num[1])+1);
+			 beginShape();
+			 
+			 for(float a = 0; a < TWO_PI; a += angle) 
+			 {
+				    float sx = width/2 + cos(a) * num[2]*4;
+				    float sy = height/2 + sin(a) * num[3]*4 ;
+				    vertex(sx, sy);
+			 }
+			 
+			  popMatrix();
 		}
-		if(currentAnimation == "Bouncing")
+		if(currentAnimation == "Face")
 		{
+			strokeWeight((num[1]/5)+1);
 			
+			  for (int y = 0 ; y < height ; y += num[2]+20)
+			  {
+			    for (int x = 0 ; x < width ; x += num[3]+20)
+			    {
+			      //stroke(red, green, blue);
+				  //THe face
+			      ellipse(x + 25, y + 25, 50, 50);
+			      // The  eyes and nose
+			      line(x + 15, y + 10, x + 16, y + 10);
+			      line(x + 35, y + 10, x + 36, y + 10);
+			      ellipse(x + 25, y + 25, 4, 4);
+
+			      // The straight mouth
+			      line(x + 20, y + 38, x + 30, y + 38);
+				}
+			 }
 		}
+			
 		if(currentAnimation == "Pendulum")
 		{
 		    translate(width / 2, height / 2);
@@ -183,6 +213,28 @@ public class PSketch extends PApplet
 
 		    angle1+=(float)(num[3]/600.0f)+0.003;
 		    angle2+=(float)(num[3]/600.0f)+0.003;
+		}
+		if(currentAnimation == "Spiral")
+		{
+			smooth();
+			//pushMatrix();
+				translate(width/2, height/2);
+			//popMatrix();
+			
+			strokeWeight(2);
+			beginShape();
+			for(int i=0;i<350;i++)
+			{
+				curveVertex((i*2)*sin((float)(i/(num[1]/10.0))),(i*2)*cos((float)(i/(num[1]/10.0))));
+			}
+			endShape(); 
+		}
+		if(currentAnimation == "Square")
+		{
+			translate(random(1000),random(1000));
+
+		    strokeWeight((num[1]/5)+1);
+			rect(0,0,num[3]*5,num[4]*5);
 		}
 		endShape(CLOSE);
 		
@@ -254,9 +306,7 @@ public class PSketch extends PApplet
 		{
 			String s = ch.getSelectedFile().getAbsolutePath();
 			save(s + ".png");
-		}
-			
-			
+		}	
 	}
 
 }
