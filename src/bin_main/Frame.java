@@ -61,7 +61,7 @@ public class Frame extends JFrame
 
 	public Frame() {
 
-		Pixel.screenSize = (int) screenHeight - 100;
+		Pixel.screenSize = (int) screenHeight - 200;
 
 		this.setTitle("Pixel Art Tool");
 		this.setSize(1000, 1000);
@@ -82,7 +82,7 @@ public class Frame extends JFrame
 		JPanel sketch = new JPanel();
 		Pixel pixel = new Pixel();
 		sketch.add(pixel);
-		sketch.setLayout(new GridLayout());
+		//sketch.setLayout(new GridLayout());
 
 		// Creating the toolBar on the RHS
 		JPanel toolBar = new JPanel();

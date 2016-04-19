@@ -19,6 +19,7 @@ public class Main
 		JPanel p = new JPanel();
 		f.add(p);
 		
+		
 		JButton b1 = new JButton("Animation Window");
 		b1.setPreferredSize(new Dimension(500,300));
 		b1.addActionListener(new ActionListener() 
