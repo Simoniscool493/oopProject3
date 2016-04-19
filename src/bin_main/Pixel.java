@@ -45,11 +45,11 @@ public class Pixel extends PApplet {
 	static boolean fram = false;
 	static boolean bg = false;
 	boolean five = false;
+	static boolean savebg=false;
 
 	static File file = new File("");
 	static File filen = new File("");
 
-	int backGround;
 	int userC;
 	int x, y;
 	int bk = 0;
@@ -89,8 +89,7 @@ public class Pixel extends PApplet {
 		backR = backG = backB = 200;
 		frameNum = 0;
 		frameRate = 59;
-
-		backGround = color(backR, backG, backB);
+		
 		userC = color(r, g, b);
 		mode = 1;
 
@@ -410,9 +409,14 @@ public class Pixel extends PApplet {
 
 	}
 
-	public void saveTrans() {
+	public void saveTrans() 
+	{
 		pArt.beginDraw();
-
+		if(savebg)
+		{
+			pArt.background(backR,backG,backB);
+		}
+		
 		for (int i = 0; i < squares.size(); i++) {
 			Square squ = squares.get(i);
 			squ.saveImageTrans();
@@ -420,13 +424,6 @@ public class Pixel extends PApplet {
 		pArt.endDraw();
 
 		pArt.save(png);
-	}
-	
-	public void saveWithBG()
-	{
-		showLines = false;
-		save("png");
-		
 	}
 
 	public void mouseReleased() {

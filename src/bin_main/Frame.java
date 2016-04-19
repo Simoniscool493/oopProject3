@@ -122,6 +122,34 @@ public class Frame extends JFrame {
 		// temp name
 		JButton EraseallButton = new JButton("Remove all squares");
 		buttonsPanel.add(EraseallButton);
+		
+				
+		JButton bg = new JButton("Save with background");
+		bg.setBackground(new Color(224,224,224));
+		buttonsPanel.add(bg);
+		
+
+		
+		bg.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				Pixel.savebg =!Pixel.savebg;
+				
+				if(Pixel.savebg)
+				{
+					bg.setBackground(new Color(153,204,255));
+				}
+				else
+				{
+					bg.setBackground(new Color(224,224,224));
+				}
+				bg.repaint();
+				System.out.println(Pixel.savebg);
+			}
+		});
+
 
 		// All Button action listeners
 		drawButton.addActionListener(new ActionListener() {
