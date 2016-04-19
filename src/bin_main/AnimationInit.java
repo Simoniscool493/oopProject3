@@ -13,12 +13,12 @@ public class AnimationInit
 	static MainWindow c;
 	static DrawWindow d;
 	
-	public static int numSliders = 8;
+	public static int numSliders = 7;
 	
 	public static String[] sliderNames = 
-	{ 		"Framerate", 	"Dimension 1", 	"Dimension 2", 
-			"Dimension 3", 	"Dimension 4", 	"Dimension 5",
-			"Dimension 6",	"Dimension 7"};
+	{ 		"Framerate", 	"Stroke Weight", 	"Dimension 1", 
+			"Dimension 2", 	"Dimension 3", 	"Dimension 4",
+			"Dimension 5",	"Dimension 6"};
 
 	public static String[] colorNames = {"Red","Green","Blue"};
 	

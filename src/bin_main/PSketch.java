@@ -119,56 +119,44 @@ public class PSketch extends PApplet
 	public void drawAnimation()
 	{
 		beginShape();
-		
-		//1 is number of points on star
-		//2 and 3 are h/w of inner radius
-		//3 and 4 are h/w of outer radius
-		
+		strokeWeight((num[1]/10));
 		if(currentAnimation == "Circle")
 		{
-			ellipse(width/2,height/2,(width/100)*num[1],(height/100)*num[2]);
+			ellipse(width/2,height/2,(width/100)*num[2],(height/100)*num[3]);
 		}
 		if(currentAnimation == "Star")
 		{
-			float angle = TWO_PI / num[1]; 
+			float angle = TWO_PI / num[2]; 
 			float halfAngle = angle/(float)2.0;
 			
 			for (float a = 0; a < TWO_PI; a += angle) 
 			{
-				float sx = width/2 + cos(a) * num[2]*5;
-				float sy = height/2 + sin(a) * num[3]*5;
+				float sx = width/2 + cos(a) * num[3]*5;
+				float sy = height/2 + sin(a) * num[4]*5;
 				vertex(sx, sy);
-				sx = width/2 + cos(a+halfAngle) * num[4]*5;
-				sy = height/2 + sin(a+halfAngle) * num[5]*5;
+				sx = width/2 + cos(a+halfAngle) * num[5]*5;
+				sy = height/2 + sin(a+halfAngle) * num[6]*5;
 				vertex(sx, sy);
 			}
 
 		}
 		if(currentAnimation == "Polygon")
 		{
-			 pushMatrix();
-			  
-			 float angle = TWO_PI /((num[1])+1);
-			 beginShape();
+			 float angle = TWO_PI /((num[2])+1);
 			 
 			 for(float a = 0; a < TWO_PI; a += angle) 
 			 {
-				    float sx = width/2 + cos(a) * num[2]*4;
-				    float sy = height/2 + sin(a) * num[3]*4 ;
+				    float sx = width/2 + cos(a) * num[3]*4;
+				    float sy = height/2 + sin(a) * num[4]*4 ;
 				    vertex(sx, sy);
 			 }
-			 
-			  popMatrix();
 		}
 		if(currentAnimation == "Face")
 		{
-			strokeWeight((num[1]/5)+1);
-			
 			  for (int y = 0 ; y < height ; y += num[2]+20)
 			  {
 			    for (int x = 0 ; x < width ; x += num[3]+20)
 			    {
-			      //stroke(red, green, blue);
 				  //THe face
 			      ellipse(x + 25, y + 25, 50, 50);
 			      // The  eyes and nose
@@ -192,12 +180,6 @@ public class PSketch extends PApplet
 		}
 		if(currentAnimation == "Orbit")
 		{
-			if(num[1]<1)
-			{
-				num[1] = 1;
-			}
-		    strokeWeight((num[1]/5));
-
 			float posx,posy;
 			posx = posy = width/2;
 			
@@ -217,28 +199,21 @@ public class PSketch extends PApplet
 		if(currentAnimation == "Spiral")
 		{
 			smooth();
-			//pushMatrix();
-				translate(width/2, height/2);
-			//popMatrix();
+			translate(width/2, height/2);
 			
-			strokeWeight(2);
-			beginShape();
 			for(int i=0;i<350;i++)
 			{
-				curveVertex((i*2)*sin((float)(i/(num[1]/10.0))),(i*2)*cos((float)(i/(num[1]/10.0))));
+				curveVertex((i*2)*sin((float)(i/(num[2]/10.0))),(i*2)*cos((float)(i/(num[2]/10.0))));
 			}
 			endShape(); 
 		}
 		if(currentAnimation == "Square")
 		{
 			translate(random(1000),random(1000));
-
-		    strokeWeight((num[1]/5)+1);
-			rect(0,0,num[3]*5,num[4]*5);
+			rect(0,0,num[2]*5,num[3]*5);
 		}
 		endShape(CLOSE);
 		
-		System.out.println(num[5]);
 		cycle();
 	}
 	
