@@ -16,8 +16,8 @@ public class MainWindow extends JFrame
 	static int sliderMax = 100;
 	static int sliderInit = 50;
 	
-	static int componentWidth = (int)((AnimationInit.screenSize.getWidth())/5);
-	static int componentHeight = (int)((AnimationInit.screenSize.getHeight())/12);
+	static int componentWidth = (int)((AnimationInit.screenSize.getWidth())/4);
+	static int componentHeight = (int)((AnimationInit.screenSize.getHeight())/9.4);
 	
 	static Dimension componentSize = new Dimension(componentWidth,componentHeight);
 	
@@ -119,7 +119,7 @@ public class MainWindow extends JFrame
 		c.gridx = w;
 		c.gridy = h;
 
-		j.setPreferredSize(new Dimension((int)(componentWidth*0.75),componentHeight));
+		j.setPreferredSize(new Dimension((int)(componentWidth),componentHeight));
 		
 		AbstractColorChooserPanel[] panels = j.getChooserPanels();
 		
