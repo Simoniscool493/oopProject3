@@ -185,7 +185,7 @@ public class PSketch extends PApplet
 		    double ball1X = (posx + sin(angle1) * num[4]*5);
 		    double ball1Y = (posy + cos(angle1) * num[5]*5);
 		    double ball2X = (posx + sin(-angle2) * num[6]*5);
-		    double ball2Y = (posy + cos(-angle2) * num[7]*5);
+		    double ball2Y = (posy + cos(-angle2) * num[6]*5);
 		    
 		    ellipse((float)ball1X,(float)ball1Y,num[2]*5,num[2]*5);
 		    ellipse((float)ball2X,(float)ball2Y,num[2]*5,num[2]*5);
