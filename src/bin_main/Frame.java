@@ -131,6 +131,9 @@ public class Frame extends JFrame {
 		JButton bg = new JButton("Save with background");
 		bg.setBackground(new Color(224,224,224));
 		buttonsPanel.add(bg);
+		
+		//Lets user know what frame they're on
+		JLabel textFrame = new JLabel("You're on frame " + (Pixel.frameNum+1) + " Out of " + Pixel.data.size());
 
 		// All Button action listeners
 		bg.addActionListener(new ActionListener() {
@@ -224,8 +227,11 @@ public class Frame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pixel.addFrame();
-
+				if(Pixel.stages == 1)
+				{
+					pixel.addFrame();
+					textFrame.setText("You're on frame " + (Pixel.frameNum+1) + " Out of " + Pixel.data.size());
+				}
 			}
 		});
 
@@ -234,6 +240,7 @@ public class Frame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pixel.prevFrame();
+				textFrame.setText("You're on frame " + (Pixel.frameNum+1) + " Out of " + Pixel.data.size());
 			}
 		});
 
@@ -242,6 +249,7 @@ public class Frame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pixel.nextFrame();
+				textFrame.setText("You're on frame " + (Pixel.frameNum+1) + " Out of " + Pixel.data.size());
 			}
 		});
 
@@ -249,7 +257,11 @@ public class Frame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pixel.removeLastFrame();
+				if(Pixel.data.size() > 1)
+				{
+					pixel.removeLastFrame();
+					textFrame.setText("You're on frame " + (Pixel.frameNum+1) + " Out of " + Pixel.data.size());
+				}
 
 			}
 		});
@@ -269,13 +281,14 @@ public class Frame extends JFrame {
 
 		});
 
-		// file explorer action listeners
 
 		// Adding sliders
 		JPanel sliderPanel = new JPanel();
 		sliderPanel.setBackground(Color.WHITE);
 
 		sliderPanel.setLayout(new GridLayout(6, 2));
+		
+		sliderPanel.add(textFrame);
 
 		JLabel redLabel = new JLabel("Red");
 		JSlider red = new JSlider();
@@ -352,7 +365,7 @@ public class Frame extends JFrame {
 		JPanel sliderBackPanel = new JPanel();
 		sliderBackPanel.setBackground(Color.WHITE);
 
-		sliderBackPanel.setLayout(new GridLayout(9, 1));
+		sliderBackPanel.setLayout(new GridLayout(10, 1));
 
 		JLabel bgcLabel = new JLabel("Background Colour");
 
@@ -557,6 +570,8 @@ public class Frame extends JFrame {
 
 		sliderBackPanel.add(frameLabel);
 		sliderBackPanel.add(frameSlider);
+		
+		sliderBackPanel.add(textFrame);
 
 		// Add things into frames
 		gridC.weightx = 1;

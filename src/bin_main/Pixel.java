@@ -99,8 +99,7 @@ public class Pixel extends PApplet {
 		//Need this to initialise the arraylist for loading pixels on start up
 		Square init = new Square(0,0,255,pixNum,this,pArt);
 		squares.add(init);
-		squares.remove(0);
-		
+		squares.clear();
 	}
 
 	public void draw() {
@@ -400,7 +399,6 @@ public class Pixel extends PApplet {
 					// println(bk + "loading");
 				}
 			
-
 			}
 
 		}
@@ -411,6 +409,8 @@ public class Pixel extends PApplet {
 			Square squ = squares.get(i);
 
 			squ.pos.x = width - squ.pos.x;
+			
+			//Changing the x and y value also
 			squ.x = (int) squ.pos.x - (boxSize / 2 - 1);
 			squ.y = (int) squ.pos.y - (boxSize / 2 - 1);
 		}

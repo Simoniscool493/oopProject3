@@ -38,11 +38,12 @@ public class Square implements java.io.Serializable
 	//If user wants to save image with no background
 	public void saveImageTrans()
 	{
+		art.rectMode(PConstants.CENTER);
 		art.stroke(c);
 		art.fill(c);
 	
 		//I draw using X and Y because changing rectMode for PGraphics gives problems
-		art.rect(x, y, Pixel.boxSize-1, Pixel.boxSize-1);
+		art.rect(pos.x, pos.y, Pixel.boxSize-1, Pixel.boxSize-1);
 	}
 	
 	/*Lets you see what the contents of an arraylist are normally
