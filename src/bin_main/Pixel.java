@@ -549,6 +549,13 @@ public class Pixel extends PApplet {
 	}
 
 	public void addFrame() {
+		
+		File Dir = new File("./data/Last");
+		
+		if (!Dir.exists()) 
+		{
+			Dir.mkdir();
+		}
 
 		pArt.beginDraw();
 
@@ -558,10 +565,10 @@ public class Pixel extends PApplet {
 		}
 		pArt.endDraw();
 
-		pArt.save("Frame/frame" + frameNum + ".png");
+		pArt.save("./data/Last/" + frameNum + ".png");
 
 		pArt.clear();
-		lastFrame = loadImage("Frame/frame" + (frameNum) + ".png");
+		lastFrame = loadImage("./data/Last/" + (frameNum) + ".png");
 
 		Framedata newFrame = new Framedata(squares, lastFrame);
 		data.add(frameNum, newFrame);

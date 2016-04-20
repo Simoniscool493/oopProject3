@@ -257,7 +257,7 @@ public class Frame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(Pixel.data.size() > 1)
+				if(Pixel.data.size() > 0)
 				{
 					pixel.removeLastFrame();
 					textFrame.setText("You're on frame " + (Pixel.frameNum+1) + " Out of " + Pixel.data.size());
