@@ -485,6 +485,7 @@ public class Frame extends JFrame {
 					Main.f.setVisible(true);
 					//Closes the window and opens the main menu again
 					Frame.this.dispose();	
+					pixel.dispose();
 				}
 			}
 		});

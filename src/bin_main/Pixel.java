@@ -78,8 +78,8 @@ public class Pixel extends PApplet {
 		boxSize = 0;
 		cursor(CROSS);
 
-		// pen = loadImage("pen.png");
-		// eraser = loadImage("eraser.png");
+		 pen = loadImage("./data/Icons/pen.png");
+		 eraser = loadImage("./data/Icons/eraser.png");
 
 		// Start color off as black
 		r = g = b = 0;
@@ -123,8 +123,7 @@ public class Pixel extends PApplet {
 
 		// The actual drawing
 		case 1:
-			// I realised the program is slower to respond if the frameRate is
-			// slower
+
 			frameRate(60);
 
 			if (data.size() > 0 && frameNum != 0) {
@@ -154,13 +153,22 @@ public class Pixel extends PApplet {
 			}
 		}
 
-		/*
-		 * if(mode==3) { cursor(pen); }
-		 * 
-		 * else if(mode==2) { cursor(eraser); }
-		 * 
-		 * else { cursor(CROSS); }
-		 */
+		
+		  if(mode==3) 
+		  { 
+			  cursor(pen); 
+		  }
+		  
+		  else if(mode==2) 
+		  { 
+			  cursor(eraser);
+		  }
+		  
+		 else 
+		 { 
+			 cursor(CROSS); 
+		 }
+		 
 
 		//For loading file
 		if (loads) {
