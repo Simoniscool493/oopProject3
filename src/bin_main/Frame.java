@@ -59,10 +59,12 @@ public class Frame extends JFrame {
 		this.setTitle("Pixel Art Tool");
 		this.setSize(1000, 1000);
 		//this.setLayout(new GridBagLayout());
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		init();
 		this.setVisible(true);
+		this.setExtendedState(JFrame.ICONIFIED);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
 	}
 
