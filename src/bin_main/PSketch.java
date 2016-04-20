@@ -200,7 +200,7 @@ public class PSketch extends PApplet
 			
 			for(int i=0;i<350;i++)
 			{
-				curveVertex((i*2)*sin((float)(i/(num[2]/10.0))),(i*2)*cos((float)(i/(num[2]/10.0))));
+				curveVertex((i*2)*sin((float)(i/(num[2]/250.0))),(i*2)*cos((float)(i/(num[2]/250.0))));
 			}
 			endShape(); 
 		}
