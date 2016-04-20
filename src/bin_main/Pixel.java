@@ -31,9 +31,6 @@ public class Pixel extends PApplet {
 	//rows and cols of squares
 	static int pixNum;
 
-	boolean animationSet = false;
-	boolean loop = false;
-
 	boolean load = false;
 	static boolean flip;
 	static boolean showLines;
@@ -111,6 +108,8 @@ public class Pixel extends PApplet {
 		maxFrameNum = data.size() - 1;
 
 		switch (stages) {
+		
+		//Menu
 		case 0:
 
 			textAlign(CENTER);
@@ -131,15 +130,17 @@ public class Pixel extends PApplet {
 			if (data.size() > 0 && frameNum != 0) {
 				lastFrame();
 			}
-
+			
 			boxSize = (float) (width) / (float) (pixNum);
 
 			rectMode(CENTER);
+			
 			for (int i = 0; i < squares.size(); i++) {
 				Square squ = squares.get(i);
 				squ.drawShape();
 			}
 
+			//To draw grid
 			if (showLines == true) {
 				drawGrid();
 			}
@@ -147,6 +148,7 @@ public class Pixel extends PApplet {
 
 		// For animation
 		case 2:
+			//Only run if there is a frame
 			if (data.size() > 0) {
 				runAnimation();
 			}
@@ -160,6 +162,7 @@ public class Pixel extends PApplet {
 		 * else { cursor(CROSS); }
 		 */
 
+		//For loading file
 		if (loads) {
 			squares = loaded(file);
 			loads = false;
@@ -171,22 +174,26 @@ public class Pixel extends PApplet {
 			}
 		}
 		
+		//Saving file
 		if (save) {
 			save(filen, squares);
 			save = false;
 		}
 		
+		//Save as img
 		if (svimg) {
 			saveTrans();
 			svimg = false;
 		}
 		
+		//Saving all frames
 		if(fram)
 		{
 			saveFrame();
 			fram = false;
 		}
 		
+		//Save with background
 		if(bg)
 		{
 			saveFrame();
@@ -194,6 +201,7 @@ public class Pixel extends PApplet {
 		}
 	}
 
+	//Code for drawing grid
 	public void drawGrid() {
 		for (int i = 1; i < pixNum + 1; i++) {
 			if (i == pixNum / 2) {
@@ -210,6 +218,7 @@ public class Pixel extends PApplet {
 		}
 	}
 
+	//Function that is used with slider actioners to update colour Preview
 	public void setColour() {
 		userC = color(r, g, b);
 	}
@@ -218,8 +227,8 @@ public class Pixel extends PApplet {
 
 		switch (mode) {
 
+		//if in draw mode
 		case 1:
-
 			if (stages == 1) {
 
 				x = (int) ((mouseX / boxSize));
@@ -230,10 +239,10 @@ public class Pixel extends PApplet {
 			}
 			break;
 
+		//If erase mode
 		case 2:
 
 			mouse = new PVector(mouseX, mouseY);
-
 			if (stages == 1) {
 				for (int i = 0; i < squares.size(); i++) {
 					Square temp = squares.get(i);
@@ -245,6 +254,7 @@ public class Pixel extends PApplet {
 			}
 			break;
 
+			//Magic pen mode
 		case 3:
 
 			mouse = new PVector(mouseX, mouseY);
@@ -253,6 +263,7 @@ public class Pixel extends PApplet {
 					Square temp = squares.get(i);
 
 					if (temp.pos.dist(mouse) < boxSize / 2) {
+						//Get the color of square
 						userC = temp.c;
 					}
 				}
@@ -263,6 +274,7 @@ public class Pixel extends PApplet {
 
 		}
 
+		//selecting the pixNum at menu
 		if (stages == 0) {
 			if (mouseX > 100 && mouseX < width - 100 && mouseY < 220 && mouseY > 180) {
 				pixNum = 16;
@@ -281,6 +293,7 @@ public class Pixel extends PApplet {
 		}
 	}
 
+	//Drawing and erasing if mouse is dragged
 	public void mouseDragged() {
 		switch (mode) {
 		case 1:
@@ -310,6 +323,7 @@ public class Pixel extends PApplet {
 		}
 	}
 
+	//Hotkeys
 	public void keyPressed() {
 		if (stages == 1) {
 			
@@ -395,8 +409,6 @@ public class Pixel extends PApplet {
 					File file = new File("./data/Bak/" + bk + ".bak");
 
 					squares = loaded(file);
-					// System.out.println("image loaded");
-					// println(bk + "loading");
 				}
 			
 			}
@@ -404,6 +416,7 @@ public class Pixel extends PApplet {
 		}
 	}
 
+	//Function to flip squares
 	public void flip() {
 		for (int i = 0; i < squares.size(); i++) {
 			Square squ = squares.get(i);
@@ -417,6 +430,7 @@ public class Pixel extends PApplet {
 
 	}
 
+	//Saving the image with/without background
 	public void saveTrans() 
 	{
 		pArt.beginDraw();
@@ -435,6 +449,7 @@ public class Pixel extends PApplet {
 	}
 
 	public void mouseReleased() {
+		//Deletes unnessacry squares
 		overWriteSquare();
 		
 		//remove squares outside of sketch
@@ -466,7 +481,6 @@ public class Pixel extends PApplet {
 			save(file, squares);
 			
 		}
-		println(bk);
 
 	}
 
@@ -494,6 +508,8 @@ public class Pixel extends PApplet {
 		}
 	}
 	
+	
+	//Outside of processing sketch
 	public void removeSquares()
 	{
 		for(int i = 0; i < squares.size(); i++)
@@ -548,6 +564,8 @@ public class Pixel extends PApplet {
 		return null;
 	}
 
+	
+	//Adding saving frame as img and loading it back up as background
 	public void addFrame() {
 		
 		File Dir = new File("./data/Last");
@@ -624,6 +642,8 @@ public class Pixel extends PApplet {
 		squares = new ArrayList<Square>(tempNew);
 		
 	}
+	
+	//Deletes last frame
 	public void removeLastFrame() {
 		data.remove(frameNum - 1);
 		if (frameNum >= data.size() - 1) {
@@ -631,6 +651,7 @@ public class Pixel extends PApplet {
 		}
 	}
 	
+	//Runs the animation
 	public void runAnimation() {
 		frameRate(frameRate);
 		tint(255, 255);
@@ -641,6 +662,7 @@ public class Pixel extends PApplet {
 		image(tempImage.lastFrame, 0, 0);
 	}
 
+	//Copying last pixel array and loads it to current one
 	public void copyLastFrame()
 	{
 		if(data.size() > 0)
@@ -650,6 +672,7 @@ public class Pixel extends PApplet {
 		}
 	}
 	
+	// view/can overwrite previous frame
 	public void prevFrame() {
 
 		if (frameNum == data.size()) {
@@ -662,6 +685,7 @@ public class Pixel extends PApplet {
 		}
 	}
 
+	//traverse with frames
 	public void nextFrame() {
 		if (frameNum <= maxFrameNum) {
 			frameNum++;
@@ -673,6 +697,7 @@ public class Pixel extends PApplet {
 		}
 	}
 
+	//can load pixels from previous/next frames
 	public void loadFramePixels() {
 		// since it can't load what isn't made yet
 		if (frameNum != data.size()) {
@@ -680,7 +705,6 @@ public class Pixel extends PApplet {
 			tempPixel.showArray();
 			squares = new ArrayList<Square>(tempPixel.pixels);
 
-			// System.out.println(squares);
 		}
 	}
 

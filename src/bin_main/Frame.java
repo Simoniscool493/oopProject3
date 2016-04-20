@@ -44,7 +44,6 @@ public class Frame extends JFrame {
 	// For sliders
 	int backGroundInit = 200;
 	int colorInit = 0;
-
 	int sliderMin = 0;
 	int sliderMax = 255;
 	int componentWidth = (int) (screenSize.getWidth() * 0.2);
@@ -58,7 +57,6 @@ public class Frame extends JFrame {
 
 		this.setTitle("Pixel Art Tool");
 		this.setSize(1000, 1000);
-		//this.setLayout(new GridBagLayout());
 		init();
 		this.setVisible(true);
 		this.setExtendedState(JFrame.ICONIFIED);
@@ -121,7 +119,6 @@ public class Frame extends JFrame {
 		JButton removeFrame = new JButton("Remove last Frame");
 		buttonsPanel.add(removeFrame);
 
-		// temp name
 		JButton EraseallButton = new JButton("Remove all squares");
 		buttonsPanel.add(EraseallButton);
 		
@@ -129,6 +126,7 @@ public class Frame extends JFrame {
 		buttonsPanel.add(copy);
 		
 		JButton bg = new JButton("Save with background");
+		//If color is grey it means background will not be saved
 		bg.setBackground(new Color(224,224,224));
 		buttonsPanel.add(bg);
 		
@@ -152,18 +150,22 @@ public class Frame extends JFrame {
 					bg.setBackground(new Color(224,224,224));
 				}
 				bg.repaint();
-				System.out.println(Pixel.savebg);
 			}
 		});
 		
+		//Copy last frame if button is pressed
 		copy.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pixel.copyLastFrame();
+				if(Pixel.data.size() > 0)
+				{
+					pixel.copyLastFrame();
+				}
 			}
 		});
 
+		//Set draw mode
 		drawButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -172,6 +174,7 @@ public class Frame extends JFrame {
 			}
 		});
 
+		//Set erase mode
 		eraseButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -180,6 +183,7 @@ public class Frame extends JFrame {
 			}
 		});
 
+		//Show grid
 		gridButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -189,6 +193,7 @@ public class Frame extends JFrame {
 
 		});
 
+		//Set magic pen tool
 		magicPen.addActionListener(new ActionListener() {
 
 			@Override
@@ -198,6 +203,7 @@ public class Frame extends JFrame {
 			}
 		});
 
+		//Flips the pixels in the sketch
 		flip.addActionListener(new ActionListener() {
 
 			@Override
@@ -207,6 +213,7 @@ public class Frame extends JFrame {
 			}
 		});
 
+		//Runs animation
 		run.addActionListener(new ActionListener() {
 
 			@Override
@@ -223,6 +230,7 @@ public class Frame extends JFrame {
 			}
 		});
 
+		//Add frame
 		add.addActionListener(new ActionListener() {
 
 			@Override
@@ -235,6 +243,7 @@ public class Frame extends JFrame {
 			}
 		});
 
+		//Go back a frame
 		prev.addActionListener(new ActionListener() {
 
 			@Override
@@ -244,6 +253,7 @@ public class Frame extends JFrame {
 			}
 		});
 
+		//Traverse next frame
 		next.addActionListener(new ActionListener() {
 
 			@Override
@@ -253,6 +263,7 @@ public class Frame extends JFrame {
 			}
 		});
 
+		//Delete last frame
 		removeFrame.addActionListener(new ActionListener() {
 
 			@Override
@@ -266,6 +277,7 @@ public class Frame extends JFrame {
 			}
 		});
 
+		//Erase all current pixels drawn
 		EraseallButton.addActionListener(new ActionListener() 
 		{
 
@@ -307,7 +319,7 @@ public class Frame extends JFrame {
 		colourPre.setBackground(new Color(Pixel.r, Pixel.g, Pixel.b));
 		buttonsPanel.add(colourPre);
 
-		// Slider listeners
+		// Slider listeners for the pen
 		red.addChangeListener(new ChangeListener() {
 
 			@Override
@@ -350,7 +362,6 @@ public class Frame extends JFrame {
 		pixel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(Pixel.mode);
 
 				colourPre.setBackground(new Color(pixel.userC));
 				colourPre.repaint();
@@ -396,6 +407,8 @@ public class Frame extends JFrame {
 		frameRLabel.put(new Integer(60), new JLabel("59"));
 		frameSlider.setLabelTable(frameRLabel);
 
+		
+		//Sets sliders for background color
 		redBack.addChangeListener(new ChangeListener() {
 
 			@Override
@@ -459,6 +472,7 @@ public class Frame extends JFrame {
 		menu.add(savefile);
 		menu.add(exit);
 		
+		//selecting exit
 		exit.addActionListener(new ActionListener() {
 			
 			@Override
@@ -469,18 +483,20 @@ public class Frame extends JFrame {
 				{
 					Pixel.squares.clear();
 					Main.f.setVisible(true);
+					//Closes the window and opens the main menu again
 					Frame.this.dispose();	
 				}
 			}
 		});
-
+		
+		//This is a new jmenu item for changing the mode of drawing
 		JMenu edit = new JMenu("Edit");
 		JMenuItem sixTeen = new JMenuItem("16 x 16");
 		JMenuItem thirtyTwo = new JMenuItem("32 x 32");
 		JMenuItem sixtyFour = new JMenuItem("64 x 64");
 		
 
-
+		
 		sixTeen.addActionListener(new ActionListener() {
 
 			@Override
@@ -611,8 +627,8 @@ public class Frame extends JFrame {
 		slider.setLabelTable(colorLabel);
 		return slider;
 	}
-
-	// Opens a new .pix file
+ 
+	// Opens a new .pix file. Uses the file explorer to select the path to the file 
 	class Open implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (Pixel.stages == 1) {
@@ -628,18 +644,13 @@ public class Frame extends JFrame {
 					File o = c.getSelectedFile();
 					Pixel.file = o;
 					Pixel.loads = true;
-					System.out.println(Pixel.file.getParent());
-					System.out.println(Pixel.file.getName());
 
 				}
-			} else {
-				System.out.println("Can't open yet");
-
 			}
 		}
 	}
 
-	// Saves a new .pix file with the .pix extension if the user hasnt specified
+	// Saves a new .pix file with the .pix extension if the user hasn't specified
 	class Save implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (Pixel.stages == 1) {
@@ -658,8 +669,6 @@ public class Frame extends JFrame {
 
 						Pixel.filen = fi;
 						Pixel.save = true;
-						System.out.println(Pixel.filen.getParent());
-						System.out.println(Pixel.filen.getName());
 					} else {
 						s += ".pix";
 
@@ -667,18 +676,15 @@ public class Frame extends JFrame {
 
 						Pixel.filen = fi;
 						Pixel.save = true;
-						System.out.println(Pixel.filen.getParent());
-						System.out.println(Pixel.filen.getName());
 
 					}
 				}
-			} else {
-				System.out.println("Can't save yet");
 			}
 
 		}
 	}
 
+	//Uses the file explorer to save the image to wherever the user wishes
 	class Saveimg implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (Pixel.stages == 1) {
@@ -701,13 +707,10 @@ public class Frame extends JFrame {
 						Pixel.png = s;
 						Pixel.svimg = true;
 					}
-				} else {
-					System.out.println("Can't save yet");
 				}
 
 				if (!Dir.exists()) {
 					Dir.mkdir();
-					System.out.println("Directory imgs not found making folder imgs");
 
 				}
 			}
@@ -715,6 +718,7 @@ public class Frame extends JFrame {
 		}
 	}
 
+	//Uses the file explorer to save the frames inside a folder of the same name
 	class savef implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			File Dir = new File("./data/Frame");
