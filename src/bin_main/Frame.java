@@ -449,9 +449,15 @@ public class Frame extends JFrame {
 		exit.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				Main.f.setVisible(true);
-				Frame.this.dispose();	
+			public void actionPerformed(ActionEvent e) 
+			{
+				int reply = JOptionPane.showConfirmDialog(null, "Are you sure?", "Return to menu",  JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION)
+				{
+					Pixel.squares.clear();
+					Main.f.setVisible(true);
+					Frame.this.dispose();	
+				}
 			}
 		});
 
