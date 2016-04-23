@@ -25,6 +25,9 @@ Change from:
 to 
 "Pixel.screenSize = (int) screenHeight - 200;"
 
+The interface should look like this:
+![sketch](Screenshot/Pixel.JPG)
+
 <br> 
 2) There's is a bug with saving a single image in the program(not including saving multiple frames as images), because we forgot to add "pArt.clear();" at the end of the fuction "saveTrans()" in pixel.java.
 "pArt.clear();" clears the PGraphics after the image is saved, so it's ready to draw and save the next image.
