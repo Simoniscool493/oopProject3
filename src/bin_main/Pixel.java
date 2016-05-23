@@ -134,9 +134,16 @@ public class Pixel extends PApplet {
 
 			rectMode(CENTER);
 			
-			for (int i = 0; i < squares.size(); i++) {
-				Square squ = squares.get(i);
-				squ.drawShape();
+			try
+			{
+				for (int i = 0; i < squares.size(); i++) {
+					Square squ = squares.get(i);
+					squ.drawShape();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println("Saving");
 			}
 
 			//To draw grid
@@ -454,6 +461,7 @@ public class Pixel extends PApplet {
 		pArt.endDraw();
 
 		pArt.save(png);
+		pArt.clear();
 	}
 
 	public void mouseReleased() {
